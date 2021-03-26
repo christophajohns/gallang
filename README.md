@@ -1,5 +1,4 @@
-![Gallang logo](src/logo.svg)
-<img src="src/logo.svg">
+<img align="center" src="src/logo.svg">
 
 # Gallang
 
