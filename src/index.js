@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import GallangModel from './GallangModel';
+
+const myModel = new GallangModel();
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App model={myModel} />
   </React.StrictMode>,
   document.getElementById('root')
 );
