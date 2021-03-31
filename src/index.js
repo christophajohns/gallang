@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import GallangModel from './GallangModel';
+import { GallangModel } from './model';
 
 const myModel = new GallangModel();
 
