@@ -1,3 +1,5 @@
+import Spinner from 'react-bootstrap/Spinner';
+
 function promiseNoData(promise, data = null, error = null) {
     if (!promise) {
         return <span>no data</span>;
@@ -7,10 +9,9 @@ function promiseNoData(promise, data = null, error = null) {
     }
     if (!data && !error) {
         return (
-            <img
-                src="http://www.csc.kth.se/~cristi/loading.gif"
-                alt="Loading data..."
-            />
+            <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+            </Spinner>
         );
     }
     if (error) {
