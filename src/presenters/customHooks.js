@@ -16,8 +16,29 @@ function useModelProperty(model, propertyName) {
         [model, propertyName]
     ); // though model never changes
     return value;
-  }
+}
 
-  export {
+function usePromise(promise) {
+    // custom hook
+    const [data, setData] = React.useState(null);
+    const [error, setError] = React.useState(null);
+
+    React.useEffect(() => {
+        async function fetchData() {
+            try {
+                const searchData = await promise;
+                setData(searchData);
+            } catch (searchError) {
+                setError(searchError);
+            }
+        }
+        fetchData();
+    }, [promise]);
+
+    return [data, setData, error, setError];
+}
+
+export {
     useModelProperty,
-  };
+    usePromise,
+};
