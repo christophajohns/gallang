@@ -1,4 +1,5 @@
 import './HomeView.css';
+import PropTypes from 'prop-types';
 import {
     HorizontalGrid,
 } from '../../components';
@@ -34,6 +35,31 @@ function HomeView(props) {
 
         </div>
     );
+}
+
+HomeView.propTypes = {
+    collections: PropTypes.arrayOf(PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        images: PropTypes.arrayOf(PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            url: PropTypes.string.isRequired,
+            liked: PropTypes.bool.isRequired,
+        }).isRequired)
+    })),
+    recentlyViewedImages: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
+        liked: PropTypes.bool.isRequired,
+    }).isRequired),
+    quote: PropTypes.string,
+    recommendations: PropTypes.arrayOf(PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        images: PropTypes.arrayOf(PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            url: PropTypes.string.isRequired,
+            liked: PropTypes.bool.isRequired,
+        }).isRequired)
+    })),
 }
 
 export default HomeView;
