@@ -23,8 +23,18 @@ const CooperHewittSource = {
                     title: "Botanical Expressions",
                     images: [
                         {
-                            id: "123456",
+                            id: "18411435",
                             url: "https://images.collection.cooperhewitt.org/152056_fd1b6ff7c925bf70_b.jpg",
+                            liked: false,
+                        },
+                        {
+                            id: "18564459",
+                            url: "https://images.collection.cooperhewitt.org/4049_41d50b6349a8bfdd_b.jpg",
+                            liked: false,
+                        },
+                        {
+                            id: "18731639",
+                            url: "https://images.collection.cooperhewitt.org/116097_d655ed99df905bd4_b.jpg",
                             liked: false,
                         },
                     ]
