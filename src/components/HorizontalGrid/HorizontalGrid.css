@@ -1,3 +1,7 @@
+.HorizontalGrid {
+    margin-bottom: 64px;
+}
+
 .HorizontalGrid__top .title-and-description {
     display: inline-block;
 }
