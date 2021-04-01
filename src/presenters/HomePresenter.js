@@ -42,6 +42,11 @@ function HomePresenter(props) {
                     url: "https://images.collection.cooperhewitt.org/223579_b1374fa355c2fb77_b.jpg",
                     liked: true,
                 },
+                {
+                    id: "2318797273",
+                    url: "https://images.collection.cooperhewitt.org/348036_88262b84479c8e3d_b.jpg",
+                    liked: true,
+                },
             ],
         },
     ];
