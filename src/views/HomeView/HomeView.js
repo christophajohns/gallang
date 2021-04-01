@@ -14,20 +14,21 @@ function HomeView(props) {
         recommendations, // Array of recommended images and the recommendation basis (e.g. medium, period, designer)
     } = props;
 
-    const firstFiveCollections = collections.slice(0, 5);
+    const firstFourCollections = collections.slice(0, 4);
+    const collectionsAfterFour = collections.slice(4, 10);
 
     return (
         <div className="HomeView">
-            <CollectionCarousel collections={firstFiveCollections} />
+            <CollectionCarousel collections={firstFourCollections} />
             <main>
-                {collections ? collections.map(collection => (
+                {recentlyViewedImages ? <HorizontalGrid title="Recently viewed" images={recentlyViewedImages} /> : ""}
+                {collections ? collectionsAfterFour.map(collection => (
                     <HorizontalGrid
                         key={collection.title}
                         title={collection.title}
                         images={collection.images}
                     />))
                 : ""}
-                {recentlyViewedImages ? <HorizontalGrid title="Recently viewed" images={recentlyViewedImages} /> : ""}
                 {quote ? <Quote quoteText={quote} /> : ""}
                 {recommendations ? recommendations.map(recommendation => (
                     <HorizontalGrid
