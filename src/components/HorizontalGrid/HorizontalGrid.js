@@ -27,7 +27,7 @@ function HorizontalGrid(props) {
                 </div>
             </div>
             <div className="HorizontalGrid__images">
-                {images.map(image => <Image key={image.id} src={image.url} liked={image.liked} />)}
+                {images.map(image => <Image key={image.id} id={image.id} src={image.url} liked={image.liked} />)}
             </div>
         </section>
     );
