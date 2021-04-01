@@ -4,6 +4,7 @@ import {
     HorizontalGrid,
 } from '../../components';
 
+/** View component for the Home/Browse page content. */
 function HomeView(props) {
     const {
         collections, // Array holding all information about collections to be rendered in a HorizontalGrid
@@ -38,6 +39,49 @@ function HomeView(props) {
     );
 }
 
+HomeView.propTypes = {
+    /** Array holding all information about collections to be rendered in a HorizontalGrid */
+    collections: PropTypes.arrayOf(PropTypes.shape({
+        /** Name or title of the collection */
+        title: PropTypes.string.isRequired,
+        /** Array of objects or images within the collection */
+        images: PropTypes.arrayOf(PropTypes.shape({
+            /** Unique identifier of the object and thereby image */
+            id: PropTypes.string.isRequired,
+            /** Image url for the object */
+            url: PropTypes.string.isRequired,
+            /** Flag whether the user has liked this image */
+            liked: PropTypes.bool.isRequired,
+        }).isRequired)
+    })),
+    /** Array of image data to be rendered in a HorizontalGrid */
+    recentlyViewedImages: PropTypes.arrayOf(PropTypes.shape({
+        /** Unique identifier of the object and thereby image */
+        id: PropTypes.string.isRequired,
+        /** Image url for the object */
+        url: PropTypes.string.isRequired,
+        /** Flag whether the user has liked this image */
+        liked: PropTypes.bool.isRequired,
+    }).isRequired),
+    /** String representing a quote */
+    quote: PropTypes.string,
+    /** Array of recommended images and the recommendation basis (e.g. medium, period, designer) */
+    recommendations: PropTypes.arrayOf(PropTypes.shape({
+        /** Name or title for the recommendation basis (e.g. medium, period, designer) */
+        title: PropTypes.string.isRequired,
+        /** Array of objects or images within the collection */
+        images: PropTypes.arrayOf(PropTypes.shape({
+            /** Unique identifier of the object and thereby image */
+            id: PropTypes.string.isRequired,
+            /** Image url for the object */
+            url: PropTypes.string.isRequired,
+            /** Flag whether the user has liked this image */
+            liked: PropTypes.bool.isRequired,
+        }).isRequired)
+    })),
+}
+
+/** Component to render a quote. */
 function Quote(props) {
     const {
         quoteText, // The quote text or content.
@@ -50,29 +94,9 @@ function Quote(props) {
     )
 }
 
-HomeView.propTypes = {
-    collections: PropTypes.arrayOf(PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        images: PropTypes.arrayOf(PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            url: PropTypes.string.isRequired,
-            liked: PropTypes.bool.isRequired,
-        }).isRequired)
-    })),
-    recentlyViewedImages: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        url: PropTypes.string.isRequired,
-        liked: PropTypes.bool.isRequired,
-    }).isRequired),
-    quote: PropTypes.string,
-    recommendations: PropTypes.arrayOf(PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        images: PropTypes.arrayOf(PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            url: PropTypes.string.isRequired,
-            liked: PropTypes.bool.isRequired,
-        }).isRequired)
-    })),
+Quote.propTypes = {
+    /** The quote text or content. */
+    quoteText: PropTypes.string.isRequired,
 }
 
 export default HomeView;
