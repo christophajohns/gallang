@@ -30,27 +30,128 @@ const CooperHewittSource = {
     getCollections(numberOfCollections = 10) {
         const collectionsPromise = new Promise((resolve, reject) => { // Placeholder for actual API call
             setTimeout(() => { 
-                const exampleCollections = [{
-                    title: "Botanical Expressions",
-                    id: "1159161457",
-                    images: [
-                        {
-                            id: "18411435",
-                            url: "https://images.collection.cooperhewitt.org/152056_fd1b6ff7c925bf70_b.jpg",
-                            liked: true,
-                        },
-                        {
-                            id: "18564459",
-                            url: "https://images.collection.cooperhewitt.org/4049_41d50b6349a8bfdd_b.jpg",
-                            liked: false,
-                        },
-                        {
-                            id: "18731639",
-                            url: "https://images.collection.cooperhewitt.org/116097_d655ed99df905bd4_b.jpg",
-                            liked: false,
-                        },
-                    ]
-                },];
+                const exampleCollections = [
+                    {
+                        title: "Botanical Expressions",
+                        id: "1159161457",
+                        numberOfImages: 127,
+                        images: [
+                            {
+                                id: "18411435",
+                                url: "https://images.collection.cooperhewitt.org/152056_fd1b6ff7c925bf70_b.jpg",
+                                liked: true,
+                            },
+                            {
+                                id: "18564459",
+                                url: "https://images.collection.cooperhewitt.org/4049_41d50b6349a8bfdd_b.jpg",
+                                liked: false,
+                            },
+                            {
+                                id: "18731639",
+                                url: "https://images.collection.cooperhewitt.org/116097_d655ed99df905bd4_b.jpg",
+                                liked: false,
+                            },
+                        ]
+                    },
+                    {
+                        title: "Willi Smith: Street Couture",
+                        id: "2318802364",
+                        numberOfImages: 54,
+                        images: [
+                            {
+                                id: "2318802528",
+                                url: "https://images.collection.cooperhewitt.org/359181_4aaa6a9bc518e309_b.jpg",
+                                liked: true,
+                            },
+                            {
+                                id: "2318798785",
+                                url: "https://images.collection.cooperhewitt.org/362156_85badf648bb66f36_b.jpg",
+                                liked: false,
+                            },
+                            {
+                                id: "2318802447",
+                                url: "https://images.collection.cooperhewitt.org/358786_557804dd78c97513_b.jpg",
+                                liked: false,
+                            },
+                            {
+                                id: "2318802553",
+                                url: "https://images.collection.cooperhewitt.org/359183_3fb40ac46376476d_b.jpg",
+                                liked: true,
+                            },
+                        ]
+                    },
+                    {
+                        title: "Contemporary Muslim Fashions",
+                        id: "2318802212",
+                        numberOfImages: 23,
+                        images: [
+                            {
+                                id: "18411435",
+                                url: "https://images.collection.cooperhewitt.org/152056_fd1b6ff7c925bf70_b.jpg",
+                                liked: true,
+                            },
+                            {
+                                id: "18564459",
+                                url: "https://images.collection.cooperhewitt.org/4049_41d50b6349a8bfdd_b.jpg",
+                                liked: false,
+                            },
+                            {
+                                id: "18731639",
+                                url: "https://images.collection.cooperhewitt.org/116097_d655ed99df905bd4_b.jpg",
+                                liked: false,
+                            },
+                        ]
+                    },
+                    {
+                        title: "Herbert Bayer: Bauhaus Master",
+                        id: "2318800172",
+                        numberOfImages: 184,
+                        images: [
+                            {
+                                id: "2318802528",
+                                url: "https://images.collection.cooperhewitt.org/359181_4aaa6a9bc518e309_b.jpg",
+                                liked: true,
+                            },
+                            {
+                                id: "2318798785",
+                                url: "https://images.collection.cooperhewitt.org/362156_85badf648bb66f36_b.jpg",
+                                liked: false,
+                            },
+                            {
+                                id: "2318802447",
+                                url: "https://images.collection.cooperhewitt.org/358786_557804dd78c97513_b.jpg",
+                                liked: false,
+                            },
+                            {
+                                id: "2318802553",
+                                url: "https://images.collection.cooperhewitt.org/359183_3fb40ac46376476d_b.jpg",
+                                liked: true,
+                            },
+                        ]
+                    },
+                    {
+                        title: "After Icebergs",
+                        id: "1159161457",
+                        numberOfImages: 47,
+                        images: [
+                            {
+                                id: "18411435",
+                                url: "https://images.collection.cooperhewitt.org/152056_fd1b6ff7c925bf70_b.jpg",
+                                liked: true,
+                            },
+                            {
+                                id: "18564459",
+                                url: "https://images.collection.cooperhewitt.org/4049_41d50b6349a8bfdd_b.jpg",
+                                liked: false,
+                            },
+                            {
+                                id: "18731639",
+                                url: "https://images.collection.cooperhewitt.org/116097_d655ed99df905bd4_b.jpg",
+                                liked: false,
+                            },
+                        ]
+                    },
+                ];
                 resolve(exampleCollections); // Return example array for now
             }, 300);
           });
@@ -62,6 +163,7 @@ const CooperHewittSource = {
  * @typedef Collection
  * @property {string} title - Name or title of the collection
  * @property {string} id - Unique identifier of the collection
+ * @property {number} numberOfImages - The number of images or objects within the collection/exhibition
  * @property {Image[]} images - Array of objects or images within the collection
  */
 
