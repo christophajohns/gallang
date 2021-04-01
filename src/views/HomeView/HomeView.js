@@ -24,7 +24,7 @@ function HomeView(props) {
                     />))
                 : ""}
                 {recentlyViewedImages ? <HorizontalGrid title="Recently viewed" images={recentlyViewedImages} /> : ""}
-                {quote ? <p className="quote">{quote}</p> : ""}
+                {quote ? <Quote quoteText={quote} /> : ""}
                 {recommendations ? recommendations.map(recommendation => (
                     <HorizontalGrid
                         key={recommendation.title}
@@ -36,6 +36,18 @@ function HomeView(props) {
             </main>
         </div>
     );
+}
+
+function Quote(props) {
+    const {
+        quoteText, // The quote text or content.
+    } = props;
+    return (
+        <div className="Quote">
+            <p className="Quote__text">{quoteText}</p>
+            <p className="Quote__author">Micah Walter</p>
+        </div>
+    )
 }
 
 HomeView.propTypes = {
