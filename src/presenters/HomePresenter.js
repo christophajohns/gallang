@@ -25,12 +25,24 @@ function HomePresenter(props) {
         model, // Model keeping application state
     } = props;
 
-    const exampleQuote = "Example quote";
-    const exampleRecentlyViewedImages = [];
+    const exampleQuote = "Maybe something by Huey Lewis?";
+    const exampleRecentlyViewedImages = [
+        {
+            id: "18644717",
+            url: "https://images.collection.cooperhewitt.org/12030_fa96a748c7d67fd9_b.jpg",
+            liked: false,
+        },
+    ];
     const exampleRecommendations = [
         {
             title: "Posters",
-            images: [],
+            images: [
+                {
+                    id: "18645651",
+                    url: "https://images.collection.cooperhewitt.org/223579_b1374fa355c2fb77_b.jpg",
+                    liked: true,
+                },
+            ],
         },
     ];
 
