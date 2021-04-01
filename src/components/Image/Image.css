@@ -2,22 +2,19 @@
     height: 400px;
     width: 400px;
     object-fit: cover;
-    /* z-index: -1;
-    position: absolute;
-    left: 0px;
-    top: 0px; */
-   
+    position: static;
+    z-index: 0;   
 }
 
-/* .Image .Image__buttons {
-    z-index: 0;
+.Image .Image__buttons {
+    z-index: 1;
     position: absolute;
-} */
+    bottom: 0px;
+    right: 0px;
+}
 
 .Image {
-    /* position: relative;
-    float:left;
-    display:inline-block; */
+    position: relative;
     flex: 0 0 auto;
     margin-right: 32px;
 }
