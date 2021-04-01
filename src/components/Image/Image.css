@@ -6,11 +6,30 @@
     z-index: 0;   
 }
 
-.Image .Image__buttons {
+.Image .grip-button {
     z-index: 1;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+.Image .Image__buttons {
+    z-index: 2;
     position: absolute;
     bottom: 0px;
     right: 0px;
+}
+
+.download-button,
+.grip-button,
+.like-button {
+    color: white;
+}
+
+.download-button:hover,
+.grip-button:hover,
+.like-button:hover {
+    color: #dddddd;
 }
 
 .Image {

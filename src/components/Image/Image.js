@@ -1,4 +1,11 @@
 import './Image.css';
+import { Button } from 'react-bootstrap';
+import {
+    Download,
+    GripVertical,
+    Heart,
+    HeartFill,
+} from 'react-bootstrap-icons';
 
 // Single object (image) showcase including like and download buttons
 function Image(props) {
@@ -11,9 +18,10 @@ function Image(props) {
     return (
         <div className="Image">
             <img id={id} src={src} alt={id} />
+            <Button variant="link" className="grip-button"><GripVertical /></Button>
             <div className="Image__buttons">
-                <button className="like-button">{liked ? "Liked" : "Like"}</button>
-                <button className="download-button">Download</button>
+                <Button variant="link" className="like-button">{liked ? <HeartFill /> : <Heart />}</Button>
+                <Button variant="link" className="download-button"><Download /></Button>
             </div>
         </div>
     );

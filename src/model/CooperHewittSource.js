@@ -25,7 +25,7 @@ const CooperHewittSource = {
                         {
                             id: "18411435",
                             url: "https://images.collection.cooperhewitt.org/152056_fd1b6ff7c925bf70_b.jpg",
-                            liked: false,
+                            liked: true,
                         },
                         {
                             id: "18564459",
