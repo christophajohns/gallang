@@ -21,6 +21,7 @@ const CooperHewittSource = {
             setTimeout(() => { 
                 const exampleCollections = [{
                     title: "Botanical Expressions",
+                    id: "1159161457",
                     images: [
                         {
                             id: "18411435",
