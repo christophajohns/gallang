@@ -11,6 +11,7 @@
     position: absolute;
     top: 0px;
     right: 0px;
+    cursor: grab !important;
 }
 
 .Image .Image__buttons {
@@ -26,8 +27,11 @@
     color: white;
 }
 
+.grip-button:hover {
+    color: white;
+}
+
 .download-button:hover,
-.grip-button:hover,
 .like-button:hover {
     color: #dddddd;
 }

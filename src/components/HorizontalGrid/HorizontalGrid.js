@@ -22,7 +22,7 @@ function HorizontalGrid(props) {
                     {description ? <p className="description">{description}</p> : ""}
                 </div>
                 <div className="previous-next-chevrons">
-                    <ChevronLeft />
+                    <ChevronLeft className="chevron-left" />
                     <ChevronRight />
                 </div>
             </div>

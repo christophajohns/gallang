@@ -1,14 +1,13 @@
-.HorizontalGrid {
-    margin-bottom: 10%;
-}
-
 .HorizontalGrid__top .title-and-description {
     display: inline-block;
 }
 
 .HorizontalGrid__top .previous-next-chevrons {
-    display: inline-block;
     float: right;
+}
+
+.HorizontalGrid__top .previous-next-chevrons .chevron-left {
+    margin-right: 16px;
 }
 
 .HorizontalGrid__images {
