@@ -1,3 +1,18 @@
 .HorizontalGrid {
-    text-align: center;
+    margin-bottom: 10%;
+}
+
+.HorizontalGrid__top .title-and-description {
+    display: inline-block;
+}
+
+.HorizontalGrid__top .previous-next-chevrons {
+    display: inline-block;
+    float: right;
+}
+
+.HorizontalGrid__images {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
 }
