@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
     HorizontalGrid,
 } from '../../components';
+import CollectionCarousel from './CollectionCarousel';
 
 /** View component for the Home/Browse page content. */
 function HomeView(props) {
@@ -13,9 +14,11 @@ function HomeView(props) {
         recommendations, // Array of recommended images and the recommendation basis (e.g. medium, period, designer)
     } = props;
 
+    const firstFiveCollections = collections.slice(0, 5);
+
     return (
         <div className="HomeView">
-            <div>This would be a carousel.</div>
+            <CollectionCarousel collections={firstFiveCollections} />
             <main>
                 {collections ? collections.map(collection => (
                     <HorizontalGrid
