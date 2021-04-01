@@ -5,7 +5,7 @@ import {
     ChevronRight,
 } from 'react-bootstrap-icons';
 
-// Horizontal (scrollable) grid of images to showcase objects in a collection or gallery
+/** Horizontal (scrollable) grid of images to showcase objects in a collection or gallery */
 function HorizontalGrid(props) {
     const {
         title, // Specify the title to placed on top of the image grid
