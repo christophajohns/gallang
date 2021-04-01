@@ -10,9 +10,7 @@ import { GallangModel } from './model';
 const myModel = new GallangModel();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App model={myModel} />
-  </React.StrictMode>,
+  <App model={myModel} />,
   document.getElementById('root')
 );
 
