@@ -1,5 +1,9 @@
 import './HorizontalGrid.css';
 import { Image } from '../../components';
+import { 
+    ChevronLeft,
+    ChevronRight,
+} from 'react-bootstrap-icons';
 
 // Horizontal (scrollable) grid of images to showcase objects in a collection or gallery
 function HorizontalGrid(props) {
@@ -14,11 +18,12 @@ function HorizontalGrid(props) {
         <section className="HorizontalGrid" label={title}>
             <div className="HorizontalGrid__top">
                 <div className="title-and-description">
-                <a href={href ? href : "#"} className="title">{title}</a>
-                {description ? <p className="description">{description}</p> : ""}
+                    <a href={href ? href : "#"} className="title">{title}</a>
+                    {description ? <p className="description">{description}</p> : ""}
                 </div>
                 <div className="previous-next-chevrons">
-                    {"<  >"}
+                    <ChevronLeft />
+                    <ChevronRight />
                 </div>
             </div>
             <div className="HorizontalGrid__images">
