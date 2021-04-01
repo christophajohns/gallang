@@ -4,6 +4,17 @@
 
 .HorizontalGrid__top .title-and-description {
     display: inline-block;
+    margin-bottom: 8px;
+}
+
+.HorizontalGrid__top .title-and-description .title {
+    color: black;
+    font-weight: bold;
+}
+
+.HorizontalGrid__top .title-and-description .description {
+    font-size: 0.9rem;
+    color: #838383;
 }
 
 .HorizontalGrid__top .previous-next-chevrons {
