@@ -1,7 +1,16 @@
-import { Carousel } from "react-bootstrap";
 import { ChevronLeft, ChevronRight } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
-import "../../types";
+import "../../../types";
+import {
+    StyledCollectionCarousel,
+    StyledCarouselItem,
+    StyledCarouselItemContent,
+    StyledCarouselItemImages,
+    StyledGridItem,
+    StyledCarouselItemCaption,
+    StyledCollectionLabel,
+    StyledCollectionTitle,
+} from "./style";
 
 /**
  * Component to render a carousel of "featured" collections
@@ -12,35 +21,33 @@ function CollectionCarousel(props) {
     const { collections } = props;
 
     return (
-        <Carousel
-            className="CollectionCarousel"
+        <StyledCollectionCarousel
             nextIcon={<ChevronRight className="next-button" />}
             prevIcon={<ChevronLeft className="previous-button" />}
         >
-            {collections.map((collection) => (
-                <Carousel.Item
-                    className="CollectionCarousel__item"
-                    key={collection.title}
-                >
-                    <div className="CollectionCarousel__item__content">
-                        <div className="CollectionCarousel__images">
+            {collections.map((collection, index) => (
+                <StyledCarouselItem key={collection.title} position={index}>
+                    <StyledCarouselItemContent>
+                        <StyledCarouselItemImages>
                             {collection.images.slice(0, 4).map((image) => (
-                                <div className="grid-item" key={image.id}>
+                                <StyledGridItem key={image.id}>
                                     <img src={image.url} alt={image.id} />
-                                </div>
+                                </StyledGridItem>
                             ))}
-                        </div>
-                        <div className="CollectionCarousel__caption">
-                            <span className="collection-label">COLLECTION</span>
-                            <h3>{collection.title}</h3>
-                            <span className="number-of-objects">
-                                {collection.numberOfImages} Objects
-                            </span>
-                        </div>
-                    </div>
-                </Carousel.Item>
+                        </StyledCarouselItemImages>
+                        <StyledCarouselItemCaption>
+                            <StyledCollectionLabel>
+                                COLLECTION
+                            </StyledCollectionLabel>
+                            <StyledCollectionTitle>
+                                {collection.title}
+                            </StyledCollectionTitle>
+                            <div>{collection.numberOfImages} Objects</div>
+                        </StyledCarouselItemCaption>
+                    </StyledCarouselItemContent>
+                </StyledCarouselItem>
             ))}
-        </Carousel>
+        </StyledCollectionCarousel>
     );
 }
 

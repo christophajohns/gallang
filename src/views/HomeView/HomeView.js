@@ -1,4 +1,3 @@
-import "./HomeView.css";
 import PropTypes from "prop-types";
 import { HorizontalGrid } from "../../components";
 import CollectionCarousel from "./CollectionCarousel";
