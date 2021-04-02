@@ -6,16 +6,16 @@ export const StyledCollectionCarousel = styled(Carousel)`
 `;
 
 const backgroundColors = [
-    "#780000",
-    "#c1121f",
-    "#ff6d00",
-    "#003049",
-    "#669bbc",
+    "linear-gradient(45deg, darksalmon, lightsalmon)",
+    "linear-gradient(45deg, darkred, firebrick)",
+    "linear-gradient(45deg, slategrey, lightslategrey)",
+    "linear-gradient(45deg, saddlebrown, peru)",
+    "linear-gradient(45deg, palevioletred, pink)",
 ];
 
 export const StyledCarouselItem = styled(Carousel.Item)`
     // Choose background color from array
-    background-color: ${(props) =>
+    background: ${(props) =>
         props.hasOwnProperty("position")
             ? backgroundColors[props.position]
             : "#eeeeee"};
