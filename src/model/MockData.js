@@ -1,3 +1,4 @@
+/** Example data for collections or exhibitions */
 export const mockCollections = [
     {
         title: "Botanical Expressions",
