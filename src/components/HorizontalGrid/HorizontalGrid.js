@@ -1,7 +1,15 @@
-import "./HorizontalGrid.css";
 import { Image } from "../../components";
-import { ChevronLeft, ChevronRight } from "react-bootstrap-icons";
+import { ChevronRight } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
+import {
+    StyledHorizontalGrid,
+    StyledTitleAndDescription,
+    StyledTitle,
+    StyledDescription,
+    StyledPreviousNextChevrons,
+    StyledChevronLeft,
+    StyledImages,
+} from "./style";
 
 /**
  * Horizontal (scrollable) grid of images to showcase objects in a collection or gallery
@@ -21,24 +29,22 @@ function HorizontalGrid(props) {
     } = props;
 
     return (
-        <section className="HorizontalGrid" label={title}>
-            <div className="HorizontalGrid__top">
-                <div className="title-and-description">
-                    <a href={href ? href : "#"} className="title">
-                        {title}
-                    </a>
+        <StyledHorizontalGrid label={title}>
+            <div>
+                <StyledTitleAndDescription>
+                    <StyledTitle href={href ? href : "#"}>{title}</StyledTitle>
                     {description ? (
-                        <p className="description">{description}</p>
+                        <StyledDescription>{description}</StyledDescription>
                     ) : (
                         ""
                     )}
-                </div>
-                <div className="previous-next-chevrons">
-                    <ChevronLeft className="chevron-left" />
+                </StyledTitleAndDescription>
+                <StyledPreviousNextChevrons>
+                    <StyledChevronLeft />
                     <ChevronRight />
-                </div>
+                </StyledPreviousNextChevrons>
             </div>
-            <div className="HorizontalGrid__images">
+            <StyledImages>
                 {images.map((image) => (
                     <Image
                         key={image.id}
@@ -47,8 +53,8 @@ function HorizontalGrid(props) {
                         liked={image.liked}
                     />
                 ))}
-            </div>
-        </section>
+            </StyledImages>
+        </StyledHorizontalGrid>
     );
 }
 
