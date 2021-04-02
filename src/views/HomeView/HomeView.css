@@ -39,7 +39,7 @@
         grid-template-columns: repeat(2, 128px);
         grid-template-rows: repeat(2, 128px);
     }
-  }
+}
 
 .CollectionCarousel__images .grid-item img {
     object-fit: cover;
@@ -60,7 +60,7 @@
     margin-bottom: 16px;
 }
 
-.CollectionCarousel__caption p {
+.CollectionCarousel__caption span {
     margin-bottom: 16px;
     opacity: 0.7;
 }

@@ -33,9 +33,9 @@ function CollectionCarousel(props) {
                         <div className="CollectionCarousel__caption">
                             <span className="collection-label">COLLECTION</span>
                             <h3>{collection.title}</h3>
-                            <p className="collection-label">
+                            <span className="number-of-objects">
                                 {collection.numberOfImages} Objects
-                            </p>
+                            </span>
                         </div>
                     </div>
                 </Carousel.Item>
