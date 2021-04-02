@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { StyledQuote, StyledQuoteText, StyledQuoteAuthor } from "./style";
 
 /**
  * Component to render a quote.
@@ -10,10 +11,10 @@ function Quote(props) {
         quoteText, // The quote text or content.
     } = props;
     return (
-        <div className="Quote">
-            <p className="Quote__text">{quoteText}</p>
-            <p className="Quote__author">Micah Walter</p>
-        </div>
+        <StyledQuote>
+            <StyledQuoteText>{quoteText}</StyledQuoteText>
+            <StyledQuoteAuthor>Micah Walter</StyledQuoteAuthor>
+        </StyledQuote>
     );
 }
 
