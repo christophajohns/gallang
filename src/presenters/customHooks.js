@@ -1,5 +1,11 @@
-import React from 'react';
+import React from "react";
 
+/**
+ * Custom hook to provide a presenter with access to a model property (including the observer patterns)
+ * @param {GallangModel} model - The main application model
+ * @param {string} propertyName - A model property (e.g. recentlyViewedImageIDs)
+ * @returns Value of accessed property
+ */
 function useModelProperty(model, propertyName) {
     // custom hook
     const [value, setValue] = React.useState(model[propertyName]);
@@ -18,6 +24,11 @@ function useModelProperty(model, propertyName) {
     return value;
 }
 
+/**
+ * Custom hook to provide standardized access to data and error for a promise
+ * @param {Promise} promise - Promise to be resolved into data or error
+ * @returns Array of state (data, error) and setters (setData, setError)
+ */
 function usePromise(promise) {
     // custom hook
     const [data, setData] = React.useState(null);
@@ -26,10 +37,10 @@ function usePromise(promise) {
     React.useEffect(() => {
         async function fetchData() {
             try {
-                const searchData = await promise;
-                setData(searchData);
-            } catch (searchError) {
-                setError(searchError);
+                const promiseData = await promise;
+                setData(promiseData);
+            } catch (promiseError) {
+                setError(promiseError);
             }
         }
         fetchData();
@@ -38,7 +49,4 @@ function usePromise(promise) {
     return [data, setData, error, setError];
 }
 
-export {
-    useModelProperty,
-    usePromise,
-};
+export { useModelProperty, usePromise };

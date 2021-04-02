@@ -1,13 +1,20 @@
-import React from 'react';
-import { HomeView } from '../views';
-import { promiseNoData } from '../components';
-import { CooperHewittSource } from '../model';
-import { usePromise } from './customHooks';
+import React from "react";
+import { HomeView } from "../views";
+import { promiseNoData } from "../components";
+import { CooperHewittSource } from "../model";
+import { usePromise } from "./customHooks";
+import "../types";
 
-function HomePresenter(props) {
+/**
+ * Presenter for the Home/Browse view
+ * @returns Loading spinner or HomeView
+ */
+function HomePresenter() {
     // State
     const [collectionsPromise, setCollectionsPromise] = React.useState(null);
-    const [collectionsData, _setCollectionsData, collectionsError, _setCollectionsError] = usePromise(collectionsPromise);
+    const promiseStatesAndSetters = usePromise(collectionsPromise);
+    const collectionsData = promiseStatesAndSetters[0];
+    const collectionsError = promiseStatesAndSetters[2];
 
     // Effects
     React.useEffect(() => {
@@ -18,18 +25,14 @@ function HomePresenter(props) {
     React.useEffect(() => {
         // check for valid format when collectionsData is set
         if (collectionsData) checkCollectionsForRequiredFormat(collectionsData);
-    }, [collectionsData])
-
-    // Props
-    const {
-        model, // Model keeping application state
-    } = props;
+    }, [collectionsData]);
 
     const exampleQuote = "Maybe something by Huey Lewis?";
     const exampleRecentlyViewedImages = [
         {
             id: "18644717",
-            url: "https://images.collection.cooperhewitt.org/12030_fa96a748c7d67fd9_b.jpg",
+            url:
+                "https://images.collection.cooperhewitt.org/12030_fa96a748c7d67fd9_b.jpg",
             liked: false,
         },
     ];
@@ -39,12 +42,14 @@ function HomePresenter(props) {
             images: [
                 {
                     id: "18645651",
-                    url: "https://images.collection.cooperhewitt.org/223579_b1374fa355c2fb77_b.jpg",
+                    url:
+                        "https://images.collection.cooperhewitt.org/223579_b1374fa355c2fb77_b.jpg",
                     liked: true,
                 },
                 {
                     id: "2318797273",
-                    url: "https://images.collection.cooperhewitt.org/348036_88262b84479c8e3d_b.jpg",
+                    url:
+                        "https://images.collection.cooperhewitt.org/348036_88262b84479c8e3d_b.jpg",
                     liked: true,
                 },
             ],
@@ -60,23 +65,34 @@ function HomePresenter(props) {
         />
     );
 
-    return promiseNoData(collectionsPromise, collectionsData, collectionsError) || homeView;
+    return (
+        promiseNoData(collectionsPromise, collectionsData, collectionsError) ||
+        homeView
+    );
 }
 
-// Utility functions
-// Properties check for collections prop
+// -- Utility functions --
+/**
+ * Properties check for collections prop
+ * @param {Collection[]} collections - Array of collection objects
+ */
 function checkCollectionsForRequiredFormat(collections) {
-    collections.map(collection => {
-        if (!collection.hasOwnProperty("title")) throw Error("Each collection needs a title.");
-        if (!collection.hasOwnProperty("images")) throw Error("Each collection needs an image property.");
-        collection.images.map(image => {
-            if (!image.hasOwnProperty("id")) throw Error("Each image in collection needs an ID.");
-            if (!image.hasOwnProperty("url")) throw Error("Each image in collection needs a URL.");
-            if (!image.hasOwnProperty("liked")) throw Error("Each image in collection needs a liked.");
+    collections.map((collection) => {
+        if (!collection.hasOwnProperty("title"))
+            throw Error("Each collection needs a title.");
+        if (!collection.hasOwnProperty("images"))
+            throw Error("Each collection needs an image property.");
+        collection.images.map((image) => {
+            if (!image.hasOwnProperty("id"))
+                throw Error("Each image in collection needs an ID.");
+            if (!image.hasOwnProperty("url"))
+                throw Error("Each image in collection needs a URL.");
+            if (!image.hasOwnProperty("liked"))
+                throw Error("Each image in collection needs a liked.");
             return true;
         });
         return true;
-    })
+    });
 }
 
 export default HomePresenter;

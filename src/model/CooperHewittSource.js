@@ -1,4 +1,5 @@
 import { mockCollections } from "./MockData";
+import "../types";
 
 /** Object to interact with the Cooper Hewitt API */
 const CooperHewittSource = {
@@ -34,20 +35,5 @@ const CooperHewittSource = {
         return collectionsPromise;
     },
 };
-
-/**
- * @typedef Collection
- * @property {string} title - Name or title of the collection
- * @property {string} id - Unique identifier of the collection
- * @property {number} numberOfImages - The number of images or objects within the collection/exhibition
- * @property {Image[]} images - Array of objects or images within the collection
- */
-
-/**
- * @typedef Image
- * @property {string} id - Unique identifier of the object or image
- * @property {string} url - Image url for the object
- * @property {bool} liked - Flag whether the user has liked this image
- */
 
 export default CooperHewittSource;
