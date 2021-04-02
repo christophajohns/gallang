@@ -1,5 +1,3 @@
-import "./Image.css";
-import { Button } from "react-bootstrap";
 import {
     Download,
     GripVertical,
@@ -7,6 +5,12 @@ import {
     HeartFill,
 } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
+import {
+    StyledGripButton,
+    StyledImage,
+    StyledIconButton,
+    StyledImageButtons,
+} from "./style";
 
 /**
  * Single object (image) showcase including like and download buttons
@@ -24,20 +28,20 @@ function Image(props) {
     } = props;
 
     return (
-        <div className="Image">
+        <StyledImage>
             <img id={id} src={src} alt={id} />
-            <Button variant="link" className="grip-button">
+            <StyledGripButton variant="link">
                 <GripVertical />
-            </Button>
-            <div className="Image__buttons">
-                <Button variant="link" className="like-button">
+            </StyledGripButton>
+            <StyledImageButtons>
+                <StyledIconButton variant="link">
                     {liked ? <HeartFill /> : <Heart />}
-                </Button>
-                <Button variant="link" className="download-button">
+                </StyledIconButton>
+                <StyledIconButton variant="link">
                     <Download />
-                </Button>
-            </div>
-        </div>
+                </StyledIconButton>
+            </StyledImageButtons>
+        </StyledImage>
     );
 }
 
