@@ -1,7 +1,3 @@
-import LoginPresenter from './LoginPresenter';
-import HomePresenter from './HomePresenter';
+import HomePresenter from "./HomePresenter";
 
-export {
-    LoginPresenter,
-    HomePresenter,
-};
+export { HomePresenter };
