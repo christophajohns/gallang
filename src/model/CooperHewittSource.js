@@ -11,6 +11,7 @@ const CooperHewittSource = {
      *      {
                 title: "Botanical Expressions",
                 id: "1159161457",
+                numberOfImages: 127,
                 images: [
                     {
                         id: "18411435",
