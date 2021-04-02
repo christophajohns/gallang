@@ -156,3 +156,6 @@ export const mockCollections = [
         ],
     },
 ];
+
+/** Example quote */
+export const mockQuote = "Maybe something by Huey Lewis?";
