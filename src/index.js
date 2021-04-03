@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import GallangModel from './GallangModel';
+import { GallangModel } from './model';
 
 const myModel = new GallangModel();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App model={myModel} />
-  </React.StrictMode>,
+  <App model={myModel} />,
   document.getElementById('root')
 );
 

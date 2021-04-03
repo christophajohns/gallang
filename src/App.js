@@ -1,6 +1,6 @@
 import './App.css';
 import {
-  LoginPresenter,
+  HomePresenter,
 } from './presenters';
 
 function App(props) {
@@ -10,7 +10,7 @@ function App(props) {
 
   return (
     <div className="App">
-      <LoginPresenter model={model} />
+      <HomePresenter model={model} />
     </div>
   );
 }
