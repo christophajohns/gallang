@@ -11,15 +11,22 @@ import "../types";
  */
 function HomePresenter() {
     // State
+    // Collections
     const [collectionsPromise, setCollectionsPromise] = React.useState(null);
-    const promiseStatesAndSetters = usePromise(collectionsPromise);
-    const collectionsData = promiseStatesAndSetters[0];
-    const collectionsError = promiseStatesAndSetters[2];
+    const collectionsPromiseStatesAndSetters = usePromise(collectionsPromise);
+    const collectionsData = collectionsPromiseStatesAndSetters[0];
+    const collectionsError = collectionsPromiseStatesAndSetters[2];
+    // Quote
+    const [quotePromise, setQuotePromise] = React.useState(null);
+    const quotePromiseStatesAndSetters = usePromise(quotePromise);
+    const quoteData = quotePromiseStatesAndSetters[0];
+    const quoteError = quotePromiseStatesAndSetters[2];
 
     // Effects
     React.useEffect(() => {
         // only at creation
         setCollectionsPromise(CooperHewittSource.getCollections(10));
+        setQuotePromise(CooperHewittSource.getQuote());
     }, []);
 
     React.useEffect(() => {
@@ -27,7 +34,6 @@ function HomePresenter() {
         if (collectionsData) checkCollectionsForRequiredFormat(collectionsData);
     }, [collectionsData]);
 
-    const exampleQuote = "Maybe something by Huey Lewis?";
     const exampleRecentlyViewedImages = [
         {
             id: "18644717",
@@ -59,7 +65,7 @@ function HomePresenter() {
     const homeView = (
         <HomeView
             collections={collectionsData}
-            quote={exampleQuote}
+            quote={quoteData}
             recentlyViewedImages={exampleRecentlyViewedImages}
             recommendations={exampleRecommendations}
         />
@@ -67,6 +73,7 @@ function HomePresenter() {
 
     return (
         promiseNoData(collectionsPromise, collectionsData, collectionsError) ||
+        promiseNoData(quotePromise, quoteData, quoteError) ||
         homeView
     );
 }

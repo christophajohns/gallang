@@ -1,4 +1,4 @@
-import { mockCollections } from "./MockData";
+import { mockCollections, mockQuote } from "./MockData";
 import "../types";
 
 /** Object to interact with the Cooper Hewitt API */
@@ -33,6 +33,20 @@ const CooperHewittSource = {
             }, 300);
         });
         return collectionsPromise;
+    },
+    /**
+     * Get a random Micah Walter quote from the API.
+     * @returns {Promise<string>} - Promise object holding a string representing the quote content
+     * @example "Maybe something by Huey Lewis?"
+     */
+    getQuote() {
+        const quotePromise = new Promise((resolve, reject) => {
+            // Placeholder for actual API call
+            setTimeout(() => {
+                resolve(mockQuote); // Return example quote for now
+            }, 300);
+        });
+        return quotePromise;
     },
 };
 
