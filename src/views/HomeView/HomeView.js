@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { HorizontalGrid } from "../../components";
+import { HorizontalGridPresenter } from "../../presenters";
 import CollectionCarousel from "./CollectionCarousel";
 import Quote from "./Quote";
 import "../../types";
@@ -28,7 +28,7 @@ function HomeView(props) {
             <CollectionCarousel collections={firstFourCollections} />
             <main>
                 {recentlyViewedImages ? (
-                    <HorizontalGrid
+                    <HorizontalGridPresenter
                         title="Recently viewed"
                         images={recentlyViewedImages}
                     />
@@ -37,7 +37,7 @@ function HomeView(props) {
                 )}
                 {collections
                     ? collectionsAfterFour.map((collection) => (
-                          <HorizontalGrid
+                          <HorizontalGridPresenter
                               key={collection.title}
                               title={collection.title}
                               images={collection.images}
@@ -47,7 +47,7 @@ function HomeView(props) {
                 {quote ? <Quote quoteText={quote} /> : ""}
                 {recommendations
                     ? recommendations.map((recommendation) => (
-                          <HorizontalGrid
+                          <HorizontalGridPresenter
                               key={recommendation.title}
                               title={recommendation.title}
                               description="Recommended for you."
