@@ -1,3 +1,4 @@
 import HomePresenter from "./HomePresenter";
+import HorizontalGridPresenter from "./HorizontalGridPresenter";
 
-export { HomePresenter };
+export { HomePresenter, HorizontalGridPresenter };

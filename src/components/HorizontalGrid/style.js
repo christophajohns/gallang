@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import { ChevronLeft } from "react-bootstrap-icons";
+import { Button } from "react-bootstrap";
 
 export const StyledHorizontalGrid = styled.section`
     margin-bottom: 64px;
+    scroll-behavior: smooth;
 `;
 
 export const StyledTitleAndDescription = styled.div`
@@ -25,12 +26,16 @@ export const StyledPreviousNextChevrons = styled.div`
     float: right;
 `;
 
-export const StyledChevronLeft = styled(ChevronLeft)`
-    margin-right: 16px;
-`;
-
 export const StyledImages = styled.div`
     display: flex;
     flex-wrap: nowrap;
-    overflow-x: auto;
+    overflow-x: scroll;
+`;
+
+export const StyledIconButton = styled(Button)`
+    color: black;
+
+    &:hover {
+        color: grey;
+    }
 `;
