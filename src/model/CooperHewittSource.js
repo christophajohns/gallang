@@ -52,6 +52,7 @@ const CooperHewittSource = {
     /**
 	 * Get object collections from the API.
 	 * @param {number} numberOfCollections - Number of collections to be fetched (default: 10; compare items per page in API Docs)
+     * @param {boolean} useMockData - (optional) Flag whether to use the API or local mock data instead (default: true for now)
 	 * @returns {Promise<Collection[]>} - Promise object holding an array of collections
 	 * @example
 	 *  [
@@ -71,14 +72,10 @@ const CooperHewittSource = {
             …
         ]
 	*/
-    getCollections(numberOfCollections = 10) {
-        const collectionsPromise = new Promise((resolve, reject) => {
-            // Placeholder for actual API call
-            setTimeout(() => {
-                resolve(mockCollections); // Return example array for now
-            }, 300);
-        });
-        return collectionsPromise;
+    async getCollections(numberOfCollections = 10, useMockData = true) {
+        // Return mock data instead of making API call if useMockData flag is set to true
+        const collections = await getMockData("collections");
+        return collections;
     },
     /**
      * Get a random Micah Walter quote from the API.
