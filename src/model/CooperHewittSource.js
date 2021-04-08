@@ -12,10 +12,10 @@ const CooperHewittSource = {
     async apiCall(params) {
         const filteredParams = filterTruthyKeys(params);
         const urlSearchParams = new URLSearchParams({
-            access_token: process.env.ACCESS_TOKEN,
+            access_token: process.env.REACT_APP_ACCESS_TOKEN,
             ...filteredParams,
         });
-        const url = `${process.env.BASE_URL}?${urlSearchParams}`;
+        const url = `${process.env.REACT_APP_BASE_URL}?${urlSearchParams}`;
         try {
             const response = await fetch(url, {
                 method: "GET",
