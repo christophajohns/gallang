@@ -1,15 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import dotenv from "dotenv";
 
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { GallangModel } from "./model";
-
-// Configure dotenv (keys and values available at process.env)
-dotenv.config();
 
 // Initialize model
 const myModel = new GallangModel();
