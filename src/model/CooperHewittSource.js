@@ -10,7 +10,7 @@ const CooperHewittSource = {
      * @returns {Promise<Object>} - Promise holding the response as a JavaScript object
      */
     async apiCall(params) {
-        const filteredParams = filterTruthyKeys(params);
+        const filteredParams = filterTruthyKeys(params); // remove unused (falsy) keys from params to avoid errors
         const urlSearchParams = new URLSearchParams({
             access_token: process.env.REACT_APP_ACCESS_TOKEN,
             ...filteredParams,
@@ -82,17 +82,24 @@ const CooperHewittSource = {
     },
     /**
      * Get a random Micah Walter quote from the API.
+     * @param {boolean} useMockData - (optional) Flag whether to use the API or local mock data instead (default: false)
      * @returns {Promise<string>} - Promise object holding a string representing the quote content
      * @example "Maybe something by Huey Lewis?"
      */
-    getQuote() {
-        const quotePromise = new Promise((resolve, reject) => {
-            // Placeholder for actual API call
-            setTimeout(() => {
-                resolve(mockQuote); // Return example quote for now
-            }, 300);
-        });
-        return quotePromise;
+    async getQuote(useMockData = false) {
+        // Return mock data instead of making API call if useMockData flag is set to true
+        if (useMockData) {
+            const quote = await getMockData("quote");
+            return quote;
+        }
+
+        // Otherwise make API call
+        const params = {
+            method: "cooperhewitt.labs.whatWouldMicahSay",
+        };
+        const data = await CooperHewittSource.apiCall(params);
+
+        return data.micah.says;
     },
 };
 
