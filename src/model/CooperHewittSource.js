@@ -110,4 +110,32 @@ function filterTruthyKeys(object) {
     return filteredObject;
 }
 
+/**
+ * Asynchronously fetch mock data for API calls
+ * @param {"quote"|"collections"} type - Type of mock data to return
+ * @returns Mock data representing a response from the Cooper Hewitt API
+ */
+async function getMockData(type) {
+    let mockData;
+    switch (type) {
+        case "quote":
+            mockData = mockQuote;
+            break;
+
+        case "collections":
+            mockData = mockCollections;
+            break;
+
+        default:
+            break;
+    }
+    const promise = new Promise((resolve, reject) => {
+        // Placeholder for actual API call
+        setTimeout(() => {
+            resolve(mockData);
+        }, 300);
+    });
+    return promise;
+}
+
 export default CooperHewittSource;
