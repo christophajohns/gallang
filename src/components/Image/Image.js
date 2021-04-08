@@ -18,13 +18,16 @@ import {
  * @param {string} props.id - Unique identifier of the object and thereby image
  * @param {string} props.src - Image url for the object image
  * @param {boolean} props.liked - Flag whether the user has liked this image
- * @returns
+ * @param {Function} props.onClickLikeButton - Function to be called when a user clicks the heart (like) button
+ * @param {Function} props.onClickUnlikeButton - Function to be called when a user clicks the filled heart (unlike) button
  */
 function Image(props) {
     const {
         id, // Specify the title to placed on top of the image grid
         src, // Array of image data to be rendered in a horizontal grid
         liked, // Boolean specifying whether the current user has already liked that image
+        onClickLikeButton, // Function to be called when a user clicks the heart (like) button
+        onClickUnlikeButton, // Function to be called when a user clicks the filled heart (unlike) button
     } = props;
 
     return (
@@ -34,7 +37,10 @@ function Image(props) {
                 <GripVertical />
             </StyledGripButton>
             <StyledImageButtons>
-                <StyledIconButton variant="link">
+                <StyledIconButton
+                    variant="link"
+                    onClick={liked ? onClickUnlikeButton : onClickLikeButton}
+                >
                     {liked ? <HeartFill /> : <Heart />}
                 </StyledIconButton>
                 <StyledIconButton variant="link">
@@ -52,6 +58,10 @@ Image.propTypes = {
     src: PropTypes.string.isRequired,
     /** Flag whether the user has liked this image */
     liked: PropTypes.bool.isRequired,
+    /** Function to be called when a user clicks the heart (like) button */
+    onClickLikeButton: PropTypes.func.isRequired,
+    /** Function to be called when a user clicks the filled heart (unlike) button */
+    onClickUnlikeButton: PropTypes.func.isRequired,
 };
 
 export default Image;
