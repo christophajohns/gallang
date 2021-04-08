@@ -11,6 +11,7 @@ import "../../types";
  * @param {Image[]} props.recentlyViewedImages - Array of image data to be rendered in a HorizontalGrid
  * @param {string} props.quote - String representing a quote
  * @param {Recommendation[]} props.recommendations - Array of recommended images and the recommendation basis (e.g. medium, period, designer)
+ * @param {GallangModel} props.model - The model holding the application state
  */
 function HomeView(props) {
     const {
@@ -18,6 +19,7 @@ function HomeView(props) {
         recentlyViewedImages, // Array of image data to be rendered in a HorizontalGrid
         quote, // String representing a quote
         recommendations, // Array of recommended images and the recommendation basis (e.g. medium, period, designer)
+        model, // The model holding the application state
     } = props;
 
     const firstFourCollections = collections.slice(0, 4);
@@ -31,6 +33,7 @@ function HomeView(props) {
                     <HorizontalGridPresenter
                         title="Recently viewed"
                         images={recentlyViewedImages}
+                        model={model}
                     />
                 ) : (
                     ""
@@ -41,6 +44,7 @@ function HomeView(props) {
                               key={collection.title}
                               title={collection.title}
                               images={collection.images}
+                              model={model}
                           />
                       ))
                     : ""}
@@ -52,6 +56,7 @@ function HomeView(props) {
                               title={recommendation.title}
                               description="Recommended for you."
                               images={recommendation.images}
+                              model={model}
                           />
                       ))
                     : ""}
@@ -110,6 +115,12 @@ HomeView.propTypes = {
             ),
         })
     ),
+    /** The model holding the application state */
+    model: PropTypes.shape({
+        likedImageIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
+        likeImage: PropTypes.func.isRequired,
+        unlikeImage: PropTypes.func.isRequired,
+    }),
 };
 
 export default HomeView;

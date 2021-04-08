@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
  * @param {string} props.href - (optional) URL to link to on click on the title
  * @param {string} props.description - (optional) Further description for the grid
  * @param {Image[]} props.images - Array of images to render in the grid
+ * @param {GallangModel} props.model - The model holding the application state
  * @returns HorizontalGrid component
  */
 function HorizontalGridPresenter(props) {
@@ -17,6 +18,7 @@ function HorizontalGridPresenter(props) {
         href, // (optional) URL to link to when clicking the title
         description, // (optional) Short (preferably less than 60 characters) description for the images in the grid
         images, // Array of image data to be rendered in a horizontal grid
+        model, // The model holding the application state
     } = props;
 
     const imagesRef = React.useRef(null); // used to enable the automatic scrolling behaviour
@@ -40,6 +42,7 @@ function HorizontalGridPresenter(props) {
             href={href}
             description={description}
             images={images}
+            model={model}
         />
     );
 }
@@ -55,6 +58,11 @@ HorizontalGridPresenter.propTypes = {
             liked: PropTypes.bool.isRequired,
         })
     ),
+    model: PropTypes.shape({
+        likedImageIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
+        likeImage: PropTypes.func.isRequired,
+        unlikeImage: PropTypes.func.isRequired,
+    }),
 };
 
 /**

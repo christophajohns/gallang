@@ -7,9 +7,14 @@ import "../types";
 
 /**
  * Presenter for the Home/Browse view
+ * @param {GallangModel} props.model - The model holding the application state
  * @returns Loading spinner or HomeView
  */
-function HomePresenter() {
+function HomePresenter(props) {
+    const {
+        model, // The model holding the application state
+    } = props;
+
     // State
     // Collections
     const [collectionsPromise, setCollectionsPromise] = React.useState(null);
@@ -68,6 +73,7 @@ function HomePresenter() {
             quote={quoteData}
             recentlyViewedImages={exampleRecentlyViewedImages}
             recommendations={exampleRecommendations}
+            model={model}
         />
     );
 
