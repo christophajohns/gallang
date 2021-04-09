@@ -9,7 +9,7 @@ function App(props) {
 
     return (
         <div className="App">
-            <ResultsView />
+            <ResultsView contentType={"search results"} />
             {/* <HomePresenter model={model} /> */}
         </div>
     );
