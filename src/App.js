@@ -1,6 +1,6 @@
 import "./App.css";
 import { HomePresenter } from "./presenters";
-import { SearchResultsView } from "./views";
+import { CollectionView } from "./views";
 import { mockCollections } from "./model/MockData";
 
 function App(props) {
@@ -10,9 +10,9 @@ function App(props) {
 
     return (
         <div className="App">
-            <SearchResultsView
-                searchQuery={"Some search query"}
-                numberOfResults={137}
+            <CollectionView
+                title={mockCollections[0].title}
+                numberOfObjects={mockCollections[0].numberOfImages}
                 images={mockCollections[0].images}
                 model={model}
             />
