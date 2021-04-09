@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { ResultsView } from "../views";
+import { ResultsPresenter } from "../presenters";
 import { imageType } from "../types";
 import { modelType as imagePresenterModelType } from "../presenters/ImagePresenter";
 
@@ -15,7 +15,7 @@ import { modelType as imagePresenterModelType } from "../presenters/ImagePresent
 function LikedContentView(props) {
     const { numberOfObjects, images, model } = props;
     return (
-        <ResultsView
+        <ResultsPresenter
             title="Liked Content"
             numberOfObjects={numberOfObjects}
             images={images}

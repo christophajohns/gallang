@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { ResultsView } from "../views";
+import { ResultsPresenter } from "../presenters";
 import { imageType } from "../types";
 import { modelType as imagePresenterModelType } from "../presenters/ImagePresenter";
 
@@ -17,7 +17,7 @@ import { modelType as imagePresenterModelType } from "../presenters/ImagePresent
 function SearchResultsView(props) {
     const { searchQuery, numberOfResults, images, model } = props;
     return (
-        <ResultsView
+        <ResultsPresenter
             contentType="search results"
             title={`"${searchQuery}"`}
             numberOfObjects={numberOfResults}

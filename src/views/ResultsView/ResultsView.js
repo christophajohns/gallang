@@ -18,7 +18,8 @@ import {
  * @param {string} props.title - Title or name for the results
  * @param {number} props.numberOfObjects - Total number of objects to be displayed
  * @param {Image[]} props.images - Array of images to render in the grid
- * @param {boolean} [props.allowDownloadAll=true] - Flag whether to have a "Download all" button on the page (default: true)
+ * @param {boolean} props.allowDownloadAll - Flag whether to have a "Download all" button on the page
+ * @param {Function} [props.onClickDownloadAll=() => {}] - Function to be called when the button is clicked (default: empty function)
  * @param {Object} props.model - Model keeping the application state
  * @param {Function} props.model.likeImage - Function to like an image by its ID
  * @param {Function} props.model.unlikeImage - Function to unlike an image by its ID
@@ -30,7 +31,8 @@ function ResultsView(props) {
         title,
         numberOfObjects,
         images,
-        allowDownloadAll = true,
+        allowDownloadAll,
+        onClickDownloadAll = () => {},
         model,
     } = props;
     return (
@@ -47,28 +49,44 @@ function ResultsView(props) {
                     <TitleH3>{title}</TitleH3>
                     <div>{numberOfObjects} Objects</div>
                 </TitleAndDescriptionDiv>
-                {allowDownloadAll ? <DownloadAllButton /> : ""}
+                {allowDownloadAll ? (
+                    <DownloadAllButton
+                        onClickDownloadAll={onClickDownloadAll}
+                    />
+                ) : (
+                    ""
+                )}
             </TopDiv>
             <VerticalGrid images={images} model={model} />
         </main>
     );
 }
 
-function DownloadAllButton() {
+/**
+ * Button saying "Download all"
+ * @param {Object} props - Properties to be passed to the component
+ * @param {Function} props.onClickDownloadAll - Function to be called when the button is clicked
+ * @returns Download all button
+ */
+function DownloadAllButton(props) {
+    const { onClickDownloadAll } = props;
+
     return (
-        <StyledButton variant="outline-dark">
+        <StyledButton variant="outline-dark" onClick={onClickDownloadAll}>
             <Download />
             Download all
         </StyledButton>
     );
 }
 
-ResultsView.propTypes = {
+export const resultsViewPropTypes = {
     contentType: PropTypes.string,
     title: PropTypes.string.isRequired,
     numberOfObjects: PropTypes.number.isRequired,
     images: PropTypes.arrayOf(imageType).isRequired,
     model: imagePresenterModelType.isRequired,
 };
+
+ResultsView.propTypes = resultsViewPropTypes;
 
 export default ResultsView;

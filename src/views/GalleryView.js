@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { ResultsView } from "../views";
+import { ResultsPresenter } from "../presenters";
 import { imageType } from "../types";
 import { modelType as imagePresenterModelType } from "../presenters/ImagePresenter";
 
@@ -16,7 +16,7 @@ import { modelType as imagePresenterModelType } from "../presenters/ImagePresent
 function GalleryView(props) {
     const { title, numberOfObjects, images, model } = props;
     return (
-        <ResultsView
+        <ResultsPresenter
             contentType="gallery"
             title={title}
             numberOfObjects={numberOfObjects}
