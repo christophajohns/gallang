@@ -22,6 +22,7 @@ function SearchResultsView(props) {
             title={`"${searchQuery}"`}
             numberOfObjects={numberOfResults}
             images={images}
+            allowDownloadAll={false}
             model={model}
         />
     );

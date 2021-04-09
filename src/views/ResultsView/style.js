@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { Button } from "react-bootstrap";
 
 export const TitleAndDescriptionDiv = styled.div`
-    margin-bottom: 32px;
+    display: inline-block;
     color: grey;
 `;
 
@@ -12,4 +13,17 @@ export const TitleH3 = styled.h3`
 
 export const ContentTypeDiv = styled.div`
     font-weight: bold;
+`;
+
+export const StyledButton = styled(Button)`
+    & > svg {
+        margin-right: 8px;
+    }
+`;
+
+export const TopDiv = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 32px;
 `;
