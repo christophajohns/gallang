@@ -34,14 +34,16 @@ function ImagePresenter(props) {
     );
 }
 
+export const modelType = PropTypes.shape({
+    likeImage: PropTypes.func.isRequired,
+    unlikeImage: PropTypes.func.isRequired,
+    likedImageIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
+});
+
 ImagePresenter.propTypes = {
     id: PropTypes.string.isRequired,
     src: PropTypes.string,
-    model: PropTypes.shape({
-        likeImage: PropTypes.func.isRequired,
-        unlikeImage: PropTypes.func.isRequired,
-        likedImageIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
-    }),
+    model: modelType.isRequired,
 };
 
 export default ImagePresenter;
