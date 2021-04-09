@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { VerticalGrid } from "../../components";
 
 /**
  * View component for the Results (e.g. search results, collection, liked content, gallery) page content.
@@ -22,7 +23,7 @@ function ResultsView(props) {
                 </h3>
                 <div>{numberOfObjects} Objects</div>
             </div>
-            <div>Here should be a results view.</div>
+            <VerticalGrid />
         </main>
     );
 }
