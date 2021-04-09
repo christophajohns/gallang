@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import { ResultsPresenter } from "../presenters";
 import { imageType } from "../types";
-import { modelType as imagePresenterModelType } from "../presenters/ImagePresenter";
+import { modelType as imagePresenterModelType } from "./ImagePresenter";
 
 /**
- * View component for the liked content page content.
+ * Presenter for the liked content page content.
  * @param {number} props.numberOfObjects - Total number of objects in the gallery to be displayed
  * @param {Image[]} props.images - Array of images to render in the grid
  * @param {Object} props.model - Model keeping the application state
@@ -12,7 +12,7 @@ import { modelType as imagePresenterModelType } from "../presenters/ImagePresent
  * @param {Function} props.model.unlikeImage - Function to unlike an image by its ID
  * @param {string[]} props.model.likedImageIDs - Array of image IDs the user has liked already
  */
-function LikedContentView(props) {
+function LikedContentPresenter(props) {
     const { numberOfObjects, images, model } = props;
     return (
         <ResultsPresenter
@@ -24,10 +24,10 @@ function LikedContentView(props) {
     );
 }
 
-LikedContentView.propTypes = {
+LikedContentPresenter.propTypes = {
     numberOfObjects: PropTypes.number.isRequired,
     images: PropTypes.arrayOf(imageType).isRequired,
     model: imagePresenterModelType.isRequired,
 };
 
-export default LikedContentView;
+export default LikedContentPresenter;

@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import { ResultsPresenter } from "../presenters";
 import { imageType } from "../types";
-import { modelType as imagePresenterModelType } from "../presenters/ImagePresenter";
+import { modelType as imagePresenterModelType } from "./ImagePresenter";
 
 /**
- * View component for the search results page content.
+ * Presenter for the search results page content.
  * @param {Object} props - Properties to be passed to the view
  * @param {string} props.searchQuery - Search query string the user has searched for
  * @param {number} props.numberOfResults - Total number of results returned
@@ -14,7 +14,7 @@ import { modelType as imagePresenterModelType } from "../presenters/ImagePresent
  * @param {Function} props.model.unlikeImage - Function to unlike an image by its ID
  * @param {string[]} props.model.likedImageIDs - Array of image IDs the user has liked already
  */
-function SearchResultsView(props) {
+function SearchResultsPresenter(props) {
     const { searchQuery, numberOfResults, images, model } = props;
     return (
         <ResultsPresenter
@@ -28,11 +28,11 @@ function SearchResultsView(props) {
     );
 }
 
-SearchResultsView.propTypes = {
+SearchResultsPresenter.propTypes = {
     searchQuery: PropTypes.string.isRequired,
     numberOfResults: PropTypes.number.isRequired,
     images: PropTypes.arrayOf(imageType).isRequired,
     model: imagePresenterModelType.isRequired,
 };
 
-export default SearchResultsView;
+export default SearchResultsPresenter;

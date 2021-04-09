@@ -1,5 +1,5 @@
 import "./App.css";
-import { LikedContentView } from "./views";
+import { LikedContentPresenter } from "./presenters";
 import { mockCollections } from "./model/MockData";
 
 function App(props) {
@@ -9,7 +9,7 @@ function App(props) {
 
     return (
         <div className="App">
-            <LikedContentView
+            <LikedContentPresenter
                 numberOfObjects={26}
                 images={mockCollections[0].images}
                 model={model}
