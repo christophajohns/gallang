@@ -4,11 +4,39 @@ import "../types";
 class GallangModel {
     /**
      * @constructor
-     * @param {string} currentUser - ID for currently logged in user (placeholder)
+     * @param {string[]} likedImageIDs - Array of image IDs the user has liked
      */
-    constructor(currentUser = null) {
+    constructor(likedImageIDs = []) {
         this.observers = [];
-        this.currentUser = currentUser;
+        this.likedImageIDs = likedImageIDs;
+    }
+
+    /**
+     * Adds an image ID to the likedImageIDs array in the model and notifies the observers
+     * @param {string} imageID - Identifier of the image to like
+     */
+    likeImage(imageID) {
+        const imageAlreadyLiked = this.likedImageIDs.includes(imageID);
+        if (!imageAlreadyLiked) {
+            this.likedImageIDs = [...this.likedImageIDs, imageID];
+            this.notifyObservers();
+        }
+    }
+
+    /**
+     * Removes an image ID to the likedImageIDs array in the model and notifies the observers
+     * @param {string} imageID - Identifier of the image to unlike
+     */
+    unlikeImage(imageID) {
+        const imageIsLiked = this.likedImageIDs.find(
+            (currentImageID) => currentImageID === imageID
+        );
+        if (imageIsLiked) {
+            this.likedImageIDs = this.likedImageIDs.filter(
+                (currentImageID) => currentImageID !== imageID
+            );
+            this.notifyObservers();
+        }
     }
 
     /**

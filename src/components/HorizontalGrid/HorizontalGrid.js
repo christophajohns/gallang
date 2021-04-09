@@ -1,4 +1,4 @@
-import { Image } from "../../components";
+import { ImagePresenter } from "../../presenters";
 import { ChevronRight, ChevronLeft } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
 import {
@@ -21,6 +21,7 @@ import {
  * @param {React.MutableRefObject} props.imagesRef - Reference to be used on the scrollable HTML element displaying the images
  * @param {Function} props.onClickPreviousButton - Function to be called when the previous button (chevron left) is clicked
  * @param {Function} props.onClickNextButton - Function to be called when the next button (chevron right) is clicked
+ * @param {GallangModel} props.model - The model holding the application state
  * @returns
  */
 function HorizontalGrid(props) {
@@ -32,6 +33,7 @@ function HorizontalGrid(props) {
         imagesRef, // Reference to be used on the scrollable HTML element displaying the images
         onClickPreviousButton, // Function to be called when the previous button (chevron left) is clicked
         onClickNextButton, // Function to be called when the next button (chevron right) is clicked
+        model, // The model holding the application state
     } = props;
 
     return (
@@ -62,11 +64,11 @@ function HorizontalGrid(props) {
             </div>
             <StyledImages ref={imagesRef}>
                 {images.map((image) => (
-                    <Image
+                    <ImagePresenter
                         key={image.id}
                         id={image.id}
                         src={image.url}
-                        liked={image.liked}
+                        model={model}
                     />
                 ))}
             </StyledImages>
@@ -82,7 +84,6 @@ HorizontalGrid.propTypes = {
         PropTypes.shape({
             id: PropTypes.string.isRequired,
             url: PropTypes.string.isRequired,
-            liked: PropTypes.bool.isRequired,
         })
     ).isRequired,
     imagesRef: PropTypes.oneOfType([
@@ -93,13 +94,17 @@ HorizontalGrid.propTypes = {
     ]).isRequired,
     onClickPreviousButton: PropTypes.func.isRequired,
     onClickNextButton: PropTypes.func.isRequired,
+    model: PropTypes.shape({
+        likedImageIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
+        likeImage: PropTypes.func.isRequired,
+        unlikeImage: PropTypes.func.isRequired,
+    }),
 };
 
 /**
  * @typedef Image
  * @property {string} id - Unique identifier of the object or image
  * @property {string} url - Image url for the object
- * @property {bool} liked - Flag whether the user has liked this image
  */
 
 export default HorizontalGrid;
