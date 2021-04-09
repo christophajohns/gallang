@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { imageType } from "../../types";
 import { ImagePresenter } from "../../presenters";
 import { modelType as imagePresenterModelType } from "../../presenters/ImagePresenter";
+import { VerticalGridDiv } from "./style";
 
 /**
  * Vertical (scrollable) grid of images to showcase objects in a the results view
@@ -16,11 +17,16 @@ function VerticalGrid(props) {
     const { images, model } = props;
 
     return (
-        <div>
+        <VerticalGridDiv>
             {images.map((image) => (
-                <ImagePresenter id={image.id} src={image.url} model={model} />
+                <ImagePresenter
+                    key={image.id}
+                    id={image.id}
+                    src={image.url}
+                    model={model}
+                />
             ))}
-        </div>
+        </VerticalGridDiv>
     );
 }
 
