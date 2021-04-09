@@ -7,7 +7,7 @@ import { TitleAndDescriptionDiv, TitleH3, ContentTypeDiv } from "./style";
 /**
  * View component for the Results (e.g. search results, collection, liked content, gallery) page content.
  * @param {Object} props - Properties to be passed to the view
- * @param {"collection" | "gallery" | "liked content"} [props.contentType] - Type of results to display
+ * @param {string} [props.contentType] - Type of results to display
  * @param {string} props.title - Title or name for the results
  * @param {number} props.numberOfObjects - Total number of objects to be displayed
  * @param {Image[]} props.images - Array of images to render in the grid
@@ -21,7 +21,7 @@ function ResultsView(props) {
     return (
         <main className="ResultsView">
             <TitleAndDescriptionDiv>
-                {contentType && contentType !== "liked content" ? (
+                {contentType ? (
                     <ContentTypeDiv>{contentType.toUpperCase()}</ContentTypeDiv>
                 ) : (
                     ""
