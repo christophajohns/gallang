@@ -7,9 +7,9 @@ import { TitleAndDescriptionDiv, TitleH3, ContentTypeDiv } from "./style";
 /**
  * View component for the Results (e.g. search results, collection, liked content, gallery) page content.
  * @param {Object} props - Properties to be passed to the view
- * @param {"collection" | "search results" | "gallery" | "liked content"} [props.contentType] - Type of results to display
+ * @param {"collection" | "gallery" | "liked content"} [props.contentType] - Type of results to display
  * @param {string} props.title - Title or name for the results
- * @param {number} props.numberOfObjects - Total number of results returned and displayed
+ * @param {number} props.numberOfObjects - Total number of objects to be displayed
  * @param {Image[]} props.images - Array of images to render in the grid
  * @param {Object} props.model - Model keeping the application state
  * @param {Function} props.model.likeImage - Function to like an image by its ID
@@ -26,9 +26,7 @@ function ResultsView(props) {
                 ) : (
                     ""
                 )}
-                <TitleH3>
-                    {contentType === "search results" ? `"${title}"` : title}
-                </TitleH3>
+                <TitleH3>{title}</TitleH3>
                 <div>{numberOfObjects} Objects</div>
             </TitleAndDescriptionDiv>
             <VerticalGrid images={images} model={model} />
