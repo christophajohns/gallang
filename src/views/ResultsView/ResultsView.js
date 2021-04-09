@@ -56,7 +56,7 @@ function ResultsView(props) {
 
 function DownloadAllButton() {
     return (
-        <StyledButton variant="light">
+        <StyledButton variant="outline-dark">
             <Download />
             Download all
         </StyledButton>
