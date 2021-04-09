@@ -4,7 +4,7 @@ import { imageType } from "../types";
 import { modelType as imagePresenterModelType } from "../presenters/ImagePresenter";
 
 /**
- * View component for the Results (e.g. search results, collection, liked content, gallery) page content.
+ * View component for the search results page content.
  * @param {Object} props - Properties to be passed to the view
  * @param {string} props.searchQuery - Search query string the user has searched for
  * @param {number} props.numberOfResults - Total number of results returned
