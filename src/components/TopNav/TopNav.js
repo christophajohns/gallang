@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { NavBar, Logo, ControlsDiv, Account } from "./style";
+import { NavBar, Logo, ControlsDiv, Account, NavSearch } from "./style";
 
 /**
  * Navigation bar for the whole application
@@ -13,7 +13,7 @@ function TopNav(props) {
         <NavBar sticky={false}>
             <Logo href="/">Gallang</Logo>
             <ControlsDiv>
-                <div>Search bar</div>
+                <NavSearch />
                 <Account>{userInitial.toUpperCase()}</Account>
             </ControlsDiv>
         </NavBar>

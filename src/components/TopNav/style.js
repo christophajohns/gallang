@@ -34,13 +34,11 @@ export const Logo = styled.a`
 export const ControlsDiv = styled.div`
     grid-area: right;
     justify-self: end;
+    display: flex;
+    align-items: center;
 
     & > div {
         display: inline-block;
-
-        &:first-of-type {
-            margin-right: 16px;
-        }
     }
 `;
 
@@ -53,4 +51,28 @@ export const Account = styled.div`
     cursor: pointer;
     line-height: 32px;
     font-weight: bold;
+`;
+
+export const NavSearch = styled.input.attrs({
+    placeholder: "Search",
+})`
+    height: 32px;
+    padding: 0 32px 0 16px;
+    margin-right: 16px;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    background: whitesmoke;
+    font-size: 12px;
+    &::placeholder {
+        color: grey;
+    }
+    &:focus {
+        width: 256px;
+        transition: width 0.1s ease-in-out;
+    }
+    &:not(:focus) {
+        width: 128px;
+        transition: width 0.1s ease-in-out;
+    }
 `;
