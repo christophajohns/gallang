@@ -5,7 +5,7 @@ import { TopNav } from "../components";
  * @returns TopNav component
  */
 function TopNavPresenter() {
-    return <TopNav />;
+    return <TopNav userInitial="G" />;
 }
 
 export default TopNavPresenter;

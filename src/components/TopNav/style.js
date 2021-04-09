@@ -43,3 +43,14 @@ export const ControlsDiv = styled.div`
         }
     }
 `;
+
+export const Account = styled.div`
+    background-color: whitesmoke;
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+    line-height: 32px;
+    font-weight: bold;
+`;
