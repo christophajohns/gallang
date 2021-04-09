@@ -12,6 +12,7 @@ function App(props) {
             <ResultsView
                 contentType={"search results"}
                 title={"Some search query"}
+                numberOfObjects={137}
             />
             {/* <HomePresenter model={model} /> */}
         </div>
