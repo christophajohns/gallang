@@ -26,7 +26,8 @@ function ResultsPresenter(props) {
     } = props;
 
     function downloadAllImagesAsZipFile() {
-        console.log("download all requested");
+        const imageURLs = images.map((image) => image.url);
+        console.log({ message: "download all requested", imageURLs });
     }
 
     return (
