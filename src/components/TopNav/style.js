@@ -36,10 +36,6 @@ export const ControlsDiv = styled.div`
     justify-self: end;
     display: flex;
     align-items: center;
-
-    & > div {
-        display: inline-block;
-    }
 `;
 
 export const Account = styled.div`
@@ -51,6 +47,7 @@ export const Account = styled.div`
     cursor: pointer;
     line-height: 32px;
     font-weight: bold;
+    grid-area: top;
 `;
 
 export const NavSearch = styled.input.attrs({
@@ -75,4 +72,35 @@ export const NavSearch = styled.input.attrs({
         width: 128px;
         transition: width 0.1s ease-in-out;
     }
+`;
+
+export const AccountOptions = styled.ul`
+    position: absolute;
+    background-color: whitesmoke;
+    padding: 8px 16px;
+    border-radius: 8px;
+    grid-area: bottom;
+    z-index: 99;
+    margin-top: 8px;
+    right: 16px;
+    top: 40px;
+`;
+
+export const AccountOption = styled.li`
+    text-align: right;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+`;
+
+export const AccountWrapper = styled.div`
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: "top" "bottom";
+    justify-content: end;
+`;
+
+export const UserName = styled(AccountOption)`
+    color: grey;
 `;
