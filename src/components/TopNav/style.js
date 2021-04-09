@@ -17,7 +17,7 @@ export const NavBar = styled.nav`
     `}
 `;
 
-export const Brand = styled.a`
+export const Logo = styled.a`
     grid-area: center;
     justify-self: center;
     font-family: Georgia, "Times New Roman", Times, serif;
