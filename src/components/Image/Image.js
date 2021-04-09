@@ -18,6 +18,7 @@ import {
  * @param {string} props.id - Unique identifier of the object and thereby image
  * @param {string} props.src - Image url for the object image
  * @param {boolean} props.liked - Flag whether the user has liked this image
+ * @param {Function} props.onClickDownloadButton - Function to be called when a user clicks on the download button
  * @param {Function} props.onClickLikeButton - Function to be called when a user clicks the heart (like) button
  * @param {Function} props.onClickUnlikeButton - Function to be called when a user clicks the filled heart (unlike) button
  */
@@ -28,6 +29,7 @@ function Image(props) {
         liked, // Boolean specifying whether the current user has already liked that image
         onClickLikeButton, // Function to be called when a user clicks the heart (like) button
         onClickUnlikeButton, // Function to be called when a user clicks the filled heart (unlike) button
+        onClickDownloadButton, // Function to be called when a user clicks on the download button
     } = props;
 
     return (
@@ -43,7 +45,10 @@ function Image(props) {
                 >
                     {liked ? <HeartFill /> : <Heart />}
                 </StyledIconButton>
-                <StyledIconButton variant="link">
+                <StyledIconButton
+                    variant="link"
+                    onClick={onClickDownloadButton}
+                >
                     <Download />
                 </StyledIconButton>
             </StyledImageButtons>
@@ -62,6 +67,8 @@ Image.propTypes = {
     onClickLikeButton: PropTypes.func.isRequired,
     /** Function to be called when a user clicks the filled heart (unlike) button */
     onClickUnlikeButton: PropTypes.func.isRequired,
+    /** Function to be called when a user clicks on the download button */
+    onClickDownloadButton: PropTypes.func.isRequired,
 };
 
 export default Image;

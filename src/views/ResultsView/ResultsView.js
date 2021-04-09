@@ -19,7 +19,7 @@ import {
  * @param {number} props.numberOfObjects - Total number of objects to be displayed
  * @param {Image[]} props.images - Array of images to render in the grid
  * @param {boolean} props.allowDownloadAll - Flag whether to have a "Download all" button on the page
- * @param {Function} [props.onClickDownloadAll=() => {}] - Function to be called when the button is clicked (default: empty function)
+ * @param {Function} [props.onClickDownloadAll] - Function to be called when the button is clicked (default: empty function)
  * @param {Object} props.model - Model keeping the application state
  * @param {Function} props.model.likeImage - Function to like an image by its ID
  * @param {Function} props.model.unlikeImage - Function to unlike an image by its ID
@@ -32,7 +32,7 @@ function ResultsView(props) {
         numberOfObjects,
         images,
         allowDownloadAll,
-        onClickDownloadAll = () => {},
+        onClickDownloadAll,
         model,
     } = props;
     return (

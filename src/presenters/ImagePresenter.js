@@ -23,10 +23,15 @@ function ImagePresenter(props) {
 
     const likedImageIDs = useModelProperty(model, "likedImageIDs");
 
+    function downloadImage(imageID) {
+        console.log("download requested for image ID", imageID);
+    }
+
     return (
         <Image
             onClickLikeButton={(e) => model.likeImage(id)}
             onClickUnlikeButton={(e) => model.unlikeImage(id)}
+            onClickDownloadButton={(e) => downloadImage(id)}
             id={id}
             src={src}
             liked={likedImageIDs.includes(id)}
