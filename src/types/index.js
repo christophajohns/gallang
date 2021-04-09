@@ -1,1 +1,2 @@
-export * from "./JSDocTypes";
+export * from "./jsDocTypes";
+export * from "./propTypes";
