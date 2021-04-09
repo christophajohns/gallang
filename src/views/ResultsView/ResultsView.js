@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { VerticalGrid } from "../../components";
 import { imageType } from "../../types";
 import { modelType as imagePresenterModelType } from "../../presenters/ImagePresenter";
+import { TitleAndDescriptionDiv, TitleH3, ContentTypeDiv } from "./style";
 
 /**
  * View component for the Results (e.g. search results, collection, liked content, gallery) page content.
@@ -19,17 +20,17 @@ function ResultsView(props) {
     const { contentType, title, numberOfObjects, images, model } = props;
     return (
         <main className="ResultsView">
-            <div>
+            <TitleAndDescriptionDiv>
                 {contentType && contentType !== "liked content" ? (
-                    <div>{contentType.toUpperCase()}</div>
+                    <ContentTypeDiv>{contentType.toUpperCase()}</ContentTypeDiv>
                 ) : (
                     ""
                 )}
-                <h3>
+                <TitleH3>
                     {contentType === "search results" ? `"${title}"` : title}
-                </h3>
+                </TitleH3>
                 <div>{numberOfObjects} Objects</div>
-            </div>
+            </TitleAndDescriptionDiv>
             <VerticalGrid images={images} model={model} />
         </main>
     );
