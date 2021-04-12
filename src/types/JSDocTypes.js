@@ -1,3 +1,5 @@
+// This file only serves to hold the JSDoc type definitions in one place.
+
 /**
  * @typedef Collection
  * @property {string} title - Name or title of the collection
