@@ -1,3 +1,4 @@
 import HomeView from "./HomeView";
+import ResultsView from "./ResultsView";
 
-export { HomeView };
+export { HomeView, ResultsView };
