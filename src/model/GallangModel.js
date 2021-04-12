@@ -50,6 +50,7 @@ class GallangModel {
         let recommendation = {
             title: null,
             images: null,
+            basisImageID: null,
         };
 
         // Check whether user has liked images as basis for the recommendation
@@ -78,6 +79,7 @@ class GallangModel {
             }
             hasFoundRecommendation =
                 currentRecommendation.title &&
+                currentRecommendation.basisImageID &&
                 currentRecommendation.images &&
                 currentRecommendation.images.length > 0;
             if (hasFoundRecommendation) recommendation = currentRecommendation;
@@ -88,6 +90,8 @@ class GallangModel {
         if (!recommendation.title) Error("Recommendation has invalid title.");
         if (!recommendation.images || recommendation.images.length === 0)
             Error("Recommendation has no images.");
+        if (!recommendation.basisImageID)
+            Error("Recommendation has no basis image ID.");
 
         return recommendation;
     }
@@ -103,6 +107,7 @@ class GallangModel {
         const recommendation = {
             title: null,
             images: null,
+            basisImageID: imageID,
         };
         let searchParams = {}; // parameters for the search API call
 
