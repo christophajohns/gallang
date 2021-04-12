@@ -112,11 +112,11 @@ class GallangModel {
         // Set search parameters and recommendation title
         if (recommendationBasis === "type") {
             searchParams.type_id = imageInfo.type_id;
-            recommendation.title = toTitleCase(imageInfo.type);
+            recommendation.title = imageInfo.type;
         }
         if (recommendationBasis === "medium") {
             searchParams.media_id = imageInfo.media_id;
-            recommendation.title = imageInfo.medium;
+            recommendation.title = toTitleCase(imageInfo.medium);
         }
         if (recommendationBasis === "person") {
             if (imageInfo.participants.length === 0)
