@@ -1,4 +1,5 @@
 import "../types";
+import CooperHewittSource from "./CooperHewittSource";
 
 /** Class for keeping application state */
 class GallangModel {
@@ -45,10 +46,39 @@ class GallangModel {
      * @returns {Recommendation} - Collection of recommended images including title/recommendation basis (e.g. medium, period, person)
      */
     getRecommendation(type = "medium") {
+        // Initialize recommendation object
         const recommendation = {
-            title: "Example medium",
-            images: [],
+            title: null,
+            images: null,
         };
+
+        // Get info for first liked image
+        if (this.likedImageIDs.length === 0)
+            throw Error(
+                "User has not liked any images yet, cannot compute recommendation."
+            );
+        const firstLikedImageID = this.likedImageIDs[0]; // Get first liked image's ID
+        const imageInfo = CooperHewittSource.getObjectInfo(firstLikedImageID); // Get info (incl. medium info) about that image ID
+
+        // Get recommendation data
+        if (type === "medium") {
+            const mediumOfFirstLikedImage = imageInfo.medium; // Get medium of first liked image
+            const mediaIDOfFirstLikedImage = imageInfo.media_id; // Get media ID of first liked image
+            const recommendedObjects = CooperHewittSource.searchObjects({
+                media_id: mediaIDOfFirstLikedImage,
+            }); // Search Cooper Hewitt collection for objects with that media ID
+            recommendation.title = mediumOfFirstLikedImage; // Set title of recommendation to medium
+            const recommendedImages = recommendedObjects.map((object) => ({
+                id: object.id,
+                url: object.images[0].b.url, // Big version of first image for object
+            })); // Transform objects into expected image array
+            recommendation.images = recommendedImages; // Set images of recommendation to this image array
+        }
+
+        // Check recommendation object for valid data
+        if (!recommendation.title) Error("Recommendation has invalid title.");
+        if (!recommendation.images) Error("Recommendation has no images.");
+
         return recommendation;
     }
 
