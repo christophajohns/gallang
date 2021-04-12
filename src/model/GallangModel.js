@@ -40,6 +40,19 @@ class GallangModel {
     }
 
     /**
+     * Evaluates a user's liked content to return recommended images including title/recommendation basis (e.g. medium, period, person)
+     * @param {"medium" | "person" | "period"} - Basis/type of the recommendation
+     * @returns {Recommendation} - Collection of recommended images including title/recommendation basis (e.g. medium, period, person)
+     */
+    getRecommendation(type = "medium") {
+        const recommendation = {
+            title: "Example medium",
+            images: [],
+        };
+        return recommendation;
+    }
+
+    /**
      * Adds an observer calling the specified callback function
      * @param {observerCallback} callback - Callback function to be called when observed value changes
      */
