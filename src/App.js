@@ -1,6 +1,10 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
-import { HomePresenter, SearchResultsPresenter } from "./presenters";
+import {
+    DetailsPresenter,
+    HomePresenter,
+    SearchResultsPresenter,
+} from "./presenters";
 
 function App(props) {
     const {
@@ -13,6 +17,9 @@ function App(props) {
                 <Switch>
                     <Route path="/search">
                         <SearchResultsPresenter />
+                    </Route>
+                    <Route path="/details/:imageID">
+                        <DetailsPresenter />
                     </Route>
                     <Route path="/">
                         <HomePresenter model={model} />
