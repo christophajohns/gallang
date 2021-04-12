@@ -7,9 +7,8 @@ import {
     SearchResultsPresenter,
     TopNavPresenter, 
     LikedContentPresenter,
-    SearchResultsPresenter,
     CollectionPresenter,
-    GalleryPresenter
+    GalleryPresenter,
 } from "./presenters";
 import { mockCollections } from "./model/MockData";
 
