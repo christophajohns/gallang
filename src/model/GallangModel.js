@@ -69,7 +69,7 @@ class GallangModel {
             const currentImageID = this.likedImageIDs[imageIDIndex];
             let currentRecommendation;
             try {
-                currentRecommendation = this.getRecommendationByImageID(
+                currentRecommendation = await this.getRecommendationByImageID(
                     currentImageID,
                     recommendationBasis
                 );
@@ -77,9 +77,9 @@ class GallangModel {
                 // console.error(error);
             }
             hasFoundRecommendation =
-                recommendation.title &&
-                recommendation.images &&
-                recommendation.images.length > 0;
+                currentRecommendation.title &&
+                currentRecommendation.images &&
+                currentRecommendation.images.length > 0;
             if (hasFoundRecommendation) recommendation = currentRecommendation;
             imageIDIndex++; // Increase index to inspect next image ID on next iteration
         }
@@ -116,14 +116,14 @@ class GallangModel {
         }
         if (recommendationBasis === "medium") {
             searchParams.media_id = imageInfo.media_id;
-            recommendation.title = toTitleCase(imageInfo.medium);
+            recommendation.title = imageInfo.medium;
         }
         if (recommendationBasis === "person") {
             if (imageInfo.participants.length === 0)
                 Error("Object has no participants to base recommendation off.");
             const person = imageInfo.participants[0];
             searchParams.person_id = person.person_id;
-            recommendation.title = toTitleCase(person.person_name);
+            recommendation.title = person.person_name;
         }
 
         // Check recommendation object for valid data
