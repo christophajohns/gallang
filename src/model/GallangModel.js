@@ -45,29 +45,44 @@ class GallangModel {
      * @param {"type" | "medium" | "person" | "period"} recommendationBasis - Basis/type of the recommendation
      * @returns {Recommendation} - Collection of recommended images including title/recommendation basis (e.g. medium, period, person)
      */
-    async getRecommendation(recommendationBasis = "type") {
+    async getRecommendation(recommendationBasis = "medium") {
         // Initialize recommendation object
         let recommendation = {
             title: null,
             images: null,
         };
 
-        // Get info for first liked image
-        if (this.likedImageIDs.length === 0)
+        // Check whether user has liked images as basis for the recommendation
+        if (this.likedImageIDs.length === 0) {
             throw Error(
                 "User has not liked any images yet, cannot compute recommendation."
             );
-        const firstLikedImageID = this.likedImageIDs[0]; // Get first liked image's ID
+        }
 
-        // Get recommendation data
-        recommendation = this.getRecommendationByImageID(
-            firstLikedImageID,
-            recommendationBasis
-        );
+        // Loop through liked images until a recommendation was computed
+        let hasFoundRecommendation = false;
+        let imageIDIndex = 0;
+        while (
+            !hasFoundRecommendation &&
+            imageIDIndex < this.likedImageIDs.length
+        ) {
+            const currentImageID = this.likedImageIDs[imageIDIndex];
+            const currentRecommendation = this.getRecommendationByImageID(
+                currentImageID,
+                recommendationBasis
+            );
+            hasFoundRecommendation =
+                recommendation.title &&
+                recommendation.images &&
+                recommendation.images.length > 0;
+            if (hasFoundRecommendation) recommendation = currentRecommendation;
+            imageIDIndex++; // Increase index to inspect next image ID on next iteration
+        }
 
         // Check recommendation object for valid data
         if (!recommendation.title) Error("Recommendation has invalid title.");
-        if (!recommendation.images) Error("Recommendation has no images.");
+        if (!recommendation.images || recommendation.images.length === 0)
+            Error("Recommendation has no images.");
 
         return recommendation;
     }
@@ -113,7 +128,8 @@ class GallangModel {
 
         // Check recommendation object for valid data
         if (!recommendation.title) Error("Recommendation has invalid title.");
-        if (!recommendation.images) Error("Recommendation has no images.");
+        if (!recommendation.images || recommendation.images.length === 0)
+            Error("Recommendation has no images.");
 
         return recommendation;
     }
