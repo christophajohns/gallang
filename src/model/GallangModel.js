@@ -42,10 +42,10 @@ class GallangModel {
 
     /**
      * Evaluates a user's liked content to return recommended images including title/recommendation basis (e.g. medium, period, person)
-     * @param {"type" | "medium" | "person" | "period"} recommendationBasis - Basis/type of the recommendation
+     * @param {"type" | "medium" | "person"} [recommendationBasis] - Basis/type of the recommendation
      * @returns {Recommendation} - Collection of recommended images including title/recommendation basis (e.g. medium, period, person)
      */
-    async getRecommendation(recommendationBasis = "person") {
+    async getRecommendation(recommendationBasis = "type") {
         // Initialize recommendation object
         let recommendation = {
             title: null,
@@ -95,7 +95,7 @@ class GallangModel {
     /**
      *
      * @param {string} imageID - Unique identifier of the image (object in the Cooper Hewitt collection)
-     * @param {"type" | "medium" | "person" | "period"} recommendationBasis - Basis/type of the recommendation
+     * @param {"type" | "medium" | "person"} [recommendationBasis] - Basis/type of the recommendation
      * @returns {Recommendation} - Collection of recommended images including title/recommendation basis (e.g. medium, period, person)
      */
     async getRecommendationByImageID(imageID, recommendationBasis = "type") {
@@ -126,6 +126,9 @@ class GallangModel {
             recommendation.title = toTitleCase(person.person_name);
         }
 
+        // Check recommendation object for valid data
+        if (!recommendation.title) Error("Recommendation has invalid title.");
+
         // Get recommended images
         const recommendedObjects = await CooperHewittSource.searchObjects(
             searchParams
@@ -139,7 +142,6 @@ class GallangModel {
         recommendation.images = recommendedImages;
 
         // Check recommendation object for valid data
-        if (!recommendation.title) Error("Recommendation has invalid title.");
         if (!recommendation.images || recommendation.images.length === 0)
             Error("Recommendation has no images.");
 
