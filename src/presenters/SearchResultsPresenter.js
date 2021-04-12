@@ -1,5 +1,6 @@
 
 import PropTypes from "prop-types";
+import { useURLSearchParams } from "./customHooks";
 import { ResultsPresenter } from "../presenters";
 import { imageType } from "../types";
 import { modelType as imagePresenterModelType } from "./ImagePresenter";
@@ -14,9 +15,17 @@ import { modelType as imagePresenterModelType } from "./ImagePresenter";
  * @param {Function} props.model.likeImage - Function to like an image by its ID
  * @param {Function} props.model.unlikeImage - Function to unlike an image by its ID
  * @param {string[]} props.model.likedImageIDs - Array of image IDs the user has liked already
- */
+ * @param {URLSearchParams} urlSearchParams - URLSearchParams object representing the parameters passed via the URL 
+*/
 function SearchResultsPresenter(props) {
     const { searchQuery, numberOfResults, images, model } = props;
+    const urlSearchParams = useURLSearchParams();
+    function logQueryStringFromURL(urlSearchParams) {
+        const query = urlSearchParams.get("query");
+        console.log({ query });
+    }
+
+    logQueryStringFromURL(urlSearchParams);
     return (
         <ResultsPresenter
             contentType="search results"
