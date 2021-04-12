@@ -1,12 +1,12 @@
 /**
- * Placeholder results view to test routing (would be used to render search results, collection, gallery, liked content)
+ * Placeholder details view to test routing (would be used to render the full page version of an image and its info)
  * @param {Object} props - Properties passed to the view
- * @param {"search results" | "gallery" | "collection" | "liked content"} contentType - Type of results to display
+ * @param {string} props.imageID - Unique identifier of the image or object displayed
  */
-function ResultsView(props) {
-    const { contentType } = props;
+function DetailsView(props) {
+    const { imageID } = props;
 
-    return <div>This would be the results view for {contentType}</div>;
+    return <div>This would be the details view for image ID: {imageID}.</div>;
 }
 
-export default ResultsView;
+export default DetailsView;

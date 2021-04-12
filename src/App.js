@@ -18,9 +18,11 @@ function App(props) {
                     <Route path="/search">
                         <SearchResultsPresenter />
                     </Route>
+
                     <Route path="/details/:imageID">
                         <DetailsPresenter />
                     </Route>
+
                     <Route path="/">
                         <HomePresenter model={model} />
                     </Route>
