@@ -45,7 +45,7 @@ class GallangModel {
      * @param {"type" | "medium" | "person" | "period"} recommendationBasis - Basis/type of the recommendation
      * @returns {Recommendation} - Collection of recommended images including title/recommendation basis (e.g. medium, period, person)
      */
-    async getRecommendation(recommendationBasis = "medium") {
+    async getRecommendation(recommendationBasis = "person") {
         // Initialize recommendation object
         let recommendation = {
             title: null,
@@ -67,10 +67,15 @@ class GallangModel {
             imageIDIndex < this.likedImageIDs.length
         ) {
             const currentImageID = this.likedImageIDs[imageIDIndex];
-            const currentRecommendation = this.getRecommendationByImageID(
-                currentImageID,
-                recommendationBasis
-            );
+            let currentRecommendation;
+            try {
+                currentRecommendation = this.getRecommendationByImageID(
+                    currentImageID,
+                    recommendationBasis
+                );
+            } catch (error) {
+                // console.error(error);
+            }
             hasFoundRecommendation =
                 recommendation.title &&
                 recommendation.images &&
@@ -110,8 +115,15 @@ class GallangModel {
             recommendation.title = toTitleCase(imageInfo.type);
         }
         if (recommendationBasis === "medium") {
-            searchParams.type_id = imageInfo.media_id;
+            searchParams.media_id = imageInfo.media_id;
             recommendation.title = toTitleCase(imageInfo.medium);
+        }
+        if (recommendationBasis === "person") {
+            if (imageInfo.participants.length === 0)
+                Error("Object has no participants to base recommendation off.");
+            const person = imageInfo.participants[0];
+            searchParams.person_id = person.person_id;
+            recommendation.title = toTitleCase(person.person_name);
         }
 
         // Get recommended images
