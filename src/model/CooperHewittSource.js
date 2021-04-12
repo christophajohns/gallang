@@ -58,6 +58,7 @@ const CooperHewittSource = {
     async getObjectInfo(objectID) {
         const params = {
             method: "cooperhewitt.objects.getInfo",
+            object_id: objectID,
             extras: "images,colors,exhibitions,metrics,participants,tombstone", // Return the maximum of information from the API
         };
         const data = await CooperHewittSource.apiCall(params);
