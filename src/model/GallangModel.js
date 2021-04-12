@@ -45,7 +45,7 @@ class GallangModel {
      * @param {"medium" | "person" | "period"} - Basis/type of the recommendation
      * @returns {Recommendation} - Collection of recommended images including title/recommendation basis (e.g. medium, period, person)
      */
-    getRecommendation(type = "medium") {
+    async getRecommendation(type = "medium") {
         // Initialize recommendation object
         const recommendation = {
             title: null,
@@ -58,13 +58,15 @@ class GallangModel {
                 "User has not liked any images yet, cannot compute recommendation."
             );
         const firstLikedImageID = this.likedImageIDs[0]; // Get first liked image's ID
-        const imageInfo = CooperHewittSource.getObjectInfo(firstLikedImageID); // Get info (incl. medium info) about that image ID
+        const imageInfo = await CooperHewittSource.getObjectInfo(
+            firstLikedImageID
+        ); // Get info (incl. medium info) about that image ID
 
         // Get recommendation data
         if (type === "medium") {
             const mediumOfFirstLikedImage = imageInfo.medium; // Get medium of first liked image
             const mediaIDOfFirstLikedImage = imageInfo.media_id; // Get media ID of first liked image
-            const recommendedObjects = CooperHewittSource.searchObjects({
+            const recommendedObjects = await CooperHewittSource.searchObjects({
                 media_id: mediaIDOfFirstLikedImage,
             }); // Search Cooper Hewitt collection for objects with that media ID
             recommendation.title = mediumOfFirstLikedImage; // Set title of recommendation to medium
