@@ -45,7 +45,12 @@ function Image(props) {
                 >
                     {liked ? <HeartFill /> : <Heart />}
                 </StyledIconButton>
-                <StyledIconButton variant="link">
+                <StyledIconButton
+                    variant="link"
+                    download={true}
+                    href={src}
+                    target="_blank"
+                >
                     <Download />
                 </StyledIconButton>
             </StyledImageButtons>

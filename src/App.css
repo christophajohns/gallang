@@ -1,6 +1,10 @@
 main {
-  padding-top: 64px;
-  padding-right: 0px;
-  padding-left: 64px;
-  padding-bottom: 64px;
+    padding-top: 64px;
+    padding-right: 0px;
+    padding-left: 64px;
+    padding-bottom: 64px;
+}
+
+.hidden {
+    display: none;
 }

@@ -9,7 +9,10 @@ import PropTypes from "prop-types";
  * @param {Object} props
  * @param {string} props.id - Unique identifier of the object and thereby image
  * @param {string} props.src - Image url for the object image
- * @param {GallangModel} props.model - The model holding the application state
+ * @param {Object} props.model - The model holding the application state
+ * @param {Function} props.model.likeImage - Function to like an image by its ID
+ * @param {Function} props.model.unlikeImage - Function to unlike an image by its ID
+ * @param {string[]} props.model.likedImageIDs - Array of image IDs the user has liked already
  * @returns Image component
  */
 function ImagePresenter(props) {
@@ -43,13 +46,16 @@ function ImagePresenter(props) {
     );
 }
 
+export const modelType = PropTypes.shape({
+    likeImage: PropTypes.func.isRequired,
+    unlikeImage: PropTypes.func.isRequired,
+    likedImageIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
+});
+
 ImagePresenter.propTypes = {
     id: PropTypes.string.isRequired,
     src: PropTypes.string,
-    model: PropTypes.shape({
-        likeImage: PropTypes.func.isRequired,
-        unlikeImage: PropTypes.func.isRequired,
-    }),
+    model: modelType.isRequired,
 };
 
 export default ImagePresenter;
