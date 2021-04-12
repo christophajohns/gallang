@@ -10,6 +10,7 @@ import {
     StyledIconButton,
     StyledImages,
 } from "./style";
+import { imageType } from "../../types";
 
 /**
  * Horizontal (scrollable) grid of images to showcase objects in a collection or gallery
@@ -80,12 +81,7 @@ HorizontalGrid.propTypes = {
     title: PropTypes.string.isRequired,
     href: PropTypes.string,
     description: PropTypes.string,
-    images: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            url: PropTypes.string.isRequired,
-        })
-    ).isRequired,
+    images: PropTypes.arrayOf(imageType).isRequired,
     imagesRef: PropTypes.oneOfType([
         // Either a function
         PropTypes.func,
@@ -100,11 +96,5 @@ HorizontalGrid.propTypes = {
         unlikeImage: PropTypes.func.isRequired,
     }),
 };
-
-/**
- * @typedef Image
- * @property {string} id - Unique identifier of the object or image
- * @property {string} url - Image url for the object
- */
 
 export default HorizontalGrid;
