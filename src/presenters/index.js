@@ -8,6 +8,7 @@ import ResultsPresenter from "./ResultsPresenter";
 import CollectionPresenter from "./CollectionPresenter";
 import GalleryPresenter from "./GalleryPresenter";
 import LikedContentPresenter from "./LikedContentPresenter";
+import LoginPresenter from "./LoginPresenter";
 
 export {
     HomePresenter,
@@ -20,4 +21,5 @@ export {
     CollectionPresenter,
     GalleryPresenter,
     LikedContentPresenter,
+    LoginPresenter,
 };
