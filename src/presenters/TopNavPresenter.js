@@ -12,10 +12,19 @@ function TopNavPresenter() {
     const [query, setQuery] = React.useState("");
     const browserHistory = useHistory(); // used to manually navigate/redirect to the details of a specific image
 
+    /** Redirect user to search results page using the query specified in the search input field */
+    const redirectToSearchResults = React.useCallback(() => {
+        // useCallback memoizes the function making it available to pass to useEffect
+        if (query === "") return;
+        const urlSearchParams = new URLSearchParams({ query });
+        const redirectURL = "/search?" + urlSearchParams;
+        browserHistory.push(redirectURL);
+    }, [query, browserHistory]);
+
     // Make a (debounced) search request when query changes
     React.useEffect(() => {
         if (query !== "") redirectToSearchResults();
-    }, [query]);
+    }, [query, redirectToSearchResults]);
 
     /** Show the account options for the currently logged in user (e.g. My account, Logout) */
     function showAccountOptions() {
@@ -25,14 +34,6 @@ function TopNavPresenter() {
     /** Hide the account options for the currently logged in user (e.g. My account, Logout) */
     function hideAccountOptions() {
         accountOptionsRef.current.classList.add("hidden");
-    }
-
-    /** Redirect user to search results page using the query specified in the search input field */
-    function redirectToSearchResults() {
-        if (query === "") return;
-        const urlSearchParams = new URLSearchParams({ query });
-        const redirectURL = "/search?" + urlSearchParams;
-        browserHistory.push(redirectURL);
     }
 
     /** Redirect user to search results page using the query specified in the search input field */
