@@ -17,11 +17,11 @@ function App(props) {
     } = props;
 
     return (
-        <div className="App">
-            <TopNavPresenter model={model} />
-            <Router>
+        <Router>
+            <div className="App">
+                <TopNavPresenter model={model} />
                 <Switch>
-                    <Route path="/search">
+                    <Route path="/search" exact={true}>
                         <SearchResultsPresenter model={model} />
                     </Route>
 
@@ -29,16 +29,16 @@ function App(props) {
                         <LikedContentPresenter model={model} />
                     </Route>
 
-                    <Route path="/details/:imageID">
+                    <Route path="/details/:imageID" exact={true}>
                         <DetailsPresenter model={model} />
                     </Route>
 
-                    <Route path="/">
+                    <Route path="/" exact={true}>
                         <HomePresenter model={model} />
                     </Route>
                 </Switch>
-            </Router>
-        </div>
+            </div>
+        </Router>
     );
 }
 
