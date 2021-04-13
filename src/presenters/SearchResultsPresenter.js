@@ -1,10 +1,8 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { useURLSearchParams } from "./customHooks";
 import { ResultsPresenter } from "../presenters";
 import { promiseNoData } from "../components";
 import { usePromise } from "./customHooks";
-import { imageType } from "../types";
 import { modelType as imagePresenterModelType } from "./ImagePresenter";
 import { CooperHewittSource } from "../model";
 
@@ -27,7 +25,7 @@ function SearchResultsPresenter(props) {
     const searchError = searchPromiseStatesAndSetters[2];
 
     // Custom Hooks
-    const urlSearchParams = useURLSearchParams();
+    const urlSearchParams = useURLSearchParams(); // Get URL search parameters (e.g. query=somesearchquery) from URL
     const query = urlSearchParams.get("query");
 
     // Effects
@@ -36,12 +34,6 @@ function SearchResultsPresenter(props) {
         setSearchPromise(CooperHewittSource.searchObjects({ query }));
     }, [query]);
 
-    function logQueryStringFromURL(urlSearchParams) {
-        const query = urlSearchParams.get("query");
-        console.log({ query });
-    }
-
-    logQueryStringFromURL(urlSearchParams);
     return (
         promiseNoData(searchPromise, searchData, searchError) || (
             <ResultsPresenter
@@ -60,9 +52,6 @@ function SearchResultsPresenter(props) {
 }
 
 SearchResultsPresenter.propTypes = {
-    searchQuery: PropTypes.string.isRequired,
-    numberOfResults: PropTypes.number.isRequired,
-    images: PropTypes.arrayOf(imageType).isRequired,
     model: imagePresenterModelType.isRequired,
 };
 
