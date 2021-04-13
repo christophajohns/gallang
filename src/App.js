@@ -5,6 +5,7 @@ import {
     HomePresenter,
     SearchResultsPresenter,
     TopNavPresenter,
+    LoginPresenter,
     LikedContentPresenter,
     CollectionPresenter,
     GalleryPresenter,
@@ -17,10 +18,14 @@ function App(props) {
     } = props;
 
     return (
-        <div className="App">
-            <TopNavPresenter model={model} />
-            <Router>
+        <Router>
+            <div className="App">
+                <TopNavPresenter model={model} />
                 <Switch>
+                    <Route path="/login">
+                        <LoginPresenter />
+                    </Route>
+
                     <Route path="/search">
                         <SearchResultsPresenter model={model} />
                     </Route>
@@ -33,8 +38,8 @@ function App(props) {
                         <HomePresenter model={model} />
                     </Route>
                 </Switch>
-            </Router>
-        </div>
+            </div>
+        </Router>
     );
 }
 
