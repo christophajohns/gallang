@@ -12,6 +12,8 @@ It was created by Christoph A. Johns, Yuqi Liu, Annetta Sillard, and Xiaoying Su
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Before you start, make sure you have locally created .env with the API KEY and ACCESS TOKEN for the Cooper Hewitt API. See [.env.example](https://gits-15.sys.kth.se/cajohns/gallang/blob/cj_routing/.env.example) for file template. 
+
 In the project directory, you can run:
 
 ```
