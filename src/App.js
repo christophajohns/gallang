@@ -1,5 +1,5 @@
 import "./App.css";
-import { LikedContentPresenter } from "./presenters";
+import { LikedContentPresenter, HomePresenter } from "./presenters";
 import { mockCollections } from "./model/MockData";
 
 function App(props) {
