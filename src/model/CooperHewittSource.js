@@ -16,7 +16,6 @@ const CooperHewittSource = {
             ...filteredParams,
         });
         const url = `${process.env.REACT_APP_BASE_URL}?${urlSearchParams}`;
-        console.log({url});
         try {
             const response = await fetch(url, {
                 method: "GET",
@@ -50,6 +49,20 @@ const CooperHewittSource = {
         };
         const data = await CooperHewittSource.apiCall(params);
         return data.objects;
+    },
+    /**
+     * Search objects in the Cooper Hewitt collection (see https://collection.cooperhewitt.org/api/methods/cooperhewitt.search.objects)
+     * @param {Object} searchParams - Object representing of the search parameters
+     * @param {string} ObjectID.query - Search for selected object by clicking the image.
+     * @returns {Promise<CooperHewittObject>} - One object holding the information of the searched object.
+     */
+    async getObjectInfo(ObjectID) {
+        const params = {
+            method: "cooperhewitt.objects.getInfo",
+            object_id: ObjectID,
+        };
+        const data = await CooperHewittSource.apiCall(params);
+        return data.object;
     },
     /**
 	 * Get object collections from the API.

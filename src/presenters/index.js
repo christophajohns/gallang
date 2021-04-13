@@ -1,4 +1,5 @@
 import HomePresenter from "./HomePresenter";
+import DetailsPresenter from "./DetailsPresenter";
 import HorizontalGridPresenter from "./HorizontalGridPresenter";
 import ImagePresenter from "./ImagePresenter";
 import ResultsPresenter from "./ResultsPresenter";
@@ -9,6 +10,7 @@ import LikedContentPresenter from "./LikedContentPresenter";
 
 export {
     HomePresenter,
+    DetailsPresenter,
     HorizontalGridPresenter,
     ImagePresenter,
     ResultsPresenter,

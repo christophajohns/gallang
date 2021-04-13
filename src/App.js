@@ -23,17 +23,16 @@ function App(props) {
             <Router>
                 <div className="App">
                     <Switch>
-
-                        <Route path="/">
+                        <Route path="/" exact>
                             <HomePresenter model={model} />
                         </Route>
                         
                         <Route path="/search">
-                            <SearchResultsPresenter />
+                            <SearchResultsPresenter model={model}/>
                         </Route>
 
                         <Route path="/details/:imageID">
-                            <DetailsPresenter />
+                            <DetailsPresenter model={model}/>
                         </Route>
                     </Switch>
                 </div>

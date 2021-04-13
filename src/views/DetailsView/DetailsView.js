@@ -7,9 +7,24 @@
 
 function DetailsView(props) {
 
-    const { imageID } = props;
+    // const { imageID } = props;
+    const {
+        id,
+        images,
+        title,
+        description
+    } = props;
+
+    const image = images[0];
     return(
-        <div>This would be the details view for image ID: {imageID}.</div>
+        <div>
+            <div>
+                This would be the details view for image ID: {id}.
+                <h2>Title: {title}</h2>
+                <p>Description: {description}.</p>
+            </div>
+            <img src={image.b.url}></img>
+        </div>
     );
 }
 
