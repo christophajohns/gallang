@@ -31,7 +31,8 @@ const CooperHewittSource = {
     /**
      * Search objects in the Cooper Hewitt collection (see https://collection.cooperhewitt.org/api/methods/cooperhewitt.search.objects)
      * @param {Object} searchParams - Object representing of the search parameters
-     * @param {string} searchParams.query - Search for objects matching terms across all the text fields
+     * @param {string} [searchParams.query] - Search for objects matching terms across all the text fields
+     * @param {string} [searchParams.media_id] - Identifier for the medium (e.g. "screenprint on paper") in the Cooper Hewitt collection
      * @param {number} maximumNumberOfResults - Maximum number of objects to return (i.e. objects per page since only one page is returned; maximum 500)
      * @returns {Promise<CooperHewittObject[]>} - Array holding objects with information about one Cooper Hewitt Object each matching the search parameters
      */
@@ -48,6 +49,20 @@ const CooperHewittSource = {
         };
         const data = await CooperHewittSource.apiCall(params);
         return data.objects;
+    },
+    /**
+     * Return detailed information for an object in the Cooper Hewitt collection (see https://collection.cooperhewitt.org/api/methods/cooperhewitt.objects.getInfo)
+     * @param {string} objectID - Unique identifier of the object inside the Cooper Hewitt collection
+     * @returns {Promise<CooperHewittObject>} - Array holding objects with information about one Cooper Hewitt Object each matching the search parameters
+     */
+    async getObjectInfo(objectID) {
+        const params = {
+            method: "cooperhewitt.objects.getInfo",
+            object_id: objectID,
+            extras: "images,colors,exhibitions,metrics,participants,tombstone", // Return the maximum of information from the API
+        };
+        const data = await CooperHewittSource.apiCall(params);
+        return data.object;
     },
     /**
 	 * Get object collections from the API.
