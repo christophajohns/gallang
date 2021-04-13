@@ -6,6 +6,7 @@ import {
     SearchResultsPresenter,
     TopNavPresenter,
     LoginPresenter,
+    SignupPresenter,
     LikedContentPresenter,
     CollectionPresenter,
     GalleryPresenter,
@@ -24,6 +25,10 @@ function App(props) {
                 <Switch>
                     <Route path="/login">
                         <LoginPresenter />
+                    </Route>
+
+                    <Route path="/signup">
+                        <SignupPresenter />
                     </Route>
 
                     <Route path="/search">

@@ -1,6 +1,6 @@
 import HomeView from "./HomeView";
 import ResultsView from "./ResultsView";
 import DetailsView from "./DetailsView";
-import { LoginView } from "./auth";
+import { LoginView, SignupView } from "./auth";
 
-export { HomeView, ResultsView, DetailsView, LoginView };
+export { HomeView, ResultsView, DetailsView, LoginView, SignupView };

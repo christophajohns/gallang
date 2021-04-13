@@ -1,5 +1,6 @@
 import { Person, Lock } from "react-bootstrap-icons";
 import { InputGroup } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import {
     LoginViewDiv,
     StyledForm,
@@ -23,8 +24,8 @@ function LoginView() {
                 </Inputs>
                 <LoginButton type="submit">Login</LoginButton>
                 <AuthLinks>
-                    <a href="#">Forgot password?</a>
-                    <a href="#">Create account</a>
+                    <Link to="/forgot-password">Forgot password?</Link>
+                    <Link to="/signup">Create account</Link>
                 </AuthLinks>
             </StyledForm>
         </LoginViewDiv>
