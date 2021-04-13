@@ -9,11 +9,12 @@ function App(props) {
 
     return (
         <div className="App">
-            <LikedContentPresenter
+            {/* <LikedContentPresenter
                 numberOfObjects={26}
                 images={mockCollections[0].images}
                 model={model}
-            />
+            /> */}
+            <HomePresenter model={model} />
         </div>
     );
 }

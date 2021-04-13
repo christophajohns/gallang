@@ -16,6 +16,7 @@ const CooperHewittSource = {
             ...filteredParams,
         });
         const url = `${process.env.REACT_APP_BASE_URL}?${urlSearchParams}`;
+        console.log({url});
         try {
             const response = await fetch(url, {
                 method: "GET",
@@ -23,6 +24,7 @@ const CooperHewittSource = {
             if (response.status !== 200) {
                 throw response.statusText;
             }
+            console.log({response});
             return response.json();
         } catch (error) {
             console.log("Error:", error);
