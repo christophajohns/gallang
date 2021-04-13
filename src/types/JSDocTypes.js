@@ -1,3 +1,5 @@
+// This file only serves to hold the JSDoc type definitions in one place.
+
 /**
  * @typedef Collection
  * @property {string} title - Name or title of the collection
@@ -10,6 +12,7 @@
  * @typedef Recommendation
  * @property {string} title - Name or title for the recommendation basis (e.g. medium, period, designer)
  * @property {Image[]} images - Array of objects or images that are being recommended
+ * @property {string} basisImageID - Identifier of the image that formed the basis for why these images were recommended
  */
 
 /**
@@ -21,4 +24,5 @@
 /**
  * Function to be called when a model property changes.
  * @callback observerCallback
- */ 
+ */
+
