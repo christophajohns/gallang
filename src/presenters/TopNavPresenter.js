@@ -12,7 +12,7 @@ function TopNavPresenter() {
 
     // Make a (debounced) search request when query changes
     React.useEffect(() => {
-        redirectToSearchResults();
+        if (query !== "") redirectToSearchResults();
     }, [query]);
 
     /** Show the account options for the currently logged in user (e.g. My account, Logout) */
@@ -27,7 +27,8 @@ function TopNavPresenter() {
 
     /** Redirect user to search results page using the query specified in the search input field */
     function redirectToSearchResults() {
-        const redirectURL = `/search?query=${query}`;
+        const urlSearchParams = new URLSearchParams({ query });
+        const redirectURL = "/search" + urlSearchParams;
         console.log("Would redirect to ", redirectURL);
         // browserHistory.push(redirectURL);
     }
