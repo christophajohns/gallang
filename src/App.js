@@ -1,12 +1,15 @@
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
-
-import { HomePresenter, TopNavPresenter } from "./presenters";
-import { LikedContentPresenter } from "./presenters";
-import { SearchResultsPresenter } from "./presenters";
-import { CollectionPresenter } from "./presenters";
-import { GalleryPresenter } from "./presenters";
+import {
+    DetailsPresenter,
+    HomePresenter,
+    SearchResultsPresenter,
+    TopNavPresenter,
+    LikedContentPresenter,
+    CollectionPresenter,
+    GalleryPresenter,
+} from "./presenters";
 import { mockCollections } from "./model/MockData";
-
 
 function App(props) {
     const {
@@ -15,10 +18,22 @@ function App(props) {
 
     return (
         <div className="App">
-
             <TopNavPresenter model={model} />
-            <HomePresenter model={model} />
+            <Router>
+                <Switch>
+                    <Route path="/search">
+                        <SearchResultsPresenter model={model} />
+                    </Route>
 
+                    <Route path="/details/:imageID">
+                        <DetailsPresenter model={model} />
+                    </Route>
+
+                    <Route path="/">
+                        <HomePresenter model={model} />
+                    </Route>
+                </Switch>
+            </Router>
         </div>
     );
 }

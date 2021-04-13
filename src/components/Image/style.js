@@ -14,6 +14,7 @@ export const StyledImage = styled.div`
         position: static;
         z-index: 0;
         transition: opacity 0.5s ease;
+        cursor: pointer;
     }
 
     &:hover img {
