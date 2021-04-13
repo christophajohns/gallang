@@ -40,7 +40,7 @@ export const ControlsDiv = styled.div`
 
 export const NavSearch = styled.input`
     height: 32px;
-    padding: 0 32px 0 16px;
+    padding: 0 16px 0 16px;
     margin-right: 16px;
     border: none;
     outline: none;
@@ -52,11 +52,15 @@ export const NavSearch = styled.input`
     }
     &:focus {
         width: 256px;
-        transition: width 0.1s ease-in-out;
+        transition: width 0.5s ease-in-out;
     }
     &:not(:focus) {
         width: 128px;
         transition: width 0.1s ease-in-out;
+    }
+    &:hover{
+        width: 256px;
+        transition: width 0.5s ease-in-out;
     }
 `;
 
