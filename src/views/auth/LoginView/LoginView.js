@@ -1,5 +1,5 @@
 import { Person, Lock } from "react-bootstrap-icons";
-import { InputGroup, Form } from "react-bootstrap";
+import { InputGroup } from "react-bootstrap";
 import {
     LoginViewDiv,
     StyledForm,
@@ -7,6 +7,7 @@ import {
     LoginButton,
     FormControl,
     InputGroupText,
+    AuthLinks,
 } from "./style";
 
 /**
@@ -21,6 +22,10 @@ function LoginView() {
                     <PasswordInput />
                 </Inputs>
                 <LoginButton type="submit">Login</LoginButton>
+                <AuthLinks>
+                    <a href="#">Forgot password?</a>
+                    <a href="#">Create account</a>
+                </AuthLinks>
             </StyledForm>
         </LoginViewDiv>
     );
