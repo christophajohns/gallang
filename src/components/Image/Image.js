@@ -20,6 +20,7 @@ import {
  * @param {boolean} props.liked - Flag whether the user has liked this image
  * @param {Function} props.onClickLikeButton - Function to be called when a user clicks the heart (like) button
  * @param {Function} props.onClickUnlikeButton - Function to be called when a user clicks the filled heart (unlike) button
+ * @param {Function} props.onClickImage - Function to be called when a user clicks on the image
  */
 function Image(props) {
     const {
@@ -28,11 +29,12 @@ function Image(props) {
         liked, // Boolean specifying whether the current user has already liked that image
         onClickLikeButton, // Function to be called when a user clicks the heart (like) button
         onClickUnlikeButton, // Function to be called when a user clicks the filled heart (unlike) button
+        onClickImage, // Function to be called when a user clicks on the image
     } = props;
 
     return (
         <StyledImage>
-            <img id={id} src={src} alt={id} />
+            <img id={id} src={src} alt={id} onClick={onClickImage} />
             <StyledGripButton variant="link">
                 <GripVertical />
             </StyledGripButton>
@@ -67,6 +69,8 @@ Image.propTypes = {
     onClickLikeButton: PropTypes.func.isRequired,
     /** Function to be called when a user clicks the filled heart (unlike) button */
     onClickUnlikeButton: PropTypes.func.isRequired,
+    /** Function to be called when a user clicks on the image */
+    onClickImage: PropTypes.func.isRequired,
 };
 
 export default Image;

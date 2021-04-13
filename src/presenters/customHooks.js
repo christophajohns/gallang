@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 /**
  * Custom hook to provide a presenter with access to a model property (including the observer patterns)
@@ -49,4 +50,9 @@ function usePromise(promise) {
     return [data, setData, error, setError];
 }
 
-export { useModelProperty, usePromise };
+/** Custom hook to access search specification (e.g search query string) from the URL at the /search route */
+function useURLSearchParams() {
+    return new URLSearchParams(useLocation().search); // ".search" means it will only work at the /search route
+}
+
+export { useModelProperty, usePromise, useURLSearchParams };
