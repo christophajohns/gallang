@@ -19,6 +19,8 @@ import {
  * @param {Function} [props.onAccountWrapperMouseEnter] - Function to be executed when a user's mouse enters the user icon
  * @param {Function} [props.onAccountOptionsMouseLeave] - Function to be executed when a user's mouse leaves the user account options
  * @param {React.MutableRefObject} props.accountOptionsRef - Reference to be used on the account options element (e.g. logout)
+ * @param {Function} props.onSearchInput - Function to call when the text inside the search input field changes
+ * @param {Function} props.onSearch - Function to call when the user hits enter inside the search input field
  */
 function TopNav(props) {
     const {
@@ -27,6 +29,8 @@ function TopNav(props) {
         onAccountWrapperMouseEnter,
         onAccountOptionsMouseLeave,
         accountOptionsRef,
+        onSearchInput,
+        onSearch,
     } = props;
 
     const userInitial =
@@ -37,7 +41,13 @@ function TopNav(props) {
             <Logo href="/">Gallang</Logo>
             {isLoggedIn && (
                 <ControlsDiv>
-                    <NavSearch />
+                    <NavSearch
+                        placeholder="Search"
+                        onInput={onSearchInput}
+                        onKeyUp={(e) => {
+                            if (e.key === "Enter") onSearch();
+                        }}
+                    />
                     <AccountWrapper onMouseEnter={onAccountWrapperMouseEnter}>
                         <Account>{userInitial}</Account>
                         <AccountOptions
@@ -67,6 +77,8 @@ TopNav.propTypes = {
         // Or the instance of a DOM native element (see the note about SSR)
         PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
     ]).isRequired,
+    onSearchInput: PropTypes.func.isRequired,
+    onSearch: PropTypes.func.isRequired,
 };
 
 export default TopNav;

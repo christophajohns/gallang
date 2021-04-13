@@ -20,9 +20,9 @@ function SearchResultsPresenter(props) {
 
     // State
     const [searchPromise, setSearchPromise] = React.useState(null);
-    const searchPromiseStatesAndSetters = usePromise(searchPromise);
-    const searchData = searchPromiseStatesAndSetters[0];
-    const searchError = searchPromiseStatesAndSetters[2];
+    const [searchData, setSearchData, searchError, setSearchError] = usePromise(
+        searchPromise
+    );
 
     // Custom Hooks
     const urlSearchParams = useURLSearchParams(); // Get URL search parameters (e.g. query=somesearchquery) from URL
@@ -30,15 +30,16 @@ function SearchResultsPresenter(props) {
 
     // Effects
     React.useEffect(() => {
-        // only at creation
         setSearchPromise(CooperHewittSource.searchObjects({ query }));
+        setSearchData(null);
+        setSearchError(null);
     }, [query]);
 
     return (
         promiseNoData(searchPromise, searchData, searchError) || (
             <ResultsPresenter
                 contentType="search results"
-                title={`"${query}"`}
+                title={!query ? "All images" : `"${query}"`} // Set title to "All images" if user enters via /search (without parameters)
                 numberOfObjects={searchData.length}
                 images={searchData.map((object) => ({
                     id: object.id,
