@@ -46,7 +46,10 @@ export const InfoContainer = styled.div`
     padding: 50px;
     background-color: #d5d9e0;
     border-radius: 10px;
-    box-shadow: 0 0 10px -3px rgba(0,0,0,.1);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    :hover {
+        box-shadow: 10px 10px 30px rgba(0, 0, 0, .3);
+    }
 `;
 
 export const StyledOptionContainer = styled.div`
@@ -84,3 +87,37 @@ export const BackIconWrapper = styled.div`
     }
 `;
 
+export const ScrollUpWrapper = styled.div`
+    position: fixed;
+    bottom: 50px;
+    right: 150px;
+    background-color: rgba(204,204,204,0.4);
+    box-sizing: border-box;
+    border-radius: 50%;
+    padding-bottom:3px;
+    :hover {
+        box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    }
+`;
+
+export const StyledTitle = styled.div`
+    font-family: 'Playfair Display SC', serif;
+    font-weight: bold;
+    font-size: 35px;
+    padding-bottom: 15px;
+    padding-top: 20px;
+    a{
+        color: #666666;
+        text-decoration: none;
+        :hover{
+            text-shadow: 0px 4px 4px rgba(0,0,0,0.25);
+        }
+    }
+`;
+
+export const StyledDescription = styled.div`
+    font-family: 'Martel', serif;
+    font-size: 20px;
+    padding: 10px 100px 20px 100px;
+    color: #7f7f7f;
+`;

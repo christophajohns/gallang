@@ -6,7 +6,10 @@ import {
     StyledSection,
     StyledOptionContainer,
     StyledIconButton,
-    BackIconWrapper
+    BackIconWrapper,
+    ScrollUpWrapper,
+    StyledTitle,
+    StyledDescription
 } from "./style";
 import { 
     Heart,
@@ -14,8 +17,10 @@ import {
     HeartFill,
     InfoCircle,
     ArrowUpLeftCircle,
-    ArrowUpLeftCircleFill
+    ArrowUpLeftCircleFill,
+    CaretUpSquare
 } from "react-bootstrap-icons";
+import { Link, animateScroll as scroll } from "react-scroll";
 
 /**
  * Placeholder details view to test routing (would be used to render the full page version of an image and its info)
@@ -29,11 +34,12 @@ function DetailsView(props) {
         id,
         images,
         title,
+        url,
         description,
         liked,
         onClickUnlikeButton,
         onClickLikeButton,
-        onClickReturn
+        onClickReturn,
     } = props;
 
     const image = images[0];
@@ -48,7 +54,7 @@ function DetailsView(props) {
                         <ArrowUpLeftCircle />
                     </StyledIconButton>
                 </BackIconWrapper>
-                <StyledSection>
+                <StyledSection id="image">
                     <StyledImageWrapper img={image.b.url}>
                         <StyledOptionContainer>
                             <StyledIconButton
@@ -59,9 +65,17 @@ function DetailsView(props) {
                             </StyledIconButton>
                             <StyledIconButton
                                 variant="link"
-                                target="_blank"
                             >
-                                <InfoCircle />
+                                <Link
+                                    activeClass="active"
+                                    to="info"
+                                    spy={true}
+                                    smooth={true}
+                                    offset={0}
+                                    duration={700}
+                                >
+                                    <InfoCircle />
+                                </Link>
                             </StyledIconButton>
                             <StyledIconButton
                                 variant="link"
@@ -75,17 +89,33 @@ function DetailsView(props) {
                     </StyledImageWrapper>
                 </StyledSection>
                 
-                <StyledSection>
+                <StyledSection id="info">
                     <StyledInfoWrappper>
                         <InfoContainer>
-                            <div class="box">
-                                <h2>Title: {title}</h2>
-                            </div>
-                            <div class="box">
-                                <p>Description: {description}.</p>
-                            </div>
+                            <StyledTitle>
+                                <a href={url}>{title}</a>
+                            </StyledTitle>
+                            <StyledDescription>
+                                <p> {description}.</p>
+                            </StyledDescription>
                         </InfoContainer>
                     </StyledInfoWrappper>
+                    <ScrollUpWrapper>
+                        <StyledIconButton
+                            variant="link"
+                        >
+                            <Link
+                                activeClass="active"
+                                to="image"
+                                spy={true}
+                                smooth={true}
+                                offset={0}
+                                duration={700}                            
+                            >
+                                <CaretUpSquare />
+                            </Link>
+                        </StyledIconButton>
+                    </ScrollUpWrapper>
                 </StyledSection>
 
             </StyledDetailsView>

@@ -33,6 +33,7 @@ function DetailsPresenter(props) {
                     id={data.id}
                     images={data.images}
                     title={data.title}
+                    url={data.url}
                     description={data.description}
                     liked={likedImageIDs.includes(data.id)}
                     onClickUnlikeButton={(e)=>model.unlikeImage(data.id)}
