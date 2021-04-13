@@ -25,6 +25,10 @@ function App(props) {
                         <SearchResultsPresenter model={model} />
                     </Route>
 
+                    <Route path="/liked">
+                        <LikedContentPresenter model={model} />
+                    </Route>
+
                     <Route path="/details/:imageID" exact={true}>
                         <DetailsPresenter model={model} />
                     </Route>

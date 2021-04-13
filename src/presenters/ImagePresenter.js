@@ -1,14 +1,15 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Image } from "../components";
-import { useModelProperty } from "./customHooks";
+import { Image, promiseNoData } from "../components";
+import { CooperHewittSource } from "../model";
+import { useModelProperty, usePromise } from "./customHooks";
 import PropTypes from "prop-types";
 
 /**
  * Presenter for the Image component
  * @param {Object} props
  * @param {string} props.id - Unique identifier of the object and thereby image
- * @param {string} props.src - Image url for the object image
+ * @param {string} [props.src] - Image url for the object image
  * @param {Object} props.model - The model holding the application state
  * @param {Function} props.model.likeImage - Function to like an image by its ID
  * @param {Function} props.model.unlikeImage - Function to unlike an image by its ID
@@ -22,6 +23,18 @@ function ImagePresenter(props) {
         model, // The model holding the application state
     } = props;
 
+    // State
+    const [objectInfoPromise, setObjectInfoPromise] = React.useState(null);
+    const objectInfoPromiseStatesAndSetters = usePromise(objectInfoPromise);
+    const objectInfoData = objectInfoPromiseStatesAndSetters[0];
+    const objectInfoError = objectInfoPromiseStatesAndSetters[2];
+
+    // Effects
+    React.useEffect(() => {
+        // only at creation
+        if (!src) setObjectInfoPromise(CooperHewittSource.getObjectInfo(id)); // fetch image info (incl. url) if src prop is not specified
+    }, [src, id]);
+
     const browserHistory = useHistory(); // used to manually navigate/redirect to the details of a specific image
 
     const likedImageIDs = useModelProperty(model, "likedImageIDs");
@@ -34,16 +47,26 @@ function ImagePresenter(props) {
         browserHistory.push(`/details/${imageID}`);
     }
 
-    return (
-        <Image
-            onClickImage={(e) => redirectToDetailsForImage(id)}
-            onClickLikeButton={(e) => model.likeImage(id)}
-            onClickUnlikeButton={(e) => model.unlikeImage(id)}
-            id={id}
-            src={src}
-            liked={likedImageIDs.includes(id)}
-        />
-    );
+    /** Properties to pass to the Image component that is rendered by the presenter */
+    const imageProps = {
+        onClickImage: (e) => redirectToDetailsForImage(id),
+        onClickLikeButton: (e) => model.likeImage(id),
+        onClickUnlikeButton: (e) => model.unlikeImage(id),
+        id,
+        liked: likedImageIDs.includes(id),
+    };
+
+    if (!src) {
+        return (
+            promiseNoData(
+                objectInfoPromise,
+                objectInfoData,
+                objectInfoError
+            ) || <Image {...imageProps} src={objectInfoData.images[0].b.url} />
+        );
+    }
+
+    return <Image {...imageProps} src={src} />;
 }
 
 export const modelType = PropTypes.shape({
