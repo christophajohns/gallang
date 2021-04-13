@@ -37,7 +37,7 @@ function TopNav(props) {
             <Logo href="/">Gallang</Logo>
             {isLoggedIn && (
                 <ControlsDiv>
-                    <NavSearch />
+                    <NavSearch placeholder="Search" />
                     <AccountWrapper onMouseEnter={onAccountWrapperMouseEnter}>
                         <Account>{userInitial}</Account>
                         <AccountOptions

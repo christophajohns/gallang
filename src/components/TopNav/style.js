@@ -50,9 +50,7 @@ export const Account = styled.div`
     grid-area: top;
 `;
 
-export const NavSearch = styled.input.attrs({
-    placeholder: "Search",
-})`
+export const NavSearch = styled.input`
     height: 32px;
     padding: 0 32px 0 16px;
     margin-right: 16px;
