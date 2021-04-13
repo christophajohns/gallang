@@ -1,4 +1,5 @@
 import React from "react";
+import _ from "underscore";
 import { TopNav } from "../components";
 
 /**
@@ -7,6 +8,12 @@ import { TopNav } from "../components";
  */
 function TopNavPresenter() {
     const accountOptionsRef = React.useRef(null); // used to enable the mouse enter/leave behaviour
+    const [query, setQuery] = React.useState("");
+
+    // Make a (debounced) search request when query changes
+    React.useEffect(() => {
+        redirectToSearchResults();
+    }, [query]);
 
     /** Show the account options for the currently logged in user (e.g. My account, Logout) */
     function showAccountOptions() {
@@ -18,6 +25,19 @@ function TopNavPresenter() {
         accountOptionsRef.current.classList.add("hidden");
     }
 
+    /** Redirect user to search results page using the query specified in the search input field */
+    function redirectToSearchResults() {
+        const redirectURL = `/search?query=${query}`;
+        console.log("Would redirect to ", redirectURL);
+        // browserHistory.push(redirectURL);
+    }
+
+    /** Redirect user to search results page using the query specified in the search input field */
+    function updateQueryInState(event) {
+        const updatedQuery = event.target.value; // Text value of the search input field
+        setQuery(updatedQuery);
+    }
+
     return (
         <TopNav
             username="GallangUser"
@@ -25,6 +45,8 @@ function TopNavPresenter() {
             onAccountWrapperMouseEnter={(e) => showAccountOptions()}
             onAccountOptionsMouseLeave={(e) => hideAccountOptions()}
             accountOptionsRef={accountOptionsRef}
+            onSearchInput={_.debounce(updateQueryInState, 500)}
+            onSearch={(e) => redirectToSearchResults()}
         />
     );
 }
