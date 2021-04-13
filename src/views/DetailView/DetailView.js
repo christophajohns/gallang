@@ -1,5 +1,0 @@
-function DetailView(props) {
-    return(
-        
-    );
-}

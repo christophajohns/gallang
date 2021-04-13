@@ -49,4 +49,9 @@ function usePromise(promise) {
     return [data, setData, error, setError];
 }
 
+/** Custom hook to access search specification (e.g search query string) from the URL at the /search route */
+function useURLSearchParams() {
+    return new URLSearchParams(useLocation().search); //".search" means it will only work at the /search route"
+}
+
 export { useModelProperty, usePromise };

@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { Image } from "../components";
 import { useModelProperty } from "./customHooks";
 import PropTypes from "prop-types";
@@ -21,10 +22,21 @@ function ImagePresenter(props) {
         model, // The model holding the application state
     } = props;
 
+    const browserHistory = useHistory(); // used to manually navigate/redirect to the details of a specific image
+
     const likedImageIDs = useModelProperty(model, "likedImageIDs");
+
+    /**
+     * Function to redirect the user to the details view for the clicked image
+     * @param {string} imageID - Identifier of the image for which to display the details
+     */
+    function redirectToDetailsForImage(imageID) {
+        browserHistory.push(`/details/${imageID}`);
+    }   
 
     return (
         <Image
+            onClickImage={(e) => redirectToDetailsForImage(id)}
             onClickLikeButton={(e) => model.likeImage(id)}
             onClickUnlikeButton={(e) => model.unlikeImage(id)}
             id={id}

@@ -1,5 +1,11 @@
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
-import { LikedContentPresenter, HomePresenter } from "./presenters";
+import { 
+    DetailsPresenter,
+    HomePresenter,
+    SearchResultsPresenter,
+    LikedContentPresenter, 
+} from "./presenters";
 import { mockCollections } from "./model/MockData";
 
 function App(props) {
@@ -14,7 +20,24 @@ function App(props) {
                 images={mockCollections[0].images}
                 model={model}
             /> */}
-            <HomePresenter model={model} />
+            <Router>
+                <div className="App">
+                    <Switch>
+
+                        <Route path="/">
+                            <HomePresenter model={model} />
+                        </Route>
+                        
+                        <Route path="/search">
+                            <SearchResultsPresenter />
+                        </Route>
+
+                        <Route path="/details/:imageID">
+                            <DetailsPresenter />
+                        </Route>
+                    </Switch>
+                </div>
+            </Router>
         </div>
     );
 }
