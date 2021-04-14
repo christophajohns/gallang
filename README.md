@@ -19,14 +19,14 @@ A digital mood-board bringing together several different sources of high-quality
 ### Expected Results
 
 Users will be able to search for images from different online sources, like [Unsplash](https://unsplash.com/developers) for photography, or artworks from [Cooper Hewitt (Smithsonian Art Museum)](https://collection.cooperhewitt.org/api/) and save them into collections (called "Galleries").
-If possible, we can add fonts from [Google Fonts](https://fonts.google.com) and as an addition to the images, as well as data from other sources.
-If possible, other users should be able to see other people’s mood-boards and add images from other people’s mood-boards to their own mood-boards.
+If possible, we can add fonts from [Google Fonts](https://fonts.google.com) alongside the images, as well as data from other sources.
+If possible, other users should be able to see other users' galleries and add images from these galleries to their own.
 
 ## Status Quo
 
 So far, we have implemented the following:
 
--   Basic home/browse page layout with a mix of mock data and API calls to the [Cooper Hewitt API](https://collection.cooperhewitt.org/api/)
+-   Basic home/browse page layout with a mix of mock data and calls to the [Cooper Hewitt API](https://collection.cooperhewitt.org/api/)
 -   Search functionality using the [Cooper Hewitt API](https://collection.cooperhewitt.org/api/)
 -   Basic routing/navigation using [React Router](https://reactrouter.com/web/guides/quick-start)
 -   Non-persisted liking of images
@@ -45,6 +45,32 @@ Until the final submission, we aim to add the following features:
 -   Displaying recommended images based on a user's liked images
 -   Possibly showing other users' galleries
 -   Download zip file containing all images in a gallery (might be problematic due to cross-origin restrictions of the APIs involved)
+
+## Project File Structure
+
+```
+.
+├── .vscode                 # Visual Studio Code settings for consistent formatting
+├── public                  # Publicly accessible static files (e.g. favicons)
+├── src                     # Source files
+  ├── components              # Reused components (small views from an architecture perspective)
+  ├── model                   # Code related to data, application state and API communication
+  ├── presenters              # Framework- (React-)specific code to display views based on the application state, fetch data and handle interactions
+  ├── types                   # Common type definitions in the JSDoc and PropTypes specifications
+  ├── views                   # Static views to present the application data
+  ├── App.css                 # Common styling for the entire application
+  ├── App.js                  # Application definition (incl. routing)
+  ├── App.test.js             # (Unused) Common test suite provided by create-react-app
+  ├── index.css               # Common styling for entire web page
+  ├── index.js                # Model initialization and call to render application
+  ├── reportWebVitals.js      # (Unused) Performance measuring provided by create-react-app
+  └── setupTests.js           # (Unused) Test setup using jest provided by create-react-app
+├── env.example             # Example file for the .env containing environment variables (e.g. access tokens)
+├── .gitignore              # Files to be ignored by git
+├── README.md               # Project documentation
+├── package-lock.json       # Locked version of package.json
+└── package.json            # Application manifest (e.g. dependencies)
+```
 
 ## Development
 
