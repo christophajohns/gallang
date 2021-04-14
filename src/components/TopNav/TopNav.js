@@ -10,6 +10,7 @@ import {
     NavSearch,
     UserName,
 } from "./style";
+import { Link } from "react-router-dom";
 
 /**
  * Navigation bar for the whole application
@@ -57,7 +58,9 @@ function TopNav(props) {
                         >
                             <UserName>{username}</UserName>
                             <AccountOption>My account</AccountOption>
-                            <AccountOption>Logout</AccountOption>
+                            <Link to="/login">
+                                <AccountOption>Logout</AccountOption>
+                            </Link>
                         </AccountOptions>
                     </AccountWrapper>
                 </ControlsDiv>
