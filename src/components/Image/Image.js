@@ -5,6 +5,7 @@ import {
     HeartFill,
 } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
+import {Tooltip, OverlayTrigger} from "react-bootstrap";
 import {
     StyledGripButton,
     StyledImage,
@@ -32,6 +33,7 @@ function Image(props) {
         onClickImage, // Function to be called when a user clicks on the image
     } = props;
 
+
     return (
         <StyledImage>
                 <img id={id} src={src} alt={id} onClick={onClickImage} />
@@ -39,12 +41,29 @@ function Image(props) {
                 <GripVertical />
             </StyledGripButton>
             <StyledImageButtons>
-                <StyledIconButton
+                <OverlayTrigger 
+                    placement="bottom"
+                    overlay={
+                        <Tooltip id={liked ? `tooltip-like` : `tooltip-unlike`}>
+                          {liked ? "Unlike" : "Like"}
+                        </Tooltip>
+                      }
+                    >
+                    <StyledIconButton
                     variant="link"
                     onClick={liked ? onClickUnlikeButton : onClickLikeButton}
                 >
                     {liked ? <HeartFill /> : <Heart />}
                 </StyledIconButton>
+                </OverlayTrigger>
+                <OverlayTrigger 
+                    placement="bottom"
+                    overlay={
+                        <Tooltip id={`tooltip-download`}>
+                          {"Download"}
+                        </Tooltip>
+                      }
+                    >
                 <StyledIconButton
                     variant="link"
                     download={true}
@@ -53,6 +72,7 @@ function Image(props) {
                 >
                     <Download />
                 </StyledIconButton>
+                </OverlayTrigger>
             </StyledImageButtons>
         </StyledImage>
     );
