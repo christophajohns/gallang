@@ -24,27 +24,31 @@ function App(props) {
             <div className="App">
                 <TopNavPresenter model={model} />
                 <Switch>
-                    <Route path="/login">
+                    <Route path="/login" exact={true}>
                         <LoginPresenter />
                     </Route>
 
-                    <Route path="/signup">
+                    <Route path="/signup" exact={true}>
                         <SignupPresenter />
                     </Route>
 
-                    <Route path="/forgot-password">
+                    <Route path="/forgot-password" exact={true}>
                         <ForgotPasswordPresenter />
                     </Route>
 
-                    <Route path="/search">
+                    <Route path="/search" exact={true}>
                         <SearchResultsPresenter model={model} />
                     </Route>
 
-                    <Route path="/details/:imageID">
+                    <Route path="/liked" exact={true}>
+                        <LikedContentPresenter model={model} />
+                    </Route>
+
+                    <Route path="/details/:imageID" exact={true}>
                         <DetailsPresenter model={model} />
                     </Route>
 
-                    <Route path="/">
+                    <Route path="/" exact={true}>
                         <HomePresenter model={model} />
                     </Route>
                 </Switch>
