@@ -58,7 +58,7 @@ export const NavSearch = styled.input`
         width: 128px;
         transition: width 0.1s ease-in-out;
     }
-    &:hover{
+    &:hover {
         width: 256px;
         transition: width 0.5s ease-in-out;
     }
@@ -80,7 +80,7 @@ export const AccountOptions = styled.ul`
     top: 40px;
     font-size: 12px;
     font-weight: bold;
-    padding-top:8px;
+    padding-top: 8px;
 `;
 
 export const Account = styled.div`
@@ -106,26 +106,20 @@ export const AccountOption = styled.li`
     margin: 0;
     line-height: 64px;
     padding: 0 32px 0 64px;
-    background-color:white;
+    background-color: white;
     cursor: pointer;
-    &:hover{
-        background-color:whitesmoke;
+    &:hover {
+        background-color: whitesmoke;
         transition: 0.1s ease-in-out;
     }
 `;
 
 export const UserName = styled(AccountOption)`
     color: grey;
-    text-align: right;
     text-transform: uppercase;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
     line-height: 32px;
-    padding: 0 32px 0 64px;
     cursor: default;
-    &:hover{
-        background-color:white;
-        
+    &:hover {
+        background-color: white;
     }
 `;
