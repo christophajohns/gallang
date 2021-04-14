@@ -34,7 +34,7 @@ function Image(props) {
 
     return (
         <StyledImage>
-            <img id={id} src={src} alt={id} onClick={onClickImage} />
+                <img id={id} src={src} alt={id} onClick={onClickImage} />
             <StyledGripButton variant="link">
                 <GripVertical />
             </StyledGripButton>
