@@ -101,7 +101,7 @@ function PasswordInput(props) {
  */
 function ConfirmPasswordInput() {
     return (
-        <PasswordInput placeholder="Confirm Password" name="confirm-password" />
+        <PasswordInput placeholder="Confirm password" name="confirm-password" />
     );
 }
 
