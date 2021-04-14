@@ -7,6 +7,7 @@ import {
     TopNavPresenter,
     LoginPresenter,
     SignupPresenter,
+    ForgotPasswordPresenter,
     LikedContentPresenter,
     CollectionPresenter,
     GalleryPresenter,
@@ -29,6 +30,10 @@ function App(props) {
 
                     <Route path="/signup">
                         <SignupPresenter />
+                    </Route>
+
+                    <Route path="/forgot-password">
+                        <ForgotPasswordPresenter />
                     </Route>
 
                     <Route path="/search">

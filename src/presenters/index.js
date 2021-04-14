@@ -10,6 +10,7 @@ import GalleryPresenter from "./GalleryPresenter";
 import LikedContentPresenter from "./LikedContentPresenter";
 import LoginPresenter from "./LoginPresenter";
 import SignupPresenter from "./SignupPresenter";
+import ForgotPasswordPresenter from "./ForgotPasswordPresenter";
 
 export {
     HomePresenter,
@@ -24,4 +25,5 @@ export {
     LikedContentPresenter,
     LoginPresenter,
     SignupPresenter,
+    ForgotPasswordPresenter,
 };
