@@ -116,4 +116,16 @@ export const AccountOption = styled.li`
 
 export const UserName = styled(AccountOption)`
     color: grey;
+    text-align: right;
+    text-transform: uppercase;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    line-height: 32px;
+    padding: 0 32px 0 64px;
+    cursor: default;
+    &:hover{
+        background-color:white;
+        
+    }
 `;
