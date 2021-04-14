@@ -81,6 +81,15 @@ export const AccountOptions = styled.ul`
     font-size: 12px;
     font-weight: bold;
     padding-top: 8px;
+
+    a {
+        color: black;
+
+        :hover {
+            color: black;
+            text-decoration: none;
+        }
+    }
 `;
 
 export const Account = styled.div`
@@ -108,6 +117,7 @@ export const AccountOption = styled.li`
     padding: 0 32px 0 64px;
     background-color: white;
     cursor: pointer;
+
     &:hover {
         background-color: whitesmoke;
         transition: 0.1s ease-in-out;

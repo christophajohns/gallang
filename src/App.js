@@ -5,6 +5,9 @@ import {
     HomePresenter,
     SearchResultsPresenter,
     TopNavPresenter,
+    LoginPresenter,
+    SignupPresenter,
+    ForgotPasswordPresenter,
     LikedContentPresenter,
     CollectionPresenter,
     GalleryPresenter,
@@ -21,11 +24,23 @@ function App(props) {
             <div className="App">
                 <TopNavPresenter model={model} />
                 <Switch>
+                    <Route path="/login" exact={true}>
+                        <LoginPresenter />
+                    </Route>
+
+                    <Route path="/signup" exact={true}>
+                        <SignupPresenter />
+                    </Route>
+
+                    <Route path="/forgot-password" exact={true}>
+                        <ForgotPasswordPresenter />
+                    </Route>
+
                     <Route path="/search" exact={true}>
                         <SearchResultsPresenter model={model} />
                     </Route>
 
-                    <Route path="/liked">
+                    <Route path="/liked" exact={true}>
                         <LikedContentPresenter model={model} />
                     </Route>
 
