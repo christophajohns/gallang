@@ -24,10 +24,10 @@ export const Logo = styled.a`
     font-weight: bold;
     font-size: 1.3rem;
     color: black;
-
     &:hover {
         text-decoration: none;
-        color: black;
+        color: slategray;
+        transition: 0.3s ease-in-out;
     }
 `;
 
@@ -38,21 +38,9 @@ export const ControlsDiv = styled.div`
     align-items: center;
 `;
 
-export const Account = styled.div`
-    background-color: whitesmoke;
-    height: 32px;
-    width: 32px;
-    border-radius: 50%;
-    text-align: center;
-    cursor: pointer;
-    line-height: 32px;
-    font-weight: bold;
-    grid-area: top;
-`;
-
 export const NavSearch = styled.input`
     height: 32px;
-    padding: 0 32px 0 16px;
+    padding: 0 16px 0 16px;
     margin-right: 16px;
     border: none;
     outline: none;
@@ -64,31 +52,16 @@ export const NavSearch = styled.input`
     }
     &:focus {
         width: 256px;
-        transition: width 0.1s ease-in-out;
+        transition: width 0.5s ease-in-out;
     }
     &:not(:focus) {
         width: 128px;
         transition: width 0.1s ease-in-out;
     }
-`;
-
-export const AccountOptions = styled.ul`
-    position: absolute;
-    background-color: whitesmoke;
-    padding: 8px 16px;
-    border-radius: 8px;
-    grid-area: bottom;
-    z-index: 99;
-    margin-top: 8px;
-    right: 16px;
-    top: 40px;
-`;
-
-export const AccountOption = styled.li`
-    text-align: right;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+    &:hover {
+        width: 256px;
+        transition: width 0.5s ease-in-out;
+    }
 `;
 
 export const AccountWrapper = styled.div`
@@ -99,6 +72,54 @@ export const AccountWrapper = styled.div`
     justify-content: end;
 `;
 
+export const AccountOptions = styled.ul`
+    position: absolute;
+    grid-area: bottom;
+    z-index: 99;
+    right: 0;
+    top: 40px;
+    font-size: 12px;
+    font-weight: bold;
+    padding-top: 8px;
+`;
+
+export const Account = styled.div`
+    background-color: whitesmoke;
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 32px;
+    font-weight: bold;
+    grid-area: top;
+    cursor: pointer;
+    ${AccountWrapper}:hover & {
+        background-color: lightgrey;
+        transition: 0.3s ease-in-out;
+    }
+`;
+
+export const AccountOption = styled.li`
+    text-align: right;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    line-height: 64px;
+    padding: 0 32px 0 64px;
+    background-color: white;
+    cursor: pointer;
+    &:hover {
+        background-color: whitesmoke;
+        transition: 0.1s ease-in-out;
+    }
+`;
+
 export const UserName = styled(AccountOption)`
     color: grey;
+    text-transform: uppercase;
+    line-height: 32px;
+    cursor: default;
+    &:hover {
+        background-color: white;
+    }
 `;
