@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Form, Button, InputGroup } from "react-bootstrap";
 
-export const ForgotPasswordViewDiv = styled.div`
+export const CenterContentDiv = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,7 +37,7 @@ export const InputGroupText = styled(InputGroup.Text)`
     border: none;
 `;
 
-export const ResetPasswordButton = styled(Button)`
+export const AuthButton = styled(Button)`
     background-color: gainsboro;
     color: black;
     border: none;
