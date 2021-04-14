@@ -9,8 +9,11 @@ import {
     StyledPreviousNextChevrons,
     StyledIconButton,
     StyledImages,
+    StyledGridSection,
+
 } from "./style";
 import { imageType } from "../../types";
+
 
 /**
  * Horizontal (scrollable) grid of images to showcase objects in a collection or gallery
@@ -39,7 +42,7 @@ function HorizontalGrid(props) {
 
     return (
         <StyledHorizontalGrid label={title}>
-            <div>
+            <StyledGridSection>
                 <StyledTitleAndDescription>
                     <StyledTitle href={href ? href : "#"}>{title}</StyledTitle>
                     {description ? (
@@ -62,17 +65,19 @@ function HorizontalGrid(props) {
                         <ChevronRight />
                     </StyledIconButton>
                 </StyledPreviousNextChevrons>
-            </div>
-            <StyledImages ref={imagesRef}>
-                {images.map((image) => (
-                    <ImagePresenter
-                        key={image.id}
-                        id={image.id}
-                        src={image.url}
-                        model={model}
-                    />
-                ))}
-            </StyledImages>
+            </StyledGridSection>
+            <StyledGridSection>
+                <StyledImages ref={imagesRef}>
+                    {images.map((image) => (
+                        <ImagePresenter
+                            key={image.id}
+                            id={image.id}
+                            src={image.url}
+                            model={model}
+                        />
+                    ))}
+                </StyledImages>
+            </StyledGridSection>
         </StyledHorizontalGrid>
     );
 }
