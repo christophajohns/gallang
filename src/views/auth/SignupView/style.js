@@ -19,7 +19,7 @@ export const SignupViewDiv = styled.div`
 
 export const StyledForm = styled(Form)`
     width: 50%;
-    max-width: 256px;
+    max-width: 384px;
 
     // apply to all direct children
     & > * {
