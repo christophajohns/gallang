@@ -79,9 +79,10 @@ This project was bootstrapped using [Create React App](https://github.com/facebo
 Before you start, make sure you have locally created .env with the API KEY and ACCESS TOKEN for the Cooper Hewitt API.
 See [.env.example](https://gits-15.sys.kth.se/cajohns/gallang/blob/master/.env.example) for file template.
 
-In the project directory, you can run:
+After cloning the project to your local machine, you can run:
 
 ```
+cd gallang
 npm start
 ```
 
