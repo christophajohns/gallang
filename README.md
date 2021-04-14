@@ -54,10 +54,64 @@ Until the final submission, we aim to add the following features:
 ├── public                  # Publicly accessible static files (e.g. favicons)
 ├── src                     # Source files
   ├── components              # Reused components (small views from an architecture perspective)
+    ├── HorizontalGrid          # Horizontal (scrollable) grid of images to showcase objects in a collection or gallery
+      ├── HorizontalGrid.js       # Component file
+      ├── index.js                # Import and export of component
+      └── style.js                # Styling of the component using styled-components
+    ├── Image                   # Single object (image) showcase including like and download buttons
+      ├── Image.js                # Component file
+      ├── index.js                # Import and export of component
+      └── style.js                # Styling of the component using styled-components
+    ├── TopNav                  # Navigation bar for the whole application
+      ├── TopNav.js               # Component file
+      ├── index.js                # Import and export of component
+      └── style.js                # Styling of the component using styled-components
+    ├── VerticalGrid            # Vertical (scrollable) grid of images to showcase objects in a the results view
+      ├── VerticalGrid.js         # Component file
+      ├── index.js                # Import and export of component
+      └── style.js                # Styling of the component using styled-components
+    ├── index.js                # Imports and export of all components
+    └── promiseNoData.js        # Returns loading spinner when promise is pending or false when it is resolved
   ├── model                   # Code related to data, application state and API communication
+    ├── CooperHewittSource.js   # Object to interact with the Cooper Hewitt API
+    ├── GallangModel.js         # Class for keeping application state
+    ├── MockData.js             # Example data to avoid requests to the Cooper Hewitt API during development
+    └── index.js                # Imports and export of GallangModel and CooperHewittSource
   ├── presenters              # Framework- (React-)specific code to display views based on the application state, fetch data and handle interactions
+    ├── CollectionPresenter.js  # Presenter for the collection page content
+    ├── DetailsPresenter.js     # Placeholder presenter to test routing for the details view
+    ├── GalleryPresenter.js     # Presenter for the gallery page content
+    ├── HomePresenter.js        # Presenter for the Home/Browse view
+    ├── HorizontalGridPresenter.js  # Presenter for the HorizontalGrid component
+    ├── ImagePresenter.js       # Presenter for the Image component
+    ├── LikedContentPresenter.js  # Presenter for the liked content page content
+    ├── ResultsPresenter.js     # Presenter for the Results view
+    ├── SearchResultsPresenter.js  # Presenter for the search results page content
+    ├── TopNavPresenter.js      # Presenter for the TopNav component
+    ├── customHooks.js          # Custom React hooks (e.g. to access model properties)
+    └── index.js                # Imports and export of all presenters
   ├── types                   # Common type definitions in the JSDoc and PropTypes specifications
+    ├── index.js                # Imports and export of type definitions
+    ├── jsDocTypes.js           # Type definitions using the JSDoc specification
+    └── propTypes.js            # Type definitions using the PropTypes specification
   ├── views                   # Static views to present the application data
+    ├── HomeView                # View component for the Home/Browse page content
+      ├── CollectionCarousel      # Component to render a carousel of "featured" collections
+        ├── CollectionCarousel.js   # Component file
+        ├── index.js                # Import and export of component
+        └── style.js                # Styling of the component using styled-components
+      ├── Quote                   # Component to render a quote
+        ├── Quote.js                # Component file
+        ├── index.js                # Import and export of component
+        └── style.js                # Styling of the component using styled-components
+      ├── HomeView.js             # View file
+      └── index.js                # Import and export of component
+    ├── ResultsView             # View component for the Results (e.g. search results, collection, liked content, gallery) page content
+      ├── ResultsView.js          # View file
+      ├── index.js                # Import and export of component
+      └── style.js                # Styling of the component using styled-components
+    ├── DetailsView.js          # Placeholder details view to test routing (would be used to render the full page version of an image and its info)
+    └── index.js                # Imports and export of all views
   ├── App.css                 # Common styling for the entire application
   ├── App.js                  # Application definition (incl. routing)
   ├── App.test.js             # (Unused) Common test suite provided by create-react-app
