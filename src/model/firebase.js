@@ -14,7 +14,7 @@ const app = firebase.initializeApp({
 });
 
 const firestore = app.firestore();
-export const myDatabase = {
+export const DatabaseModel = {
     folders: firestore.collection("folders"),
     files: firestore.collection("files"),
     formatDoc: (doc) => {
