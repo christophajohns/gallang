@@ -20,7 +20,7 @@ import {
  * @param {boolean} props.liked - Flag whether the user has liked this image
  * @param {Function} props.onClickLikeButton - Function to be called when a user clicks the heart (like) button
  * @param {Function} props.onClickUnlikeButton - Function to be called when a user clicks the filled heart (unlike) button
- * @param {Function} props.onClickImage - Function to be called when a user clicks on a image
+ * @param {Function} props.onClickImage - Function to be called when a user clicks on the image
  */
 function Image(props) {
     const {
@@ -34,7 +34,7 @@ function Image(props) {
 
     return (
         <StyledImage>
-            <img id={id} src={src} alt={id} onClick={onClickImage}/>
+            <img id={id} src={src} alt={id} onClick={onClickImage} />
             <StyledGripButton variant="link">
                 <GripVertical />
             </StyledGripButton>

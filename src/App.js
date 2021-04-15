@@ -1,10 +1,16 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
-import { 
+import {
     DetailsPresenter,
     HomePresenter,
     SearchResultsPresenter,
-    LikedContentPresenter, 
+    TopNavPresenter,
+    LoginPresenter,
+    SignupPresenter,
+    ForgotPasswordPresenter,
+    LikedContentPresenter,
+    CollectionPresenter,
+    GalleryPresenter,
 } from "./presenters";
 import { mockCollections } from "./model/MockData";
 
@@ -14,30 +20,40 @@ function App(props) {
     } = props;
 
     return (
-        <div className="App">
-            {/* <LikedContentPresenter
-                numberOfObjects={26}
-                images={mockCollections[0].images}
-                model={model}
-            /> */}
-            <Router>
-                <div className="App">
-                    <Switch>
-                        <Route path="/" exact>
-                            <HomePresenter model={model} />
-                        </Route>
-                        
-                        <Route path="/search">
-                            <SearchResultsPresenter model={model}/>
-                        </Route>
+        <Router>
+            <div className="App">
+                <TopNavPresenter model={model} />
+                <Switch>
+                    <Route path="/login" exact={true}>
+                        <LoginPresenter />
+                    </Route>
 
-                        <Route path="/details/:imageID">
-                            <DetailsPresenter model={model}/>
-                        </Route>
-                    </Switch>
-                </div>
-            </Router>
-        </div>
+                    <Route path="/signup" exact={true}>
+                        <SignupPresenter />
+                    </Route>
+
+                    <Route path="/forgot-password" exact={true}>
+                        <ForgotPasswordPresenter />
+                    </Route>
+
+                    <Route path="/search" exact={true}>
+                        <SearchResultsPresenter model={model} />
+                    </Route>
+
+                    <Route path="/liked" exact={true}>
+                        <LikedContentPresenter model={model} />
+                    </Route>
+
+                    <Route path="/details/:imageID" exact={true}>
+                        <DetailsPresenter model={model} />
+                    </Route>
+
+                    <Route path="/" exact={true}>
+                        <HomePresenter model={model} />
+                    </Route>
+                </Switch>
+            </div>
+        </Router>
     );
 }
 

@@ -23,7 +23,7 @@ const CooperHewittSource = {
             if (response.status !== 200) {
                 throw response.statusText;
             }
-            console.log({response});
+            console.log({ response });
             return response.json();
         } catch (error) {
             console.log("Error:", error);
@@ -32,7 +32,8 @@ const CooperHewittSource = {
     /**
      * Search objects in the Cooper Hewitt collection (see https://collection.cooperhewitt.org/api/methods/cooperhewitt.search.objects)
      * @param {Object} searchParams - Object representing of the search parameters
-     * @param {string} searchParams.query - Search for objects matching terms across all the text fields
+     * @param {string} [searchParams.query] - Search for objects matching terms across all the text fields
+     * @param {string} [searchParams.media_id] - Identifier for the medium (e.g. "screenprint on paper") in the Cooper Hewitt collection
      * @param {number} maximumNumberOfResults - Maximum number of objects to return (i.e. objects per page since only one page is returned; maximum 500)
      * @returns {Promise<CooperHewittObject[]>} - Array holding objects with information about one Cooper Hewitt Object each matching the search parameters
      */
@@ -51,15 +52,15 @@ const CooperHewittSource = {
         return data.objects;
     },
     /**
-     * Search objects in the Cooper Hewitt collection (see https://collection.cooperhewitt.org/api/methods/cooperhewitt.search.objects)
-     * @param {Object} searchParams - Object representing of the search parameters
-     * @param {string} ObjectID.query - Search for selected object by clicking the image.
-     * @returns {Promise<CooperHewittObject>} - One object holding the information of the searched object.
+     * Return detailed information for an object in the Cooper Hewitt collection (see https://collection.cooperhewitt.org/api/methods/cooperhewitt.objects.getInfo)
+     * @param {string} objectID - Unique identifier of the object inside the Cooper Hewitt collection
+     * @returns {Promise<CooperHewittObject>} - Object holding the information of the specified object in the Cooper Hewitt collection
      */
-    async getObjectInfo(ObjectID) {
+    async getObjectInfo(objectID) {
         const params = {
             method: "cooperhewitt.objects.getInfo",
-            object_id: ObjectID,
+            object_id: objectID,
+            extras: "images,colors,exhibitions,metrics,participants,tombstone", // Return the maximum of information from the API
         };
         const data = await CooperHewittSource.apiCall(params);
         return data.object;
