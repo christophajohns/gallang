@@ -33,7 +33,7 @@ function SearchResultsPresenter(props) {
         setSearchPromise(CooperHewittSource.searchObjects({ query }));
         setSearchData(null);
         setSearchError(null);
-    }, [query]);
+    }, [query, setSearchData, setSearchError]);
 
     return (
         promiseNoData(searchPromise, searchData, searchError) || (
