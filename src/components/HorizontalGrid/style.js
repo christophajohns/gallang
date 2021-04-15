@@ -13,6 +13,7 @@ export const StyledGridSection = styled.div`
 export const StyledGridTop = styled.div`
     display: flex;
     justify-content: space-between;
+    margin-bottom: 4px;
 `;
 
 export const StyledTitleAndDescription = styled.div`
