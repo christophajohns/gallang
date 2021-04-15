@@ -8,9 +8,10 @@ import { FormControl, InputGroupText } from "./style";
  * @param {string} props.placeholder - Placeholder for the input field
  * @param {string} props.name - Name for the input field
  * @param {string} [props.type = "text"] - Type of the input field (e.g. text or password)
+ * @param {React.MutableRefObject} props.ref - Reference for the input field
  */
 function AuthInputField(props) {
-    const { icon: Icon, placeholder, name, type = "text" } = props;
+    const { icon: Icon, placeholder, name, type = "text", authRef } = props;
 
     return (
         <InputGroup>
@@ -24,6 +25,7 @@ function AuthInputField(props) {
                 required
                 placeholder={placeholder}
                 name={name}
+                ref={authRef}
             />
         </InputGroup>
     );
