@@ -10,6 +10,7 @@ import {
     StyledIconButton,
     StyledImages,
     StyledGridSection,
+    StyledGridTop,
 } from "./style";
 import { imageType } from "../../types";
 
@@ -40,7 +41,7 @@ function HorizontalGrid(props) {
 
     return (
         <StyledHorizontalGrid label={title}>
-            <StyledGridSection>
+            <StyledGridTop>
                 <StyledTitleAndDescription>
                     <StyledTitle href={href ? href : "#"}>{title}</StyledTitle>
                     {description ? (
@@ -63,7 +64,7 @@ function HorizontalGrid(props) {
                         <ChevronRight />
                     </StyledIconButton>
                 </StyledPreviousNextChevrons>
-            </StyledGridSection>
+            </StyledGridTop>
             <StyledGridSection>
                 <StyledImages ref={imagesRef}>
                     {images.map((image) => (

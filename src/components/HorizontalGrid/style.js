@@ -5,14 +5,18 @@ export const StyledHorizontalGrid = styled.section`
     margin-bottom: 64px;
     scroll-behavior: smooth;
 `;
+
 export const StyledGridSection = styled.div`
-    display: block;
     overflow: hidden;
 `;
 
+export const StyledGridTop = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+
 export const StyledTitleAndDescription = styled.div`
-    display: inline-block;
-    display: inline-block;
+    align-self: center;
 `;
 
 export const StyledTitle = styled.a`
@@ -28,10 +32,7 @@ export const StyledDescription = styled.p`
 `;
 
 export const StyledPreviousNextChevrons = styled.div`
-    float: right;
-    display: block;
-    clear: both;
-    bottom: 0px;
+    align-self: flex-start;
 `;
 
 export const StyledImages = styled.div`
