@@ -40,7 +40,7 @@ function TopNav(props) {
 
     return (
         <NavBar sticky={false}>
-            <Logo href="/">Gallang</Logo>
+            <Logo to="/">Gallang</Logo>
             {isLoggedIn && (
                 <ControlsDiv>
                     <NavSearch
