@@ -22,6 +22,7 @@ import { Link } from "react-router-dom";
  * @param {React.MutableRefObject} props.accountOptionsRef - Reference to be used on the account options element (e.g. logout)
  * @param {Function} props.onSearchInput - Function to call when the text inside the search input field changes
  * @param {Function} props.onSearch - Function to call when the user hits enter inside the search input field
+ * @param {Function} props.onLogoutRequest - Function to call when a user requests a logout (clicks the logout button)
  */
 function TopNav(props) {
     const {
@@ -32,6 +33,7 @@ function TopNav(props) {
         accountOptionsRef,
         onSearchInput,
         onSearch,
+        onLogoutRequest,
     } = props;
 
     const userInitial =
@@ -58,9 +60,9 @@ function TopNav(props) {
                         >
                             <UserName>{username}</UserName>
                             <AccountOption>My account</AccountOption>
-                            <Link to="/login">
-                                <AccountOption>Logout</AccountOption>
-                            </Link>
+                            <AccountOption onClick={onLogoutRequest}>
+                                Logout
+                            </AccountOption>
                         </AccountOptions>
                     </AccountWrapper>
                 </ControlsDiv>

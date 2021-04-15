@@ -2,6 +2,7 @@ import React from "react";
 import _ from "underscore";
 import { useHistory } from "react-router-dom";
 import { TopNav } from "../components";
+import { AuthenticationModel } from "../model";
 
 /**
  * Presenter for the TopNav component
@@ -42,6 +43,19 @@ function TopNavPresenter() {
         setQuery(updatedQuery);
     }
 
+    /**
+     * Login user using the authentication model (firebase authentication)
+     * @param {Event} event
+     */
+    async function logoutUser(event) {
+        try {
+            await AuthenticationModel.signOut();
+            browserHistory.push("/login");
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <TopNav
             username="GallangUser"
@@ -51,6 +65,7 @@ function TopNavPresenter() {
             accountOptionsRef={accountOptionsRef}
             onSearchInput={_.debounce(updateQueryInState, 500)}
             onSearch={(e) => redirectToSearchResults()}
+            onLogoutRequest={(e) => logoutUser()}
         />
     );
 }
