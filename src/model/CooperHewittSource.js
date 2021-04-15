@@ -23,7 +23,6 @@ const CooperHewittSource = {
             if (response.status !== 200) {
                 throw response.statusText;
             }
-            console.log({ response });
             return response.json();
         } catch (error) {
             console.log("Error:", error);
