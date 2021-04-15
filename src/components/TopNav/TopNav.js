@@ -10,7 +10,6 @@ import {
     NavSearch,
     UserName,
 } from "./style";
-import { Link } from "react-router-dom";
 
 /**
  * Navigation bar for the whole application
