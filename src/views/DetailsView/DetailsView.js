@@ -9,7 +9,9 @@ import {
     BackIconWrapper,
     ScrollUpWrapper,
     StyledTitle,
-    StyledDescription
+    StyledDescription,
+    StyledFrameWrapper,
+    StyledTitleWrapper
 } from "./style";
 import { 
     Heart,
@@ -55,38 +57,44 @@ function DetailsView(props) {
                     </StyledIconButton>
                 </BackIconWrapper>
                 <StyledSection id="image">
-                    <StyledImageWrapper img={image.b.url}>
-                        <StyledOptionContainer>
-                            <StyledIconButton
-                                variant="link"
-                                onClick={liked ? onClickUnlikeButton : onClickLikeButton}
+                    <StyledOptionContainer>
+                        <StyledIconButton
+                            variant="link"
+                            onClick={liked ? onClickUnlikeButton : onClickLikeButton}
+                        >
+                            {liked? <HeartFill /> : <Heart />}
+                        </StyledIconButton>
+                        <StyledIconButton
+                            variant="link"
+                        >
+                            <Link
+                                activeClass="active"
+                                to="info"
+                                spy={true}
+                                smooth={true}
+                                offset={0}
+                                duration={700}
                             >
-                                {liked? <HeartFill /> : <Heart />}
-                            </StyledIconButton>
-                            <StyledIconButton
-                                variant="link"
-                            >
-                                <Link
-                                    activeClass="active"
-                                    to="info"
-                                    spy={true}
-                                    smooth={true}
-                                    offset={0}
-                                    duration={700}
-                                >
-                                    <InfoCircle />
-                                </Link>
-                            </StyledIconButton>
-                            <StyledIconButton
-                                variant="link"
-                                download={true}
-                                href={image.b.url}
-                                target="_blank"
-                            >
-                                <Download />
-                            </StyledIconButton>
-                        </StyledOptionContainer>
-                    </StyledImageWrapper>
+                                <InfoCircle />
+                            </Link>
+                        </StyledIconButton>
+                        <StyledIconButton
+                            variant="link"
+                            download={true}
+                            href={image.b.url}
+                            target="_blank"
+                        >
+                            <Download />
+                        </StyledIconButton>
+                    </StyledOptionContainer>
+                    
+                    <StyledFrameWrapper>
+                        <StyledImageWrapper img={image.b.url}>
+                        </StyledImageWrapper>
+                    </StyledFrameWrapper>
+                    <StyledTitleWrapper>
+                        {title}
+                    </StyledTitleWrapper>
                 </StyledSection>
                 
                 <StyledSection id="info">

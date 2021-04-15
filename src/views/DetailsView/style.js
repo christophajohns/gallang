@@ -22,9 +22,27 @@ export const StyledSection = styled.section`
     background: #eee;
 `;
 
+export const StyledFrameWrapper = styled.div`
+    width: 80%;
+    height: 70%;
+`;
+
+export const StyledTitleWrapper = styled.div`
+    position: flex;
+    margin-top: 5px;
+    text-align: right;
+    font-family: Georgia;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 24px;
+`;
+
 export const StyledImageWrapper = styled.div`
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     background: url(${props=>props.img});
     background-size:contain;
     background-repeat: no-repeat;
