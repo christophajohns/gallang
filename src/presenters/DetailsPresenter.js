@@ -5,7 +5,15 @@ import { CooperHewittSource } from "../model";
 import { promiseNoData } from "../components";
 import { usePromise } from "./customHooks";
 import { useModelProperty } from "./customHooks";
+import { modelType } from "./ImagePresenter";
 
+/**
+ * Presenter for the details page content (larger display of an image).
+ * @param {Object} props.model - Model keeping the application state
+ * @param {Function} props.model.likeImage - Function to like an image by its ID
+ * @param {Function} props.model.unlikeImage - Function to unlike an image by its ID
+ * @param {string[]} props.model.likedImageIDs - Array of image IDs the user has liked already
+ */
 function DetailsPresenter(props) {
     const { imageID } = useParams();
     const { model } = props;
@@ -16,7 +24,7 @@ function DetailsPresenter(props) {
     // Effects
     React.useEffect(() => {
         setPromise(CooperHewittSource.getObjectInfo(imageID));
-    }, []);
+    }, [imageID]);
 
     const [data, , error] = usePromise(promise);
 
@@ -43,5 +51,9 @@ function DetailsPresenter(props) {
         </Fragment>
     );
 }
+
+DetailsPresenter.propTypes = {
+    model: modelType,
+};
 
 export default DetailsPresenter;
