@@ -12,7 +12,7 @@ import {
     StyledGridSection,
     StyledGridTop,
 } from "./style";
-import { imageType } from "../../types";
+import { imageType, refType } from "../../types";
 
 /**
  * Horizontal (scrollable) grid of images to showcase objects in a collection or gallery
@@ -86,12 +86,7 @@ HorizontalGrid.propTypes = {
     href: PropTypes.string,
     description: PropTypes.string,
     images: PropTypes.arrayOf(imageType).isRequired,
-    imagesRef: PropTypes.oneOfType([
-        // Either a function
-        PropTypes.func,
-        // Or the instance of a DOM native element (see the note about SSR)
-        PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-    ]).isRequired,
+    imagesRef: refType.isRequired,
     onClickPreviousButton: PropTypes.func.isRequired,
     onClickNextButton: PropTypes.func.isRequired,
     model: PropTypes.shape({
