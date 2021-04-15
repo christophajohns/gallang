@@ -1,11 +1,11 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { DetailsView } from "../views";
 import { CooperHewittSource } from "../model";
 import { promiseNoData } from "../components";
 import { usePromise } from "./customHooks";
 import { useModelProperty } from "./customHooks";
-import { modelType } from "./ImagePresenter";
+import { modelType as imagePresenterModelType } from "./ImagePresenter";
 
 /**
  * Presenter for the details page content (larger display of an image).
@@ -15,45 +15,55 @@ import { modelType } from "./ImagePresenter";
  * @param {string[]} props.model.likedImageIDs - Array of image IDs the user has liked already
  */
 function DetailsPresenter(props) {
-    const { imageID } = useParams();
     const { model } = props;
+
+    // Hooks
     const likedImageIDs = useModelProperty(model, "likedImageIDs");
 
-    const [promise, setPromise] = React.useState(null);
+    const [objectInfoPromise, setPromise] = React.useState(null);
+    const [objectInfoData, , objectInfoError] = usePromise(objectInfoPromise);
+
+    const { imageID } = useParams();
+    const browserHistory = useHistory();
 
     // Effects
     React.useEffect(() => {
         setPromise(CooperHewittSource.getObjectInfo(imageID));
     }, [imageID]);
 
-    const [data, , error] = usePromise(promise);
-
-    const browserHistory = useHistory();
+    /** Redirect user to home page ("/") when a user clicks on the return button */
     function redirectToHome() {
         browserHistory.push(`/`);
     }
 
     return (
-        <Fragment>
-            {promiseNoData(promise, data, error) || (
+        <>
+            {promiseNoData(
+                objectInfoPromise,
+                objectInfoData,
+                objectInfoError
+            ) || (
                 <DetailsView
-                    id={data.id}
-                    images={data.images}
-                    title={data.title}
-                    url={data.url}
-                    description={data.description}
-                    liked={likedImageIDs.includes(data.id)}
-                    onClickUnlikeButton={(e) => model.unlikeImage(data.id)}
-                    onClickLikeButton={(e) => model.likeImage(data.id)}
-                    onClickReturn={(e) => redirectToHome()}
+                    id={objectInfoData.id}
+                    title={objectInfoData.title}
+                    url={objectInfoData.images[0].b.url}
+                    description={objectInfoData.description}
+                    liked={likedImageIDs.includes(objectInfoData.id)}
+                    onClickUnlikeButton={(e) =>
+                        model.unlikeImage(objectInfoData.id)
+                    }
+                    onClickLikeButton={(e) =>
+                        model.likeImage(objectInfoData.id)
+                    }
+                    onClickClose={(e) => redirectToHome()}
                 />
             )}
-        </Fragment>
+        </>
     );
 }
 
 DetailsPresenter.propTypes = {
-    model: modelType,
+    model: imagePresenterModelType,
 };
 
 export default DetailsPresenter;

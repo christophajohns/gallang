@@ -11,124 +11,115 @@ import {
     StyledTitle,
     StyledDescription,
     StyledFrameWrapper,
-    StyledTitleWrapper
+    StyledTitleWrapper,
 } from "./style";
-import { 
+import {
     Heart,
     Download,
     HeartFill,
     InfoCircle,
-    ArrowUpLeftCircle,
-    ArrowUpLeftCircleFill,
-    CaretUpSquare
+    X as XIcon,
+    CaretUpSquare,
 } from "react-bootstrap-icons";
-import { Link, animateScroll as scroll } from "react-scroll";
+import { Link as ScrollLink } from "react-scroll";
 
 /**
- * Placeholder details view to test routing (would be used to render the full page version of an image and its info)
+ * Details view to render the full page version of an image and its info
  * @param {Object} props - Properties passed to the view
- * @param {string} props.imageID - Unique identifier of the image or object displayed
+ * @param {string} props.id - Unique identifier of the image or object displayed
+ * @param {string} props.title - Name or title of the image (object)
+ * @param {string} props.url - URL of the image source
+ * @param {string} props.description - Long-form description of the image
+ * @param {boolean} props.liked - Flag whether the user has liked this image
+ * @param {Function} props.onClickLikeButton - Function to be called when a user clicks the heart (like) button
+ * @param {Function} props.onClickUnlikeButton - Function to be called when a user clicks the filled heart (unlike) button
+ * @param {Function} props.onClickImage - Function to be called when a user clicks on the image
+ * @param {Function} props.onClickClose - Function to be called when a user clicks on the button to close the details view (return to previous page)
  */
 function DetailsView(props) {
-
-    // const { imageID } = props;
     const {
         id,
-        images,
         title,
         url,
         description,
         liked,
         onClickUnlikeButton,
         onClickLikeButton,
-        onClickReturn,
+        onClickClose,
     } = props;
 
-    const image = images[0];
-    return(
-        <div className="DetailsView">
-            <StyledDetailsView>
-                <BackIconWrapper>
+    return (
+        <StyledDetailsView className="DetailsView">
+            <BackIconWrapper>
+                <StyledIconButton variant="link" onClick={onClickClose}>
+                    <XIcon />
+                </StyledIconButton>
+            </BackIconWrapper>
+            <StyledSection id="image">
+                <StyledOptionContainer>
                     <StyledIconButton
                         variant="link"
-                        onClick={onClickReturn}
+                        onClick={
+                            liked ? onClickUnlikeButton : onClickLikeButton
+                        }
                     >
-                        <ArrowUpLeftCircle />
+                        {liked ? <HeartFill /> : <Heart />}
                     </StyledIconButton>
-                </BackIconWrapper>
-                <StyledSection id="image">
-                    <StyledOptionContainer>
-                        <StyledIconButton
-                            variant="link"
-                            onClick={liked ? onClickUnlikeButton : onClickLikeButton}
+                    <StyledIconButton variant="link">
+                        <ScrollLink
+                            activeClass="active"
+                            to="info"
+                            spy={true}
+                            smooth={true}
+                            offset={0}
+                            duration={700}
                         >
-                            {liked? <HeartFill /> : <Heart />}
-                        </StyledIconButton>
-                        <StyledIconButton
-                            variant="link"
-                        >
-                            <Link
-                                activeClass="active"
-                                to="info"
-                                spy={true}
-                                smooth={true}
-                                offset={0}
-                                duration={700}
-                            >
-                                <InfoCircle />
-                            </Link>
-                        </StyledIconButton>
-                        <StyledIconButton
-                            variant="link"
-                            download={true}
-                            href={image.b.url}
-                            target="_blank"
-                        >
-                            <Download />
-                        </StyledIconButton>
-                    </StyledOptionContainer>
-                    
-                    <StyledFrameWrapper>
-                        <StyledImageWrapper img={image.b.url}>
-                        </StyledImageWrapper>
-                    </StyledFrameWrapper>
-                    <StyledTitleWrapper>
-                        {title}
-                    </StyledTitleWrapper>
-                </StyledSection>
-                
-                <StyledSection id="info">
-                    <StyledInfoWrappper>
-                        <InfoContainer>
-                            <StyledTitle>
-                                <a href={url}>{title}</a>
-                            </StyledTitle>
-                            <StyledDescription>
-                                <p> {description}.</p>
-                            </StyledDescription>
-                        </InfoContainer>
-                    </StyledInfoWrappper>
-                    <ScrollUpWrapper>
-                        <StyledIconButton
-                            variant="link"
-                        >
-                            <Link
-                                activeClass="active"
-                                to="image"
-                                spy={true}
-                                smooth={true}
-                                offset={0}
-                                duration={700}                            
-                            >
-                                <CaretUpSquare />
-                            </Link>
-                        </StyledIconButton>
-                    </ScrollUpWrapper>
-                </StyledSection>
+                            <InfoCircle />
+                        </ScrollLink>
+                    </StyledIconButton>
+                    <StyledIconButton
+                        variant="link"
+                        download={true}
+                        href={url}
+                        target="_blank"
+                    >
+                        <Download />
+                    </StyledIconButton>
+                </StyledOptionContainer>
 
-            </StyledDetailsView>
+                <StyledFrameWrapper>
+                    <StyledImageWrapper img={url}></StyledImageWrapper>
+                </StyledFrameWrapper>
+                <StyledTitleWrapper>{title}</StyledTitleWrapper>
+            </StyledSection>
 
-        </div>
+            <StyledSection id="info">
+                <StyledInfoWrappper>
+                    <InfoContainer>
+                        <StyledTitle>
+                            <a href={url}>{title}</a>
+                        </StyledTitle>
+                        <StyledDescription>
+                            <p>{description}</p>
+                        </StyledDescription>
+                    </InfoContainer>
+                </StyledInfoWrappper>
+                <ScrollUpWrapper>
+                    <StyledIconButton variant="link">
+                        <ScrollLink
+                            activeClass="active"
+                            to="image"
+                            spy={true}
+                            smooth={true}
+                            offset={0}
+                            duration={700}
+                        >
+                            <CaretUpSquare />
+                        </ScrollLink>
+                    </StyledIconButton>
+                </ScrollUpWrapper>
+            </StyledSection>
+        </StyledDetailsView>
     );
 }
 
