@@ -1,13 +1,27 @@
 import { Button } from "react-bootstrap";
 import styled from "styled-components";
 
-export const StyledDetailsView = styled.div`
-    padding:0;
-    margin:0;
-    box-sizing:border-box;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
+export const TopFixed = styled.div`
+    position: fixed;
+    width: 100%;
+    top: 64px;
+    padding-left: 16px;
+    padding-right: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+`;
+
+export const BottomRightFixed = styled.div`
+    position: fixed;
+    bottom: 32px;
+    right: 16px;
+`;
+
+export const DetailsViewDiv = styled.div`
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 16px;
+    line-height: 24px;
 `;
 
 export const StyledSection = styled.section`
@@ -15,127 +29,52 @@ export const StyledSection = styled.section`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
     width: 100%;
     height: 100vh;
-    scroll-snap-align: center;
-    background: #eee;
-`;
-
-export const StyledFrameWrapper = styled.div`
-    width: 80%;
-    height: 70%;
+    padding: 128px;
 `;
 
 export const StyledTitleWrapper = styled.div`
-    position: flex;
-    margin-top: 5px;
+    margin-top: 12px;
     text-align: right;
-    font-family: Georgia;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 24px;
+    align-self: flex-end;
 `;
 
-export const StyledImageWrapper = styled.div`
-    display: flex;
-    flex-wrap: wrap;
+export const StyledImage = styled.img`
     width: 100%;
-    height: 100%;
-    background: url(${props=>props.img});
-    background-size:contain;
-    background-repeat: no-repeat;
-    background-position: center center;
-`;
-
-export const StyledInfoWrappper = styled.div`
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #eee;
+    height: calc(100% - 60px); // Full height minus height of title and subtitle
+    object-fit: contain;
 `;
 
 export const InfoContainer = styled.div`
-    width: 50%;
-    margin: 50px auto;
-    padding: 50px;
-    background-color: #d5d9e0;
-    border-radius: 10px;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-    :hover {
-        box-shadow: 10px 10px 30px rgba(0, 0, 0, .3);
-    }
+    max-width: 640px;
 `;
 
 export const StyledOptionContainer = styled.div`
-    position: fixed;
-    top: 100px;
-    right: 150px;
-    width: 40px;
-    padding-top: 5px;
-    padding-bottom: 10px;
-    background-color: rgba(204,204,204,0.4);
-    box-sizing: border-box;
-    border-radius: 10px;
-    :hover {
-        box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-    }
+    display: flex;
+    flex-direction: column;
 `;
 
 export const StyledIconButton = styled(Button)`
     color: grey;
-    &:hover {
+
+    &:hover,
+    .active {
         color: black;
     }
 `;
 
-export const BackIconWrapper = styled.div`
-    position: fixed;
-    top: 30px;
-    left: 100px;
-    background-color: rgba(204,204,204,0.4);
-    box-sizing: border-box;
-    border-radius: 50%;
-    padding-bottom:3px;
-    :hover {
-        box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-    }
-`;
-
-export const ScrollUpWrapper = styled.div`
-    position: fixed;
-    bottom: 50px;
-    right: 150px;
-    background-color: rgba(204,204,204,0.4);
-    box-sizing: border-box;
-    border-radius: 50%;
-    padding-bottom:3px;
-    :hover {
-        box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-    }
-`;
-
-export const StyledTitle = styled.div`
-    font-family: 'Playfair Display SC', serif;
+export const StyledTitle = styled.h3`
+    font-size: 16px;
+    line-height: 16px;
     font-weight: bold;
-    font-size: 35px;
-    padding-bottom: 15px;
-    padding-top: 20px;
-    a{
-        color: #666666;
-        text-decoration: none;
-        :hover{
-            text-shadow: 0px 4px 4px rgba(0,0,0,0.25);
-        }
-    }
+    margin-bottom: 4px;
 `;
 
-export const StyledDescription = styled.div`
-    font-family: 'Martel', serif;
-    font-size: 20px;
-    padding: 10px 100px 20px 100px;
-    color: #7f7f7f;
+export const StyledSubTitle = styled.div`
+    font-style: italic;
+`;
+
+export const StyledDescription = styled.p`
+    margin-top: 16px;
 `;

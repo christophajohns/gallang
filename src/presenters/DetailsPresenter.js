@@ -44,8 +44,9 @@ function DetailsPresenter(props) {
                 objectInfoError
             ) || (
                 <DetailsView
-                    id={objectInfoData.id}
-                    title={objectInfoData.title}
+                    title={objectInfoData.title_raw}
+                    date={objectInfoData.date}
+                    objectType={objectInfoData.type}
                     url={objectInfoData.images[0].b.url}
                     description={objectInfoData.description}
                     liked={likedImageIDs.includes(objectInfoData.id)}
@@ -55,7 +56,7 @@ function DetailsPresenter(props) {
                     onClickLikeButton={(e) =>
                         model.likeImage(objectInfoData.id)
                     }
-                    onClickClose={(e) => redirectToHome()}
+                    onClickBackButton={(e) => redirectToHome()}
                 />
             )}
         </>
