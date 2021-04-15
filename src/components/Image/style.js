@@ -20,6 +20,12 @@ export const StyledImage = styled.div`
     &:hover img {
         opacity: 0.7;
     }
+    @media (max-width: 820px) {
+        img {
+            height: 200px;
+            width: 200px;
+        }
+    }
 `;
 
 export const StyledImageButtons = styled.div`

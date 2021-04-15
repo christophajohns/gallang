@@ -5,6 +5,7 @@ import {
     HeartFill,
 } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import {
     StyledGripButton,
     StyledImage,
@@ -39,20 +40,36 @@ function Image(props) {
                 <GripVertical />
             </StyledGripButton>
             <StyledImageButtons>
-                <StyledIconButton
-                    variant="link"
-                    onClick={liked ? onClickUnlikeButton : onClickLikeButton}
+                <OverlayTrigger
+                    placement="bottom"
+                    overlay={
+                        <Tooltip id={liked ? "tooltip-like" : "tooltip-unlike"}>
+                            {liked ? "Unlike" : "Like"}
+                        </Tooltip>
+                    }
                 >
-                    {liked ? <HeartFill /> : <Heart />}
-                </StyledIconButton>
-                <StyledIconButton
-                    variant="link"
-                    download={true}
-                    href={src}
-                    target="_blank"
+                    <StyledIconButton
+                        variant="link"
+                        onClick={
+                            liked ? onClickUnlikeButton : onClickLikeButton
+                        }
+                    >
+                        {liked ? <HeartFill /> : <Heart />}
+                    </StyledIconButton>
+                </OverlayTrigger>
+                <OverlayTrigger
+                    placement="bottom"
+                    overlay={<Tooltip id="tooltip-download">Download</Tooltip>}
                 >
-                    <Download />
-                </StyledIconButton>
+                    <StyledIconButton
+                        variant="link"
+                        download={true}
+                        href={src}
+                        target="_blank"
+                    >
+                        <Download />
+                    </StyledIconButton>
+                </OverlayTrigger>
             </StyledImageButtons>
         </StyledImage>
     );

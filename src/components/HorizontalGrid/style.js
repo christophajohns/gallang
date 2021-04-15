@@ -6,9 +6,18 @@ export const StyledHorizontalGrid = styled.section`
     scroll-behavior: smooth;
 `;
 
+export const StyledGridSection = styled.div`
+    overflow: hidden;
+`;
+
+export const StyledGridTop = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+`;
+
 export const StyledTitleAndDescription = styled.div`
-    display: inline-block;
-    margin-bottom: 8px;
+    align-self: center;
 `;
 
 export const StyledTitle = styled.a`
@@ -20,10 +29,11 @@ export const StyledDescription = styled.p`
     margin-bottom: 0px;
     font-size: 0.9rem;
     color: grey;
+    margin-bottom: 8px;
 `;
 
 export const StyledPreviousNextChevrons = styled.div`
-    float: right;
+    align-self: flex-start;
 `;
 
 export const StyledImages = styled.div`
@@ -34,7 +44,6 @@ export const StyledImages = styled.div`
 
 export const StyledIconButton = styled(Button)`
     color: black;
-
     &:hover {
         color: grey;
     }
