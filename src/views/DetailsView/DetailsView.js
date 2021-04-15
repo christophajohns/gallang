@@ -209,7 +209,7 @@ function ImageSection(props) {
     const { url, title, objectType, date } = props;
 
     return (
-        <StyledSection>
+        <StyledSection id="image">
             <StyledImage src={url} alt={title} />
             <StyledTitleWrapper>
                 <div>{title.toUpperCase()}</div>
@@ -233,7 +233,7 @@ function InfoSection(props) {
     const { title, description, objectType, date } = props;
 
     return (
-        <StyledSection>
+        <StyledSection id="info">
             <InfoContainer>
                 <StyledTitle>{title}</StyledTitle>
                 <StyledSubTitle>
