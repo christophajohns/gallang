@@ -12,6 +12,7 @@ import {
     CollectionPresenter,
     GalleryPresenter,
 } from "./presenters";
+import { PrivateRoute } from "./components";
 import { mockCollections } from "./model/MockData";
 
 function App(props) {
@@ -36,21 +37,21 @@ function App(props) {
                         <ForgotPasswordPresenter />
                     </Route>
 
-                    <Route path="/search" exact={true}>
+                    <PrivateRoute path="/search" exact={true}>
                         <SearchResultsPresenter model={model} />
-                    </Route>
+                    </PrivateRoute>
 
-                    <Route path="/liked" exact={true}>
+                    <PrivateRoute path="/liked" exact={true}>
                         <LikedContentPresenter model={model} />
-                    </Route>
+                    </PrivateRoute>
 
-                    <Route path="/details/:imageID" exact={true}>
+                    <PrivateRoute path="/details/:imageID" exact={true}>
                         <DetailsPresenter model={model} />
-                    </Route>
+                    </PrivateRoute>
 
-                    <Route path="/" exact={true}>
+                    <PrivateRoute path="/" exact={true}>
                         <HomePresenter model={model} />
-                    </Route>
+                    </PrivateRoute>
                 </Switch>
             </div>
         </Router>
