@@ -43,7 +43,7 @@ function Image(props) {
                 <OverlayTrigger
                     placement="bottom"
                     overlay={
-                        <Tooltip id={liked ? `tooltip-like` : `tooltip-unlike`}>
+                        <Tooltip id={liked ? "tooltip-like" : "tooltip-unlike"}>
                             {liked ? "Unlike" : "Like"}
                         </Tooltip>
                     }
@@ -59,9 +59,7 @@ function Image(props) {
                 </OverlayTrigger>
                 <OverlayTrigger
                     placement="bottom"
-                    overlay={
-                        <Tooltip id={`tooltip-download`}>{"Download"}</Tooltip>
-                    }
+                    overlay={<Tooltip id="tooltip-download">Download</Tooltip>}
                 >
                     <StyledIconButton
                         variant="link"
