@@ -16,6 +16,10 @@ function LoginPresenter() {
 
     const browserHistory = useHistory();
 
+    /**
+     * Login user using the authentication model (firebase authentication)
+     * @param {Event} event
+     */
     async function loginUser(event) {
         event.preventDefault(); // Do not reload page on submit
 
