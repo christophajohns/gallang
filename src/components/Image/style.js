@@ -21,14 +21,11 @@ export const StyledImage = styled.div`
         opacity: 0.7;
     }
     @media (max-width: 820px) {
-
-        img{
+        img {
             height: 200px;
-            width:200px;
+            width: 200px;
         }
-        
     }
-   
 `;
 
 export const StyledImageButtons = styled.div`

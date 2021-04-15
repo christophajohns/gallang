@@ -6,13 +6,13 @@ export const StyledHorizontalGrid = styled.section`
     scroll-behavior: smooth;
 `;
 export const StyledGridSection = styled.div`
-    display:block;
+    display: block;
     overflow: hidden;
 `;
 
 export const StyledTitleAndDescription = styled.div`
     display: inline-block;
-    display:inline-block;
+    display: inline-block;
 `;
 
 export const StyledTitle = styled.a`
@@ -31,7 +31,7 @@ export const StyledPreviousNextChevrons = styled.div`
     float: right;
     display: block;
     clear: both;
-    bottom:0px:
+    bottom: 0px;
 `;
 
 export const StyledImages = styled.div`

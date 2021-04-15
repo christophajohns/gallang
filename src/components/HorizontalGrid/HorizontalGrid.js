@@ -10,10 +10,8 @@ import {
     StyledIconButton,
     StyledImages,
     StyledGridSection,
-
 } from "./style";
 import { imageType } from "../../types";
-
 
 /**
  * Horizontal (scrollable) grid of images to showcase objects in a collection or gallery
