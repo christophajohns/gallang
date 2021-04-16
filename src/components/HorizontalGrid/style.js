@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Button } from "react-bootstrap";
 
 export const StyledHorizontalGrid = styled.section`
     margin-bottom: 64px;
