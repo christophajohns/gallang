@@ -9,16 +9,19 @@ import {
     SignupPresenter,
     ForgotPasswordPresenter,
     LikedContentPresenter,
-    CollectionPresenter,
-    GalleryPresenter,
     SidebarPresenter,
 } from "./presenters";
-import { mockCollections } from "./model/MockData";
 
 function App(props) {
     const {
         model, // Model keeping application state
     } = props;
+
+    const sidebar = (
+        <aside>
+            <SidebarPresenter model={model} />
+        </aside>
+    );
 
     return (
         <Router>
@@ -44,18 +47,14 @@ function App(props) {
                         <MainContent>
                             <SearchResultsPresenter model={model} />
                         </MainContent>
-                        <aside>
-                            <SidebarPresenter />
-                        </aside>
+                        {sidebar}
                     </Route>
 
                     <Route path="/liked" exact={true}>
                         <MainContent>
                             <LikedContentPresenter model={model} />
                         </MainContent>
-                        <aside>
-                            <SidebarPresenter />
-                        </aside>
+                        {sidebar}
                     </Route>
 
                     <Route path="/details/:imageID" exact={true}>
@@ -66,9 +65,7 @@ function App(props) {
                         <MainContent>
                             <HomePresenter model={model} />
                         </MainContent>
-                        <aside>
-                            <SidebarPresenter />
-                        </aside>
+                        {sidebar}
                     </Route>
                 </Switch>
             </div>
