@@ -2,6 +2,7 @@ import React from "react";
 import _ from "underscore";
 import { useHistory } from "react-router-dom";
 import { TopNav } from "../components";
+import { useCurrentUser } from "./customHooks";
 import { AuthenticationModel } from "../model";
 
 /**
@@ -11,7 +12,9 @@ import { AuthenticationModel } from "../model";
 function TopNavPresenter() {
     const accountOptionsRef = React.useRef(null); // used to enable the mouse enter/leave behaviour
     const [query, setQuery] = React.useState("");
+
     const browserHistory = useHistory(); // used to manually navigate/redirect to the details of a specific image
+    const currentUser = useCurrentUser();
 
     /** Redirect user to search results page using the query specified in the search input field */
     const redirectToSearchResults = React.useCallback(() => {
@@ -58,8 +61,8 @@ function TopNavPresenter() {
 
     return (
         <TopNav
-            username="GallangUser"
-            isLoggedIn={true}
+            isLoggedIn={!!currentUser}
+            username={currentUser?.displayName}
             onAccountWrapperMouseEnter={(e) => showAccountOptions()}
             onAccountOptionsMouseLeave={(e) => hideAccountOptions()}
             accountOptionsRef={accountOptionsRef}
