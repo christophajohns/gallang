@@ -4,7 +4,7 @@ import { Alert } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { GroupedInputs } from "./style";
 import AuthInputField from "../AuthInputField";
-import UserNameInput from "../UserNameInput";
+import UsernameInput from "../UsernameInput";
 import EmailInput from "../EmailInput";
 import PasswordInput from "../PasswordInput";
 import { CenterContentDiv, StyledForm, AuthButton } from "../style";
@@ -34,7 +34,7 @@ function SignupView(props) {
         <CenterContentDiv className="SignupView">
             <StyledForm onSubmit={onRequestSignup}>
                 {error && <Alert variant="danger">{error}</Alert>}
-                <UserNameInput usernameRef={usernameRef} />
+                <UsernameInput usernameRef={usernameRef} />
                 <EmailInput emailRef={emailRef} />
                 <GroupedInputs>
                     <PasswordInput passwordRef={passwordRef} />
