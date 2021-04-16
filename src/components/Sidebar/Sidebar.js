@@ -22,7 +22,7 @@ function Sidebar(props) {
             </IconButton>
             <LikedContentButton />
             {galleries.map((gallery) => (
-                <GalleryButton gallery={gallery} />
+                <GalleryButton key={gallery.id} gallery={gallery} />
             ))}
             <AddGalleryButton onClickAddGallery={onClickAddGallery} />
         </SidebarAside>
