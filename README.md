@@ -80,13 +80,16 @@ Until the final submission, we aim to add the following features:
   ├── presenters              # Framework- (React-)specific code to display views based on the application state, fetch data and handle interactions
     ├── CollectionPresenter.js  # Presenter for the collection page content
     ├── DetailsPresenter.js     # Placeholder presenter to test routing for the details view
+    ├── ForgotPasswordPresenter.js  # Presenter for the forgot password view
     ├── GalleryPresenter.js     # Presenter for the gallery page content
     ├── HomePresenter.js        # Presenter for the Home/Browse view
     ├── HorizontalGridPresenter.js  # Presenter for the HorizontalGrid component
     ├── ImagePresenter.js       # Presenter for the Image component
     ├── LikedContentPresenter.js  # Presenter for the liked content page content
+    ├── LoginPresenter.js       # Presenter for the login view
     ├── ResultsPresenter.js     # Presenter for the Results view
     ├── SearchResultsPresenter.js  # Presenter for the search results page content
+    ├── SignupPresenter.js      # Presenter for the signup view
     ├── TopNavPresenter.js      # Presenter for the TopNav component
     ├── customHooks.js          # Custom React hooks (e.g. to access model properties)
     └── index.js                # Imports and export of all presenters
@@ -95,6 +98,10 @@ Until the final submission, we aim to add the following features:
     ├── jsDocTypes.js           # Type definitions using the JSDoc specification
     └── propTypes.js            # Type definitions using the PropTypes specification
   ├── views                   # Static views to present the application data
+    ├── DetailsView             # Details view to render the full page version of an image and its info
+      ├── DetailsView.js          # View file
+      ├── index.js                # Import and export of component
+      └── style.js                # Styling of the component using styled-components
     ├── HomeView                # View component for the Home/Browse page content
       ├── CollectionCarousel      # Component to render a carousel of "featured" collections
         ├── CollectionCarousel.js   # Component file
@@ -110,7 +117,24 @@ Until the final submission, we aim to add the following features:
       ├── ResultsView.js          # View file
       ├── index.js                # Import and export of component
       └── style.js                # Styling of the component using styled-components
-    ├── DetailsView.js          # Placeholder details view to test routing (would be used to render the full page version of an image and its info)
+    ├── auth                    # Views for the authentication flow
+      ├── ForgotPasswordView      # View component for the forgot password page
+        ├── ForgotPasswordView.js   # View file
+        └── index.js                # Import and export of component
+      ├── LoginView               # View component for the login page
+        ├── LoginView.js            # View file
+        ├── index.js                # Import and export of component
+        └── style.js                # Styling of the component using styled-components
+      ├── SignupView              # View component for the signup page
+        ├── LoginView.js            # View file
+        ├── index.js                # Import and export of component
+        └── style.js                # Styling of the component using styled-components
+      ├── AuthInputField.js       # Component to render a text input field for the authentication pages
+      ├── EmailInput.js           # Component to render a text input field for the email
+      ├── PasswordInput.js        # Component to render a text input field for the password
+      ├── UserNameInput.js        # Component to render a text input field for the username
+      ├── index.js                # Imports and exports of the authentication views
+      └── style.js                # Common styling for the authentication views
     └── index.js                # Imports and export of all views
   ├── App.css                 # Common styling for the entire application
   ├── App.js                  # Application definition (incl. routing)
