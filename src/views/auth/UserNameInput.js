@@ -1,5 +1,6 @@
 import { Person } from "react-bootstrap-icons";
 import AuthInputField from "./AuthInputField";
+import { refType } from "../../types";
 
 /**
  * Component to render a text input field for the username
@@ -19,5 +20,9 @@ function UserNameInput(props) {
         />
     );
 }
+
+UserNameInput.propTypes = {
+    userNameRef: refType.isRequired,
+};
 
 export default UserNameInput;

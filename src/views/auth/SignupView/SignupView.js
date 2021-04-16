@@ -1,12 +1,14 @@
 import { Lock } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import { Alert } from "react-bootstrap";
+import PropTypes from "prop-types";
 import { GroupedInputs } from "./style";
 import AuthInputField from "../AuthInputField";
 import UserNameInput from "../UserNameInput";
 import EmailInput from "../EmailInput";
 import PasswordInput from "../PasswordInput";
 import { CenterContentDiv, StyledForm, AuthButton } from "../style";
+import { refType } from "../../../types";
 
 /**
  * View component for the login page.
@@ -51,6 +53,16 @@ function SignupView(props) {
     );
 }
 
+SignupView.propTypes = {
+    onRequestSignup: PropTypes.func.isRequired,
+    usernameRef: refType.isRequired,
+    emailRef: refType.isRequired,
+    passwordRef: refType.isRequired,
+    confirmPasswordRef: refType.isRequired,
+    isLoading: PropTypes.bool,
+    error: PropTypes.string,
+};
+
 /**
  * Component to render a the confirm password text input field
  * @param {Object} props - Properties passed to the component
@@ -69,5 +81,9 @@ function ConfirmPasswordInput(props) {
         />
     );
 }
+
+ConfirmPasswordInput.propTypes = {
+    confirmPasswordRef: refType.isRequired,
+};
 
 export default SignupView;

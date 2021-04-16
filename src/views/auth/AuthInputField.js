@@ -1,5 +1,7 @@
 import { InputGroup } from "react-bootstrap";
+import PropTypes from "prop-types";
 import { FormControl, InputGroupText } from "./style";
+import { refType } from "../../types";
 
 /**
  * Component to render a text input field for the authentication pages
@@ -30,5 +32,13 @@ function AuthInputField(props) {
         </InputGroup>
     );
 }
+
+AuthInputField.propTypes = {
+    icon: PropTypes.node.isRequired,
+    placeholder: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string,
+    authRef: refType.isRequired,
+};
 
 export default AuthInputField;

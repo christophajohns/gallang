@@ -1,5 +1,6 @@
 import { Lock } from "react-bootstrap-icons";
 import AuthInputField from "./AuthInputField";
+import { refType } from "../../types";
 
 /**
  * Component to render a text input field for the password
@@ -19,5 +20,9 @@ function PasswordInput(props) {
         />
     );
 }
+
+PasswordInput.propTypes = {
+    passwordRef: refType.isRequired,
+};
 
 export default PasswordInput;
