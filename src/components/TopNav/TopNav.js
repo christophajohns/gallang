@@ -14,8 +14,8 @@ import {
 /**
  * Navigation bar for the whole application
  * @param {Object} props - Properties passed to component
- * @param {boolean} [props.isLoggedIn=false] - Flag whether the user is currently logged in
- * @param {string} props.username - The username of the currently logged in user
+ * @param {boolean} props.isLoggedIn - Flag whether the user is currently logged in
+ * @param {string} [props.username = "Anonymous Designer"] - The username of the currently logged in user (null if user is not logged in)
  * @param {Function} [props.onAccountWrapperMouseEnter] - Function to be executed when a user's mouse enters the user icon
  * @param {Function} [props.onAccountOptionsMouseLeave] - Function to be executed when a user's mouse leaves the user account options
  * @param {React.MutableRefObject} props.accountOptionsRef - Reference to be used on the account options element (e.g. logout)
@@ -25,8 +25,7 @@ import {
  */
 function TopNav(props) {
     const {
-        isLoggedIn = false,
-        username,
+        isLoggedIn,
         onAccountWrapperMouseEnter,
         onAccountOptionsMouseLeave,
         accountOptionsRef,
@@ -34,6 +33,8 @@ function TopNav(props) {
         onSearch,
         onLogoutRequest,
     } = props;
+
+    const username = props.username ? props.username : "Anonymous Designer";
 
     const userInitial =
         isLoggedIn && username && username.charAt(0).toUpperCase();
@@ -71,8 +72,7 @@ function TopNav(props) {
 }
 
 TopNav.propTypes = {
-    username: PropTypes.string.isRequired,
-    isLoggedIn: PropTypes.bool,
+    username: PropTypes.string,
     onAccountWrapperMouseEnter: PropTypes.func,
     onAccountOptionsMouseLeave: PropTypes.func,
     accountOptionsRef: PropTypes.oneOfType([
