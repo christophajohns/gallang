@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Alert } from "react-bootstrap";
 import { GroupedInputs } from "./style";
 import AuthInputField from "../AuthInputField";
+import UserNameInput from "../UserNameInput";
 import EmailInput from "../EmailInput";
 import PasswordInput from "../PasswordInput";
 import { CenterContentDiv, StyledForm, AuthButton } from "../style";
@@ -19,6 +20,7 @@ import { CenterContentDiv, StyledForm, AuthButton } from "../style";
 function SignupView(props) {
     const {
         onRequestSignup,
+        usernameRef,
         emailRef,
         passwordRef,
         confirmPasswordRef,
@@ -30,6 +32,7 @@ function SignupView(props) {
         <CenterContentDiv className="SignupView">
             <StyledForm onSubmit={onRequestSignup}>
                 {error && <Alert variant="danger">{error}</Alert>}
+                <EmailInput usernameRef={usernameRef} />
                 <EmailInput emailRef={emailRef} />
                 <GroupedInputs>
                     <PasswordInput passwordRef={passwordRef} />
