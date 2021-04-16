@@ -32,7 +32,7 @@ function SignupView(props) {
         <CenterContentDiv className="SignupView">
             <StyledForm onSubmit={onRequestSignup}>
                 {error && <Alert variant="danger">{error}</Alert>}
-                <EmailInput usernameRef={usernameRef} />
+                <UserNameInput usernameRef={usernameRef} />
                 <EmailInput emailRef={emailRef} />
                 <GroupedInputs>
                     <PasswordInput passwordRef={passwordRef} />
