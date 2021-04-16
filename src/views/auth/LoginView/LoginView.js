@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Inputs, AuthLinks } from "./style";
 import { CenterContentDiv, StyledForm, AuthButton } from "../style";
 import { refType } from "../../../types";
-import UserNameInput from "../UserNameInput";
+import EmailInput from "../EmailInput";
 import PasswordInput from "../PasswordInput";
 
 /**
@@ -30,7 +30,7 @@ function LoginView(props) {
             <StyledForm onSubmit={onRequestLogin}>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Inputs>
-                    <UserNameInput userNameRef={emailRef} />
+                    <EmailInput emailRef={emailRef} />
                     <PasswordInput passwordRef={passwordRef} />
                 </Inputs>
                 <AuthButton type="submit" disabled={isLoading}>
