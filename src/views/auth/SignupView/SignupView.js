@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { GroupedInputs } from "./style";
 import AuthInputField from "../AuthInputField";
 import EmailInput from "../EmailInput";
-import UserNameInput from "../UserNameInput";
 import PasswordInput from "../PasswordInput";
 import { CenterContentDiv, StyledForm, AuthButton } from "../style";
 
@@ -14,7 +13,6 @@ function SignupView() {
     return (
         <CenterContentDiv className="SignupView">
             <StyledForm>
-                <UserNameInput />
                 <EmailInput />
                 <GroupedInputs>
                     <PasswordInput />
