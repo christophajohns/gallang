@@ -8,8 +8,8 @@ export const StyledImage = styled.div`
     background-color: black;
 
     img {
-        height: 400px;
-        width: 400px;
+        height: ${(props) => (props.small ? "200px" : "400px")};
+        width: ${(props) => (props.small ? "200px" : "400px")};
         object-fit: cover;
         position: static;
         z-index: 0;

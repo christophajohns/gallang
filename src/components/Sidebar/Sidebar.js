@@ -2,9 +2,15 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Heart, Plus } from "react-bootstrap-icons";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
-import { SidebarAside, StyledSidebarButton } from "./style";
-import { galleryType } from "../../types";
-import { IconButton } from "../../components";
+import {
+    SidebarAside,
+    StyledSidebarButton,
+    ExpandedSidebarDiv,
+    StyledIconButton,
+} from "./style";
+import { galleryType, imageType } from "../../types";
+import { HorizontalGridPresenter } from "../../presenters";
+import { modelType } from "../../presenters/ImagePresenter";
 
 /**
  * Sidebar to access liked content and access or add galleries
@@ -13,6 +19,11 @@ import { IconButton } from "../../components";
  * @param {Function} props.onClickAddGallery - Function to be called when a user clicks the button to add a new gallery
  * @param {boolean} [props.expanded = false] - Flag whether the sidebar should be expanded or not
  * @param {Function} props.onClickExpandCollapseButton - Function to be called when a user clicks on the button to expand/collapse the sidebar
+ * @param {Image[]} props.likedImages - Array of images that the user has liked
+ * @param {Object} props.model - Model keeping the application state
+ * @param {Function} props.model.likeImage - Function to like an image by its ID
+ * @param {Function} props.model.unlikeImage - Function to unlike an image by its ID
+ * @param {string[]} props.model.likedImageIDs - Array of image IDs the user has liked already
  */
 function Sidebar(props) {
     const {
@@ -20,21 +31,70 @@ function Sidebar(props) {
         onClickAddGallery,
         expanded = false,
         onClickExpandCollapseButton,
+        likedImages,
+        model,
     } = props;
 
     return (
-        <SidebarAside>
-            <IconButton onClick={onClickExpandCollapseButton}>
+        <SidebarAside expanded={expanded}>
+            <StyledIconButton
+                onClick={onClickExpandCollapseButton}
+                expanded={expanded}
+            >
                 {expanded ? <ChevronRight /> : <ChevronLeft />}
-            </IconButton>
-            <LikedContentButton />
-            {galleries.map((gallery) => (
-                <GalleryButton key={gallery.id} gallery={gallery} />
-            ))}
-            <AddGalleryButton onClickAddGallery={onClickAddGallery} />
+            </StyledIconButton>
+            {expanded ? (
+                <ExpandedSidebarDiv>
+                    <LikedContent likedImages={likedImages} model={model} />
+                    {galleries.map((gallery) => (
+                        <HorizontalGridPresenter
+                            key={gallery.id}
+                            title={gallery.title}
+                            images={gallery.images}
+                            small={true}
+                            model={model}
+                        />
+                    ))}
+                </ExpandedSidebarDiv>
+            ) : (
+                <>
+                    <LikedContentButton />
+                    {galleries.map((gallery) => (
+                        <GalleryButton key={gallery.id} gallery={gallery} />
+                    ))}
+                    <AddGalleryButton onClickAddGallery={onClickAddGallery} />
+                </>
+            )}
         </SidebarAside>
     );
 }
+
+/**
+ *
+ * @param {Object} props - Properties passed to the component
+ * @param {Image[]} props.likedImages - Array of images that the user has liked
+ * @param {Object} props.model - Model keeping the application state
+ * @param {Function} props.model.likeImage - Function to like an image by its ID
+ * @param {Function} props.model.unlikeImage - Function to unlike an image by its ID
+ * @param {string[]} props.model.likedImageIDs - Array of image IDs the user has liked already
+ * @returns HorizontalGridPresenter displaying the images specified
+ */
+function LikedContent(props) {
+    const { likedImages, model } = props;
+
+    return (
+        <HorizontalGridPresenter
+            title="Liked content"
+            images={likedImages}
+            model={model}
+        />
+    );
+}
+
+LikedContent.propTypes = {
+    likedImages: PropTypes.arrayOf(imageType),
+    model: modelType,
+};
 
 /** Button linking to the user's liked content */
 function LikedContentButton() {
@@ -128,6 +188,8 @@ Sidebar.propTypes = {
     galleries: PropTypes.arrayOf(galleryType).isRequired,
     onClickAddGallery: PropTypes.func.isRequired,
     expanded: PropTypes.bool,
+    likedImages: PropTypes.arrayOf(imageType),
+    model: modelType,
 };
 
 export default Sidebar;

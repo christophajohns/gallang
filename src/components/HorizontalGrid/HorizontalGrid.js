@@ -24,6 +24,7 @@ import { IconButton } from "../../components";
  * @param {React.MutableRefObject} props.imagesRef - Reference to be used on the scrollable HTML element displaying the images
  * @param {Function} props.onClickPreviousButton - Function to be called when the previous button (chevron left) is clicked
  * @param {Function} props.onClickNextButton - Function to be called when the next button (chevron right) is clicked
+ * @param {boolean} [props.small] - Flag whether to render smaller versions of the images
  * @param {GallangModel} props.model - The model holding the application state
  * @returns
  */
@@ -36,6 +37,7 @@ function HorizontalGrid(props) {
         imagesRef, // Reference to be used on the scrollable HTML element displaying the images
         onClickPreviousButton, // Function to be called when the previous button (chevron left) is clicked
         onClickNextButton, // Function to be called when the next button (chevron right) is clicked
+        small, // Flag whether to render smaller versions of the images
         model, // The model holding the application state
     } = props;
 
@@ -66,6 +68,7 @@ function HorizontalGrid(props) {
                             key={image.id}
                             id={image.id}
                             src={image.url}
+                            small={small}
                             model={model}
                         />
                     ))}
@@ -88,6 +91,7 @@ HorizontalGrid.propTypes = {
     ]).isRequired,
     onClickPreviousButton: PropTypes.func.isRequired,
     onClickNextButton: PropTypes.func.isRequired,
+    small: PropTypes.bool,
     model: PropTypes.shape({
         likedImageIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
         likeImage: PropTypes.func.isRequired,

@@ -32,6 +32,7 @@ export const StyledDescription = styled.p`
 
 export const StyledPreviousNextChevrons = styled.div`
     align-self: flex-start;
+    min-width: 84px;
 `;
 
 export const StyledImages = styled.div`

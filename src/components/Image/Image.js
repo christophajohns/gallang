@@ -31,10 +31,11 @@ function Image(props) {
         onClickLikeButton, // Function to be called when a user clicks the heart (like) button
         onClickUnlikeButton, // Function to be called when a user clicks the filled heart (unlike) button
         onClickImage, // Function to be called when a user clicks on the image
+        small = false, // Flag whether to render smaller versions of the images
     } = props;
 
     return (
-        <StyledImage>
+        <StyledImage small={small}>
             <img id={id} src={src} alt={id} onClick={onClickImage} />
             <StyledGripButton variant="link">
                 <GripVertical />

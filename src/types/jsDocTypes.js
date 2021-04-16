@@ -25,7 +25,7 @@
 /**
  * @typedef Image
  * @property {string} id - Unique identifier of the object or image
- * @property {string} url - Image url for the object
+ * @property {string} [url] - Image url for the object
  */
 
 /**

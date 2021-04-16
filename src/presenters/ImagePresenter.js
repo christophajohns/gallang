@@ -14,12 +14,14 @@ import PropTypes from "prop-types";
  * @param {Function} props.model.likeImage - Function to like an image by its ID
  * @param {Function} props.model.unlikeImage - Function to unlike an image by its ID
  * @param {string[]} props.model.likedImageIDs - Array of image IDs the user has liked already
+ * @param {boolean} [props.small] - Flag whether to render smaller versions of the images
  * @returns Image component
  */
 function ImagePresenter(props) {
     const {
         id, // Unique identifier of the object and thereby image
         src, // Image url for the object image
+        small, // Flag whether to render smaller versions of the images
         model, // The model holding the application state
     } = props;
 
@@ -54,6 +56,7 @@ function ImagePresenter(props) {
         onClickUnlikeButton: (e) => model.unlikeImage(id),
         id,
         liked: likedImageIDs.includes(id),
+        small,
     };
 
     if (!src) {
@@ -78,6 +81,7 @@ export const modelType = PropTypes.shape({
 ImagePresenter.propTypes = {
     id: PropTypes.string.isRequired,
     src: PropTypes.string,
+    small: PropTypes.bool,
     model: modelType.isRequired,
 };
 
