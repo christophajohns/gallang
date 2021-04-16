@@ -7,7 +7,6 @@ import {
     StyledTitle,
     StyledDescription,
     StyledPreviousNextChevrons,
-    StyledIconButton,
     StyledImages,
     StyledGridSection,
     StyledGridTop,

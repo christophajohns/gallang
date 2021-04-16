@@ -40,10 +40,3 @@ export const StyledImages = styled.div`
     flex-wrap: nowrap;
     overflow-x: scroll;
 `;
-
-export const StyledIconButton = styled(Button)`
-    color: black;
-    &:hover {
-        color: grey;
-    }
-`;
