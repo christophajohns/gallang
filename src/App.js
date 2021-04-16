@@ -26,6 +26,7 @@ function App(props) {
                 <div className="topnav">
                     <TopNavPresenter model={model} />
                 </div>
+
                 <Switch>
                     <Route path="/login" exact={true}>
                         <LoginPresenter />
@@ -40,11 +41,21 @@ function App(props) {
                     </Route>
 
                     <Route path="/search" exact={true}>
-                        <SearchResultsPresenter model={model} />
+                        <MainContent>
+                            <SearchResultsPresenter model={model} />
+                        </MainContent>
+                        <aside>
+                            <SidebarPresenter />
+                        </aside>
                     </Route>
 
                     <Route path="/liked" exact={true}>
-                        <LikedContentPresenter model={model} />
+                        <MainContent>
+                            <LikedContentPresenter model={model} />
+                        </MainContent>
+                        <aside>
+                            <SidebarPresenter />
+                        </aside>
                     </Route>
 
                     <Route path="/details/:imageID" exact={true}>
@@ -52,9 +63,9 @@ function App(props) {
                     </Route>
 
                     <Route path="/" exact={true}>
-                        <div className="mainContent">
+                        <MainContent>
                             <HomePresenter model={model} />
-                        </div>
+                        </MainContent>
                         <aside>
                             <SidebarPresenter />
                         </aside>
@@ -63,6 +74,16 @@ function App(props) {
             </div>
         </Router>
     );
+}
+
+/**
+ * Wrapper component to display main content correctly in the app layout
+ * @param {Object} props - Properties passed to the object
+ * @returns div element with className "mainContent" containing the children elements
+ */
+function MainContent(props) {
+    const { children } = props;
+    return <div className="mainContent">{children}</div>;
 }
 
 export default App;
