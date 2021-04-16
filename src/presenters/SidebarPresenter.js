@@ -6,7 +6,24 @@ import { Sidebar } from "../components";
  * @returns Sidebar component
  */
 function SidebarPresenter() {
-    const galleries = [];
+    // Placeholder galleries for now
+    const galleries = [
+        {
+            title: "Dark and Moody",
+            id: "12345",
+            images: [],
+        },
+        {
+            title: "Happy and Cheerful",
+            id: "12346",
+            images: [],
+        },
+        {
+            title: "Almost Disgusting (but in a fun way)",
+            id: "12347",
+            images: [],
+        },
+    ];
 
     /** Redirect user to search results page using the query specified in the search input field */
     function addGallery() {
