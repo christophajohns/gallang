@@ -13,6 +13,7 @@ import {
     StyledGridTop,
 } from "./style";
 import { imageType } from "../../types";
+import { IconButton } from "../../components";
 
 /**
  * Horizontal (scrollable) grid of images to showcase objects in a collection or gallery
@@ -51,18 +52,12 @@ function HorizontalGrid(props) {
                     )}
                 </StyledTitleAndDescription>
                 <StyledPreviousNextChevrons>
-                    <StyledIconButton
-                        variant="link"
-                        onClick={onClickPreviousButton}
-                    >
+                    <IconButton onClick={onClickPreviousButton}>
                         <ChevronLeft />
-                    </StyledIconButton>
-                    <StyledIconButton
-                        variant="link"
-                        onClick={onClickNextButton}
-                    >
+                    </IconButton>
+                    <IconButton onClick={onClickNextButton}>
                         <ChevronRight />
-                    </StyledIconButton>
+                    </IconButton>
                 </StyledPreviousNextChevrons>
             </StyledGridTop>
             <StyledGridSection>
