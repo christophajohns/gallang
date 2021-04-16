@@ -14,7 +14,7 @@ import PasswordInput from "../PasswordInput";
  * @param {React.MutableRefObject} props.emailRef - Reference to the email/username input field to handle login request
  * @param {React.MutableRefObject} props.passwordRef - Reference to the password input field to handle login request
  * @param {boolean} [props.isLoading = false] - Flag whether the user is currently being logged in
- * @param {Error} props.error - Error from the login request
+ * @param {string} props.error - Error message from the login request
  */
 function LoginView(props) {
     const {
@@ -49,6 +49,8 @@ LoginView.propTypes = {
     onRequestLogin: PropTypes.func.isRequired,
     emailRef: refType.isRequired,
     passwordRef: refType.isRequired,
+    isLoading: PropTypes.bool,
+    error: PropTypes.string,
 };
 
 export default LoginView;
