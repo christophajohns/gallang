@@ -55,6 +55,12 @@ function Sidebar(props) {
                             model={model}
                         />
                     ))}
+                    <HorizontalGridPresenter
+                        title="New Gallery"
+                        images={[]}
+                        small={true}
+                        model={model}
+                    />
                 </ExpandedSidebarDiv>
             ) : (
                 <>
@@ -85,8 +91,10 @@ function LikedContent(props) {
     return (
         <HorizontalGridPresenter
             title="Liked content"
+            href="/liked"
             images={likedImages}
             model={model}
+            small={true}
         />
     );
 }
