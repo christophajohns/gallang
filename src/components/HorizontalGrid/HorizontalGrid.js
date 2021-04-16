@@ -45,7 +45,7 @@ function HorizontalGrid(props) {
         <StyledHorizontalGrid label={title}>
             <StyledGridTop>
                 <StyledTitleAndDescription>
-                    <StyledTitle href={href ? href : "#"}>{title}</StyledTitle>
+                    <StyledTitle to={href || "#"}>{title}</StyledTitle>
                     {description ? (
                         <StyledDescription>{description}</StyledDescription>
                     ) : (
@@ -62,17 +62,21 @@ function HorizontalGrid(props) {
                 </StyledPreviousNextChevrons>
             </StyledGridTop>
             <StyledGridSection>
-                <StyledImages ref={imagesRef}>
-                    {images.map((image) => (
-                        <ImagePresenter
-                            key={image.id}
-                            id={image.id}
-                            src={image.url}
-                            small={small}
-                            model={model}
-                        />
-                    ))}
-                </StyledImages>
+                {images.length ? (
+                    <StyledImages ref={imagesRef}>
+                        {images.map((image) => (
+                            <ImagePresenter
+                                key={image.id}
+                                id={image.id}
+                                src={image.url}
+                                small={small}
+                                model={model}
+                            />
+                        ))}
+                    </StyledImages>
+                ) : (
+                    <div>No images yet</div>
+                )}
             </StyledGridSection>
         </StyledHorizontalGrid>
     );

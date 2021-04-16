@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const StyledHorizontalGrid = styled.section`
     margin-bottom: 64px;
@@ -19,7 +20,7 @@ export const StyledTitleAndDescription = styled.div`
     align-self: center;
 `;
 
-export const StyledTitle = styled.a`
+export const StyledTitle = styled(Link)`
     font-weight: bold;
 `;
 
