@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { SignupView } from "../views";
 import { AuthenticationModel } from "../model";
+import { useCurrentUser } from "./customHooks";
 
 /**
  * Presenter for the signup view
@@ -17,6 +18,12 @@ function SignupPresenter() {
     const [signupError, setSignupError] = React.useState(null);
 
     const browserHistory = useHistory();
+    const currentUser = useCurrentUser();
+
+    // Redirect to home page when the authentication signals that the user is already logged in
+    React.useEffect(() => {
+        if (currentUser) browserHistory.push("/");
+    }, [currentUser, browserHistory]);
 
     /**
      * Signup user using the authentication model (firebase authentication)
