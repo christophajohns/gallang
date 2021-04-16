@@ -29,6 +29,7 @@ function Sidebar(props) {
     );
 }
 
+/** Button linking to the user's liked content */
 function LikedContentButton() {
     return (
         <SidebarButton name="Liked content">
@@ -39,6 +40,12 @@ function LikedContentButton() {
     );
 }
 
+/**
+ * Button linking to the specified gallery
+ * @param {Object} props - Properties passed to the component
+ * @param {Gallery} props.gallery - Gallery to link to
+ * @returns SidebarButton to view a gallery
+ */
 function GalleryButton(props) {
     const { gallery } = props;
     const { title = "Example Gallery" } = gallery;
@@ -52,6 +59,16 @@ function GalleryButton(props) {
     );
 }
 
+GalleryButton.propTypes = {
+    gallery: galleryType.isRequired,
+};
+
+/**
+ * Button to add a gallery
+ * @param {Object} props - Properties passed to the component
+ * @param {Function} props.onClickAddGallery - Function to be called when a user clicks the button to add a gallery
+ * @returns SidebarButton to add a gallery
+ */
 function AddGalleryButton(props) {
     const { onClickAddGallery } = props;
 
@@ -62,6 +79,17 @@ function AddGalleryButton(props) {
     );
 }
 
+AddGalleryButton.propTypes = {
+    onClickAddGallery: PropTypes.func.isRequired,
+};
+
+/**
+ * Button in the collapsed sidebar
+ * @param {Object} props - Properties passed to the component
+ * @param {Node} props.children - Elements to render as children of the button
+ * @param {string} [props.name] - Name of the button to display in a tooltip
+ * @returns SidebarButton to add a gallery
+ */
 function SidebarButton(props) {
     const { children, name } = props;
 
@@ -80,6 +108,14 @@ function SidebarButton(props) {
 
     return name ? buttonWithOverlay : button;
 }
+
+SidebarButton.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node,
+    ]).isRequired,
+    name: PropTypes.string,
+};
 
 Sidebar.propTypes = {
     galleries: PropTypes.arrayOf(galleryType).isRequired,
