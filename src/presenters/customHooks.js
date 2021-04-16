@@ -1,5 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import { AuthenticationModel } from "../model";
 
 /**
  * Custom hook to provide a presenter with access to a model property (including the observer patterns)
@@ -55,4 +56,21 @@ function useURLSearchParams() {
     return new URLSearchParams(useLocation().search); // ".search" means it will only work at the /search route
 }
 
-export { useModelProperty, usePromise, useURLSearchParams };
+/** Custom hook to access the current user from the authentication model */
+function useCurrentUser() {
+    const [currentUser, setCurrentUser] = React.useState(
+        AuthenticationModel.currentUser
+    );
+
+    // Subscribe to changes in the authentication model on creation
+    React.useEffect(() => {
+        const unsubscribeFromAuthState = AuthenticationModel.onAuthStateChanged(
+            setCurrentUser
+        );
+        return unsubscribeFromAuthState;
+    }, []);
+
+    return currentUser;
+}
+
+export { useModelProperty, usePromise, useURLSearchParams, useCurrentUser };
