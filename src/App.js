@@ -11,6 +11,7 @@ import {
     LikedContentPresenter,
     CollectionPresenter,
     GalleryPresenter,
+    SidebarPresenter,
 } from "./presenters";
 import { mockCollections } from "./model/MockData";
 
@@ -22,7 +23,9 @@ function App(props) {
     return (
         <Router>
             <div className="App">
-                <TopNavPresenter model={model} />
+                <div className="topnav">
+                    <TopNavPresenter model={model} />
+                </div>
                 <Switch>
                     <Route path="/login" exact={true}>
                         <LoginPresenter />
@@ -49,7 +52,12 @@ function App(props) {
                     </Route>
 
                     <Route path="/" exact={true}>
-                        <HomePresenter model={model} />
+                        <div className="mainContent">
+                            <HomePresenter model={model} />
+                        </div>
+                        <aside>
+                            <SidebarPresenter />
+                        </aside>
                     </Route>
                 </Switch>
             </div>

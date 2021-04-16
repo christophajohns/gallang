@@ -8,3 +8,23 @@ main {
 .hidden {
     display: none;
 }
+
+.App {
+    display: grid;
+    grid-template-areas:
+        "topnav topnav"
+        "mainContent sidebar";
+}
+
+.App > .topnav {
+    grid-area: topnav;
+}
+
+.App > .mainContent {
+    grid-area: mainContent;
+    overflow: hidden;
+}
+
+.App > aside {
+    grid-area: sidebar;
+}
