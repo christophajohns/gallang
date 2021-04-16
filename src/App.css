@@ -5,6 +5,14 @@ main {
     padding-bottom: 64px;
 }
 
+a {
+    color: black;
+}
+
+a:hover {
+    color: black;
+}
+
 .hidden {
     display: none;
 }

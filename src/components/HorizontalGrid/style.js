@@ -21,7 +21,6 @@ export const StyledTitleAndDescription = styled.div`
 `;
 
 export const StyledTitle = styled.a`
-    color: black;
     font-weight: bold;
 `;
 
