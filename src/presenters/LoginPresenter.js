@@ -1,5 +1,6 @@
 import React from "react";
 import { LoginView } from "../views";
+import { useCurrentUser } from "./customHooks";
 import { AuthenticationModel } from "../model";
 import { useHistory } from "react-router";
 
@@ -14,7 +15,14 @@ function LoginPresenter() {
     const [isLoading, setIsLoading] = React.useState(false);
     const [loginError, setLoginError] = React.useState(null);
 
+    const currentUser = useCurrentUser();
+
     const browserHistory = useHistory();
+
+    // Redirect to home page when the authentication signals that the user is already logged in
+    React.useEffect(() => {
+        if (currentUser) browserHistory.push("/");
+    }, [currentUser, browserHistory]);
 
     /**
      * Login user using the authentication model (firebase authentication)
