@@ -6,6 +6,8 @@ import { Sidebar } from "../components";
  * @returns Sidebar component
  */
 function SidebarPresenter() {
+    const [expanded, setExpanded] = React.useState(false);
+
     // Placeholder galleries for now
     const galleries = [
         {
@@ -34,6 +36,8 @@ function SidebarPresenter() {
         <Sidebar
             galleries={galleries}
             onClickAddGallery={(e) => addGallery()}
+            expanded={expanded}
+            onClickExpandCollapseButton={(e) => setExpanded(!expanded)}
         />
     );
 }

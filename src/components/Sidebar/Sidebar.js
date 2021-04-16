@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { ChevronLeft, Heart, Plus } from "react-bootstrap-icons";
+import { ChevronLeft, ChevronRight, Heart, Plus } from "react-bootstrap-icons";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import { SidebarAside, StyledSidebarButton } from "./style";
 import { galleryType } from "../../types";
@@ -11,14 +11,21 @@ import { IconButton } from "../../components";
  * @param {Object} props - Properties passed to component
  * @param {Gallery[]} props.galleries - Array with gallery information for the user
  * @param {Function} props.onClickAddGallery - Function to be called when a user clicks the button to add a new gallery
+ * @param {boolean} [props.expanded = false] - Flag whether the sidebar should be expanded or not
+ * @param {Function} props.onClickExpandCollapseButton - Function to be called when a user clicks on the button to expand/collapse the sidebar
  */
 function Sidebar(props) {
-    const { galleries, onClickAddGallery } = props;
+    const {
+        galleries,
+        onClickAddGallery,
+        expanded = false,
+        onClickExpandCollapseButton,
+    } = props;
 
     return (
         <SidebarAside>
-            <IconButton>
-                <ChevronLeft />
+            <IconButton onClick={onClickExpandCollapseButton}>
+                {expanded ? <ChevronRight /> : <ChevronLeft />}
             </IconButton>
             <LikedContentButton />
             {galleries.map((gallery) => (
@@ -120,6 +127,7 @@ SidebarButton.propTypes = {
 Sidebar.propTypes = {
     galleries: PropTypes.arrayOf(galleryType).isRequired,
     onClickAddGallery: PropTypes.func.isRequired,
+    expanded: PropTypes.bool,
 };
 
 export default Sidebar;
