@@ -7,9 +7,9 @@ export const SidebarAside = styled.aside`
     top: 0px;
     display: flex;
     flex-direction: column;
-    align-items: ${(props) => (props.expanded ? "stretch" : "center")};
-
     padding: 8px;
+    overflow-y: scroll;
+    align-items: ${(props) => (props.expanded ? "stretch" : "center")};
 
     ${(props) => props.expanded && "width: clamp(256px, 25vw, 512px);"}
 
@@ -34,6 +34,8 @@ export const StyledSidebarButton = styled(Button)`
 
 export const ExpandedSidebarDiv = styled.div`
     padding-left: 16px;
+    height: calc(100vh - 128px);
+    overflow-y: scroll;
 `;
 
 export const StyledIconButton = styled(IconButton)`

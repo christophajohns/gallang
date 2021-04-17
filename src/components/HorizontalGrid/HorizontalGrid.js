@@ -11,6 +11,7 @@ import {
     StyledGridSection,
     StyledGridTop,
     StyledLabel,
+    ImagePlaceholderDiv,
 } from "./style";
 import { imageType, refType } from "../../types";
 import { IconButton } from "../../components";
@@ -32,6 +33,7 @@ import {
  * @param {Function} props.onClickNextButton - Function to be called when the next button (chevron right) is clicked
  * @param {boolean} [props.small] - Flag whether to render smaller versions of the images
  * @param {"collection" | "gallery"} [props.type] - Type of content that is displayed in the grid (e.g. Gallery)
+ * @param {string} [props.emptyStateText = "No images yet"] - Text to display if no images are supplied
  * @param {ImagePresenterModelType} props.model - The model holding the application state
  * @returns
  */
@@ -46,6 +48,7 @@ function HorizontalGrid(props) {
         onClickNextButton, // Function to be called when the next button (chevron right) is clicked
         small, // Flag whether to render smaller versions of the images
         type, // Type of content that is displayed in the grid (e.g. Gallery)
+        emptyStateText = "No images yet", // Text to display if no images are supplied
         model, // The model holding the application state
     } = props;
 
@@ -84,7 +87,9 @@ function HorizontalGrid(props) {
                         ))}
                     </StyledImages>
                 ) : (
-                    <div>No images yet</div>
+                    <ImagePlaceholderDiv small={small}>
+                        {emptyStateText}
+                    </ImagePlaceholderDiv>
                 )}
             </StyledGridSection>
         </StyledHorizontalGrid>
@@ -101,6 +106,7 @@ HorizontalGrid.propTypes = {
     onClickNextButton: PropTypes.func.isRequired,
     small: PropTypes.bool,
     type: PropTypes.string,
+    emptyStateText: PropTypes.string,
     model: imagePresenterModelType.isRequired,
 };
 

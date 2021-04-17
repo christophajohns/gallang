@@ -53,6 +53,7 @@ function Sidebar(props) {
                             title={gallery.title}
                             images={gallery.images}
                             small={true}
+                            emptyStateText={"Drag here to add to gallery"}
                             model={model}
                         />
                     ))}
@@ -61,6 +62,7 @@ function Sidebar(props) {
                         title="New Gallery"
                         images={[]}
                         small={true}
+                        emptyStateText={"Drag here to create a new gallery"}
                         model={model}
                     />
                 </ExpandedSidebarDiv>
@@ -97,6 +99,7 @@ function LikedContent(props) {
             images={likedImages}
             model={model}
             small={true}
+            emptyStateText={"Click on the heart icon to like an image"}
         />
     );
 }

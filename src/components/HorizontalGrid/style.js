@@ -48,3 +48,20 @@ export const StyledLabel = styled.div`
     font-size: 0.8rem;
     line-height: 0.8rem;
 `;
+
+export const ImagePlaceholderDiv = styled.div`
+    height: ${(props) => (props.small ? "200px" : "400px")};
+    width: ${(props) => (props.small ? "200px" : "400px")};
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 8px;
+    border: 1px dashed black;
+
+    @media (max-width: 820px) {
+        height: 200px;
+        width: 200px;
+    }
+`;

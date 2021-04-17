@@ -17,6 +17,7 @@ import {
  * @param {Image[]} props.images - Array of images to render in the grid
  * @param {boolean} [props.small = false] - Flag whether to render smaller versions of the images
  * @param {"collection" | "gallery"} [props.type] - Type of content that is displayed in the grid (e.g. Gallery)
+ * @param {string} [props.emptyStateText] - Text to display if no images are supplied
  * @param {ImagePresenterModelType} props.model - The model holding the application state
  * @returns HorizontalGrid component
  */
@@ -28,6 +29,7 @@ function HorizontalGridPresenter(props) {
         images, // Array of image data to be rendered in a horizontal grid
         small, // Flag whether to render smaller versions of the images
         type, // Type of content that is displayed in the grid (e.g. Gallery)
+        emptyStateText, // Text to display if no images are supplied
         model, // The model holding the application state
     } = props;
 
@@ -54,6 +56,7 @@ function HorizontalGridPresenter(props) {
             images={images}
             small={small}
             type={type}
+            emptyStateText={emptyStateText}
             model={model}
         />
     );
@@ -65,6 +68,7 @@ HorizontalGridPresenter.propTypes = {
     description: PropTypes.string,
     images: PropTypes.arrayOf(imageType),
     small: PropTypes.bool,
+    emptyStateText: PropTypes.string,
     model: imagePresenterModelType.isRequired,
 };
 
