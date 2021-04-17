@@ -2,7 +2,11 @@ import React from "react";
 import { HorizontalGrid } from "../components";
 import PropTypes from "prop-types";
 import { imageType } from "../types";
-import { modelType } from "./ImagePresenter";
+import {
+    modelType as imagePresenterModelType,
+    // eslint-disable-next-line no-unused-vars
+    ImagePresenterModelType,
+} from "./ImagePresenter";
 
 /**
  * Presenter for the HorizontalGrid component
@@ -12,7 +16,8 @@ import { modelType } from "./ImagePresenter";
  * @param {string} props.description - (optional) Further description for the grid
  * @param {Image[]} props.images - Array of images to render in the grid
  * @param {boolean} [props.small = false] - Flag whether to render smaller versions of the images
- * @param {GallangModel} props.model - The model holding the application state
+ * @param {"collection" | "gallery"} [props.type] - Type of content that is displayed in the grid (e.g. Gallery)
+ * @param {ImagePresenterModelType} props.model - The model holding the application state
  * @returns HorizontalGrid component
  */
 function HorizontalGridPresenter(props) {
@@ -22,6 +27,7 @@ function HorizontalGridPresenter(props) {
         description, // (optional) Short (preferably less than 60 characters) description for the images in the grid
         images, // Array of image data to be rendered in a horizontal grid
         small, // Flag whether to render smaller versions of the images
+        type, // Type of content that is displayed in the grid (e.g. Gallery)
         model, // The model holding the application state
     } = props;
 
@@ -47,6 +53,7 @@ function HorizontalGridPresenter(props) {
             description={description}
             images={images}
             small={small}
+            type={type}
             model={model}
         />
     );
@@ -58,7 +65,7 @@ HorizontalGridPresenter.propTypes = {
     description: PropTypes.string,
     images: PropTypes.arrayOf(imageType),
     small: PropTypes.bool,
-    model: modelType,
+    model: imagePresenterModelType.isRequired,
 };
 
 export default HorizontalGridPresenter;

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const StyledHorizontalGrid = styled.section`
-    margin-bottom: 64px;
+    margin-bottom: ${(props) => (props.small ? "32px" : "64px")};
     scroll-behavior: smooth;
 `;
 
@@ -40,4 +40,11 @@ export const StyledImages = styled.div`
     display: flex;
     flex-wrap: nowrap;
     overflow-x: scroll;
+`;
+
+export const StyledLabel = styled.div`
+    font-weight: bold;
+    color: grey;
+    font-size: 0.9rem;
+    line-height: 0.9rem;
 `;

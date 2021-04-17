@@ -10,9 +10,15 @@ import {
     StyledImages,
     StyledGridSection,
     StyledGridTop,
+    StyledLabel,
 } from "./style";
-import { imageType } from "../../types";
+import { imageType, refType } from "../../types";
 import { IconButton } from "../../components";
+import {
+    modelType as imagePresenterModelType,
+    // eslint-disable-next-line no-unused-vars
+    ImagePresenterModelType,
+} from "../../presenters/ImagePresenter";
 
 /**
  * Horizontal (scrollable) grid of images to showcase objects in a collection or gallery
@@ -25,7 +31,8 @@ import { IconButton } from "../../components";
  * @param {Function} props.onClickPreviousButton - Function to be called when the previous button (chevron left) is clicked
  * @param {Function} props.onClickNextButton - Function to be called when the next button (chevron right) is clicked
  * @param {boolean} [props.small] - Flag whether to render smaller versions of the images
- * @param {GallangModel} props.model - The model holding the application state
+ * @param {"collection" | "gallery"} [props.type] - Type of content that is displayed in the grid (e.g. Gallery)
+ * @param {ImagePresenterModelType} props.model - The model holding the application state
  * @returns
  */
 function HorizontalGrid(props) {
@@ -38,13 +45,15 @@ function HorizontalGrid(props) {
         onClickPreviousButton, // Function to be called when the previous button (chevron left) is clicked
         onClickNextButton, // Function to be called when the next button (chevron right) is clicked
         small, // Flag whether to render smaller versions of the images
+        type, // Type of content that is displayed in the grid (e.g. Gallery)
         model, // The model holding the application state
     } = props;
 
     return (
-        <StyledHorizontalGrid label={title}>
+        <StyledHorizontalGrid label={title} small={small}>
             <StyledGridTop>
                 <StyledTitleAndDescription>
+                    {type && <StyledLabel>{type.toUpperCase()}</StyledLabel>}
                     <StyledTitle to={href || "#"}>{title}</StyledTitle>
                     {description ? (
                         <StyledDescription>{description}</StyledDescription>
@@ -87,20 +96,12 @@ HorizontalGrid.propTypes = {
     href: PropTypes.string,
     description: PropTypes.string,
     images: PropTypes.arrayOf(imageType).isRequired,
-    imagesRef: PropTypes.oneOfType([
-        // Either a function
-        PropTypes.func,
-        // Or the instance of a DOM native element (see the note about SSR)
-        PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-    ]).isRequired,
+    imagesRef: refType.isRequired,
     onClickPreviousButton: PropTypes.func.isRequired,
     onClickNextButton: PropTypes.func.isRequired,
     small: PropTypes.bool,
-    model: PropTypes.shape({
-        likedImageIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
-        likeImage: PropTypes.func.isRequired,
-        unlikeImage: PropTypes.func.isRequired,
-    }),
+    type: PropTypes.string,
+    model: imagePresenterModelType.isRequired,
 };
 
 export default HorizontalGrid;

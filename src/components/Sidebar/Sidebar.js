@@ -49,6 +49,7 @@ function Sidebar(props) {
                     {galleries.map((gallery) => (
                         <HorizontalGridPresenter
                             key={gallery.id}
+                            type="gallery"
                             title={gallery.title}
                             images={gallery.images}
                             small={true}
@@ -56,6 +57,7 @@ function Sidebar(props) {
                         />
                     ))}
                     <HorizontalGridPresenter
+                        type="gallery"
                         title="New Gallery"
                         images={[]}
                         small={true}
