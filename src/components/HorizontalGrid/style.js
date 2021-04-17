@@ -45,6 +45,6 @@ export const StyledImages = styled.div`
 export const StyledLabel = styled.div`
     font-weight: bold;
     color: grey;
-    font-size: 0.9rem;
-    line-height: 0.9rem;
+    font-size: 0.8rem;
+    line-height: 0.8rem;
 `;
