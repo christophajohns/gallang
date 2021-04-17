@@ -16,36 +16,25 @@ function SidebarPresenter(props) {
     const { model } = props;
 
     const [expanded, setExpanded] = React.useState(false);
+
     const likedImageIDs = useModelProperty(model, "likedImageIDs");
+    const galleries = useModelProperty(model, "galleries");
 
-    // Placeholder galleries for now
-    const galleries = [
-        {
-            title: "Dark and Moody",
-            id: "12345",
-            images: [],
-        },
-        {
-            title: "Happy and Cheerful",
-            id: "12346",
-            images: [],
-        },
-        {
-            title: "Almost Disgusting (but in a fun way)",
-            id: "12347",
-            images: [],
-        },
-    ];
-
-    /** Redirect user to search results page using the query specified in the search input field */
-    function addGallery() {
-        console.log("Add gallery requested");
+    /**
+     * Create a new gallery with the specified title
+     * @param {string} title - Title or name for the new gallery
+     */
+    function addGallery(title) {
+        console.log(`Add gallery ${title} requested`);
     }
 
     return (
         <Sidebar
-            galleries={galleries}
-            onClickAddGallery={(e) => addGallery()}
+            galleries={galleries.map((gallery) => ({
+                ...gallery,
+                images: gallery.imageIDs.map((imageID) => ({ id: imageID })),
+            }))}
+            onClickAddGallery={(e) => addGallery("Example Gallery")}
             expanded={expanded}
             onClickExpandCollapseButton={(e) => setExpanded(!expanded)}
             likedImages={likedImageIDs.map((imageID) => ({

@@ -20,6 +20,7 @@ import {
  * @param {"collection" | "gallery"} [props.type] - Type of content that is displayed in the grid (e.g. Gallery)
  * @param {string} [props.emptyStateText] - Text to display if no images are supplied
  * @param {ImagePresenterModelType} props.model - The model holding the application state
+ * @param {Function} props.model.addImageToGallery - Function to add the specified image to the specified gallery
  * @returns HorizontalGrid component
  */
 function HorizontalGridPresenter(props) {
@@ -65,7 +66,11 @@ function HorizontalGridPresenter(props) {
         const imageID = event.dataTransfer.getData("text/plain");
         if (id) {
             if (id === "likedContent") model.likeImage(imageID);
-            else console.log(`Add image ${imageID} to gallery ${id}`);
+            if (id === "newGallery")
+                console.log(
+                    `Create new gallery with image ${imageID} requested`
+                );
+            else model.addImageToGallery(imageID, id);
         }
     }
 
@@ -88,6 +93,11 @@ function HorizontalGridPresenter(props) {
     );
 }
 
+const modelType = PropTypes.shape({
+    ...imagePresenterModelType.isRequired,
+    addImageToGallery: PropTypes.func.isRequired,
+});
+
 HorizontalGridPresenter.propTypes = {
     id: PropTypes.string,
     title: PropTypes.string.isRequired,
@@ -96,7 +106,7 @@ HorizontalGridPresenter.propTypes = {
     images: PropTypes.arrayOf(imageType),
     small: PropTypes.bool,
     emptyStateText: PropTypes.string,
-    model: imagePresenterModelType.isRequired,
+    model: modelType.isRequired,
 };
 
 export default HorizontalGridPresenter;
