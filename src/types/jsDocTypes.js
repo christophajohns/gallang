@@ -12,7 +12,7 @@
  * @typedef Gallery
  * @property {string} title - Name or title of the gallery
  * @property {string} id - Unique identifier of the gallery
- * @property {Image[]} images - Array of objects or images within the collection
+ * @property {string[]} imageIDs - Array of identifiers of the images in the gallery
  */
 
 /**

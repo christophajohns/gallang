@@ -8,7 +8,7 @@ export const imageType = PropTypes.shape({
 export const galleryType = PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    images: PropTypes.arrayOf(imageType).isRequired,
+    imageIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
 });
 
 export const refType = PropTypes.oneOfType([
