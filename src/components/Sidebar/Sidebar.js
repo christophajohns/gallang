@@ -171,13 +171,16 @@ AddGalleryButton.propTypes = {
  * @param {Object} props - Properties passed to the component
  * @param {Node} props.children - Elements to render as children of the button
  * @param {string} [props.name] - Name of the button to display in a tooltip
+ * @param {Function} [props.onClick] - Function to be called when a user clicks on the button
  * @returns SidebarButton to add a gallery
  */
 function SidebarButton(props) {
-    const { children, name } = props;
+    const { children, name, onClick } = props;
 
     const button = (
-        <StyledSidebarButton variant="light">{children}</StyledSidebarButton>
+        <StyledSidebarButton variant="light" onClick={onClick}>
+            {children}
+        </StyledSidebarButton>
     );
 
     const buttonWithOverlay = (
