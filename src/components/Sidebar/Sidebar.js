@@ -49,6 +49,7 @@ function Sidebar(props) {
                     {galleries.map((gallery) => (
                         <HorizontalGridPresenter
                             key={gallery.id}
+                            id={gallery.id}
                             type="gallery"
                             title={gallery.title}
                             images={gallery.images}
@@ -58,6 +59,7 @@ function Sidebar(props) {
                         />
                     ))}
                     <HorizontalGridPresenter
+                        id={"newGallery"}
                         type="gallery"
                         title="New Gallery"
                         images={[]}
@@ -94,6 +96,7 @@ function LikedContent(props) {
 
     return (
         <HorizontalGridPresenter
+            id={"likedContent"}
             title="Liked content"
             href="/liked"
             images={likedImages}

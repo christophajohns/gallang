@@ -58,6 +58,15 @@ function ImagePresenter(props) {
         browserHistory.push(`/details/${imageID}`);
     }
 
+    /**
+     * Sets the drop effect to copy and the data property to the image ID
+     * @param {Event} event
+     */
+    function setDataTransferToCopyImageID(event) {
+        event.dataTransfer.dropEffect = "copy";
+        event.dataTransfer.setData("text/plain", id);
+    }
+
     /** Properties to pass to the Image component that is rendered by the presenter */
     const imageProps = {
         onClickImage: (e) => redirectToDetailsForImage(id),
@@ -66,6 +75,7 @@ function ImagePresenter(props) {
         id,
         liked: likedImageIDs.includes(id),
         small,
+        onDragStartImage: setDataTransferToCopyImageID,
     };
 
     if (!src) {

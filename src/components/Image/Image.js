@@ -22,6 +22,7 @@ import {
  * @param {Function} props.onClickLikeButton - Function to be called when a user clicks the heart (like) button
  * @param {Function} props.onClickUnlikeButton - Function to be called when a user clicks the filled heart (unlike) button
  * @param {Function} props.onClickImage - Function to be called when a user clicks on the image
+ * @param {Function} props.onDragStartImage - Function to be called when a user starts dragging an image
  */
 function Image(props) {
     const {
@@ -31,13 +32,18 @@ function Image(props) {
         onClickLikeButton, // Function to be called when a user clicks the heart (like) button
         onClickUnlikeButton, // Function to be called when a user clicks the filled heart (unlike) button
         onClickImage, // Function to be called when a user clicks on the image
+        onDragStartImage, // Function to be called when a user starts dragging an image
         small = false, // Flag whether to render smaller versions of the images
     } = props;
 
     return (
         <StyledImage small={small}>
             <img id={id} src={src} alt={id} onClick={onClickImage} />
-            <StyledGripButton variant="link">
+            <StyledGripButton
+                variant="link"
+                draggable="true"
+                onDragStart={onDragStartImage}
+            >
                 <GripVertical />
             </StyledGripButton>
             <StyledImageButtons>
@@ -89,6 +95,8 @@ Image.propTypes = {
     onClickUnlikeButton: PropTypes.func.isRequired,
     /** Function to be called when a user clicks on the image */
     onClickImage: PropTypes.func.isRequired,
+    /** Function to be called when a user starts dragging an image */
+    onDragStartImage: PropTypes.func.isRequired,
 };
 
 export default Image;

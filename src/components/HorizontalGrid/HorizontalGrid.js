@@ -34,6 +34,8 @@ import {
  * @param {boolean} [props.small] - Flag whether to render smaller versions of the images
  * @param {"collection" | "gallery"} [props.type] - Type of content that is displayed in the grid (e.g. Gallery)
  * @param {string} [props.emptyStateText = "No images yet"] - Text to display if no images are supplied
+ * @param {Function} props.onDragOverImagePlaceholder - Function to be called when a user drags an image over the image placeholder
+ * @param {Function} props.onDropImagePlaceholder - Function to be called when a user drops a dragged image onto the image placeholder
  * @param {ImagePresenterModelType} props.model - The model holding the application state
  * @returns
  */
@@ -49,6 +51,8 @@ function HorizontalGrid(props) {
         small, // Flag whether to render smaller versions of the images
         type, // Type of content that is displayed in the grid (e.g. Gallery)
         emptyStateText = "No images yet", // Text to display if no images are supplied
+        onDragOverImagePlaceholder, // Function to be called when a user drags an image over the image placeholder
+        onDropImagePlaceholder, // Function to be called when a user drops a dragged image onto the image placeholder
         model, // The model holding the application state
     } = props;
 
@@ -87,7 +91,11 @@ function HorizontalGrid(props) {
                         ))}
                     </StyledImages>
                 ) : (
-                    <ImagePlaceholderDiv small={small}>
+                    <ImagePlaceholderDiv
+                        small={small}
+                        onDrop={onDropImagePlaceholder}
+                        onDragOver={onDragOverImagePlaceholder}
+                    >
                         {emptyStateText}
                     </ImagePlaceholderDiv>
                 )}
@@ -107,6 +115,8 @@ HorizontalGrid.propTypes = {
     small: PropTypes.bool,
     type: PropTypes.string,
     emptyStateText: PropTypes.string,
+    onDragOverImagePlaceholder: PropTypes.func.isRequired,
+    onDropImagePlaceholder: PropTypes.func.isRequired,
     model: imagePresenterModelType.isRequired,
 };
 

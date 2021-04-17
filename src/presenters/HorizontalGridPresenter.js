@@ -11,6 +11,7 @@ import {
 /**
  * Presenter for the HorizontalGrid component
  * @param {Object} props - Properties passed to component
+ * @param {string} [props.id] - Unique identifier for the horizontal grid (e.g. the gallery id)
  * @param {string} props.title - Title or name for the images displayed in the grid
  * @param {string} props.href - (optional) URL to link to on click on the title
  * @param {string} props.description - (optional) Further description for the grid
@@ -23,6 +24,7 @@ import {
  */
 function HorizontalGridPresenter(props) {
     const {
+        id, // Unique identifier for the horizontal grid (e.g. the gallery id)
         title, // Specify the title to placed on top of the image grid
         href, // (optional) URL to link to when clicking the title
         description, // (optional) Short (preferably less than 60 characters) description for the images in the grid
@@ -45,6 +47,28 @@ function HorizontalGridPresenter(props) {
         imagesRef.current.scrollLeft += imagesRef.current.clientWidth;
     }
 
+    /**
+     * Sets the data transfer drop effect to copy (plus icon in UI)
+     * @param {Event} event
+     */
+    function showDropEffectCopy(event) {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = "copy";
+    }
+
+    /**
+     * Adds the dragged image ID to liked content or the specified gallery
+     * @param {Event} event
+     */
+    function addImageToLikedOrGallery(event) {
+        event.preventDefault();
+        const imageID = event.dataTransfer.getData("text/plain");
+        if (id) {
+            if (id === "likedContent") model.likeImage(imageID);
+            else console.log(`Add image ${imageID} to gallery ${id}`);
+        }
+    }
+
     return (
         <HorizontalGrid
             imagesRef={imagesRef}
@@ -57,12 +81,15 @@ function HorizontalGridPresenter(props) {
             small={small}
             type={type}
             emptyStateText={emptyStateText}
+            onDragOverImagePlaceholder={(e) => showDropEffectCopy(e)}
+            onDropImagePlaceholder={(e) => addImageToLikedOrGallery(e)}
             model={model}
         />
     );
 }
 
 HorizontalGridPresenter.propTypes = {
+    id: PropTypes.string,
     title: PropTypes.string.isRequired,
     href: PropTypes.string,
     description: PropTypes.string,
