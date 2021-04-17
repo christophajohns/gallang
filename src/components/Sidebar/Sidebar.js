@@ -59,7 +59,7 @@ function Sidebar(props) {
                         />
                     ))}
                     <HorizontalGridPresenter
-                        id={"newGallery"}
+                        id="newGallery"
                         type="gallery"
                         title="New Gallery"
                         images={[]}
@@ -96,7 +96,7 @@ function LikedContent(props) {
 
     return (
         <HorizontalGridPresenter
-            id={"likedContent"}
+            id="likedContent"
             title="Liked content"
             href="/liked"
             images={likedImages}

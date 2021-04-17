@@ -64,14 +64,13 @@ function HorizontalGridPresenter(props) {
     function addImageToLikedOrGallery(event) {
         event.preventDefault();
         const imageID = event.dataTransfer.getData("text/plain");
-        if (id) {
-            if (id === "likedContent") model.likeImage(imageID);
-            if (id === "newGallery")
-                console.log(
-                    `Create new gallery with image ${imageID} requested`
-                );
-            else model.addImageToGallery(imageID, id);
-        }
+        if (!id) return;
+        if (id === "likedContent") return model.likeImage(imageID);
+        if (id === "newGallery")
+            return console.log(
+                `Create new gallery with image ${imageID} requested`
+            );
+        model.addImageToGallery(imageID, id);
     }
 
     return (
