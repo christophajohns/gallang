@@ -24,15 +24,27 @@ function ImagePresenter(props) {
 
     // State
     const [objectInfoPromise, setObjectInfoPromise] = React.useState(null);
-    const objectInfoPromiseStatesAndSetters = usePromise(objectInfoPromise);
-    const objectInfoData = objectInfoPromiseStatesAndSetters[0];
-    const objectInfoError = objectInfoPromiseStatesAndSetters[2];
+    const [
+        objectInfoData,
+        setObjectInfoData,
+        objectInfoError,
+        setObjectInfoError,
+    ] = usePromise(objectInfoPromise);
 
     // Effects
     React.useEffect(() => {
         // only at creation
         if (!src) setObjectInfoPromise(CooperHewittSource.getObjectInfo(id)); // fetch image info (incl. url) if src prop is not specified
     }, [src, id]);
+
+    React.useEffect(() => {
+        // cleanup to avoid memory leaks
+        return () => {
+            setObjectInfoPromise(null);
+            setObjectInfoData(null);
+            setObjectInfoError(null);
+        };
+    }, [setObjectInfoData, setObjectInfoError]);
 
     const browserHistory = useHistory(); // used to manually navigate/redirect to the details of a specific image
 
