@@ -9,6 +9,7 @@ import {
     SignupPresenter,
     ForgotPasswordPresenter,
     LikedContentPresenter,
+    ProfilePresenter,
     CollectionPresenter,
     GalleryPresenter,
 } from "./presenters";
@@ -34,6 +35,10 @@ function App(props) {
 
                     <Route path="/forgot-password" exact={true}>
                         <ForgotPasswordPresenter />
+                    </Route>
+
+                    <Route path="/profile" exact={true}>
+                        <ProfilePresenter />
                     </Route>
 
                     <Route path="/search" exact={true}>
