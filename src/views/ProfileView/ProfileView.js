@@ -1,6 +1,16 @@
-import { Button } from "react-bootstrap";
 import { HorizontalGridPresenter } from "../../presenters";
-import { ProfileViewMain } from "./style";
+import {
+    AccountSettingsDiv,
+    UserDiv,
+    Account,
+    ProfileViewMain,
+    CreationTimeDiv,
+    DeleteAccountButton,
+    UserDataDiv,
+    UserDataLabelDiv,
+    UserDataValueDiv,
+    UserDataEditButton,
+} from "./style";
 
 /**
  * Profile view to update a user's account and view all galleries
@@ -58,18 +68,18 @@ function AccountSettings(props) {
     } = props;
 
     return (
-        <div>
-            <div>Account settings</div>
+        <AccountSettingsDiv>
+            <h3 className="bold grey">Account settings</h3>
             <UserData
                 user={user}
                 onClickEditUserDisplayName={onClickEditUserDisplayName}
                 onClickEditUserEmail={onClickEditUserEmail}
                 onClickEditUserPassword={onClickEditUserPassword}
             />
-            <Button variant="link" onClick={onClickDeleteAccount}>
+            <DeleteAccountButton variant="link" onClick={onClickDeleteAccount}>
                 Delete account
-            </Button>
-        </div>
+            </DeleteAccountButton>
+        </AccountSettingsDiv>
     );
 }
 
@@ -77,13 +87,15 @@ function UserDataRow(props) {
     const { label, value, editFunction } = props;
 
     return (
-        <div>
-            <div>{label.toUpperCase()}</div>
-            <div>{value}</div>
-            <Button variant="link" onClick={editFunction}>
+        <>
+            <UserDataLabelDiv className="bold grey">
+                {label.toUpperCase()}
+            </UserDataLabelDiv>
+            <UserDataValueDiv>{value}</UserDataValueDiv>
+            <UserDataEditButton variant="link" onClick={editFunction}>
                 Edit
-            </Button>
-        </div>
+            </UserDataEditButton>
+        </>
     );
 }
 
@@ -96,7 +108,7 @@ function UserData(props) {
     } = props;
 
     return (
-        <div>
+        <UserDataDiv>
             <UserDataRow
                 label="username"
                 value={user.displayName}
@@ -112,7 +124,7 @@ function UserData(props) {
                 value="********"
                 editFunction={onClickEditUserPassword}
             />
-        </div>
+        </UserDataDiv>
     );
 }
 
@@ -120,13 +132,15 @@ function User(props) {
     const { initial, name, creationTime } = props;
 
     return (
-        <div>
-            <div>{initial}</div>
+        <UserDiv>
+            <Account>{initial}</Account>
             <div>
-                <div>{name}</div>
-                <div>Since {creationTime}</div>
+                <div className="bold">{name}</div>
+                <CreationTimeDiv className="grey">
+                    Since {creationTime}
+                </CreationTimeDiv>
             </div>
-        </div>
+        </UserDiv>
     );
 }
 
@@ -135,7 +149,7 @@ function Galleries(props) {
 
     return (
         <div>
-            <div>My Galleries</div>
+            <h3 className="bold grey">My Galleries</h3>
             <div>
                 {galleries.map((gallery) => (
                     <HorizontalGridPresenter
