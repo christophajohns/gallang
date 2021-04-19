@@ -2,8 +2,11 @@ import { ProfileView } from "../views";
 
 /**
  * Presenter for the profile page.
+ * @param {GallangModel} props.model - Model keeping the application state
  */
-function ProfilePresenter() {
+function ProfilePresenter(props) {
+    const { model } = props;
+
     const exampleUser = {
         email: "exampleuser@gallang.com",
         displayName: "Example User",
@@ -13,19 +16,23 @@ function ProfilePresenter() {
         {
             title: "Dark and Moody",
             id: "12345",
-            imageIDs: [],
+            imageIDs: ["18645651"],
         },
         {
             title: "Happy and Cheerful",
             id: "12346",
-            imageIDs: [],
+            imageIDs: ["2318797273", "18644717"],
         },
     ];
 
     return (
         <ProfileView
+            model={model}
             user={exampleUser}
-            galleries={exampleGalleries}
+            galleries={exampleGalleries.map((gallery) => ({
+                ...gallery,
+                images: gallery.imageIDs.map((imageID) => ({ id: imageID })),
+            }))}
             onClickEditUserDisplayName={(e) =>
                 console.log("edit user display name requested")
             }

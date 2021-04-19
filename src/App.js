@@ -38,7 +38,7 @@ function App(props) {
                     </Route>
 
                     <Route path="/profile" exact={true}>
-                        <ProfilePresenter />
+                        <ProfilePresenter model={model} />
                     </Route>
 
                     <Route path="/search" exact={true}>
