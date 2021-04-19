@@ -57,7 +57,9 @@ function TopNav(props) {
                             ref={accountOptionsRef}
                         >
                             <UserName>{username}</UserName>
-                            <AccountOption>My account</AccountOption>
+                            <Link to="/profile">
+                                <AccountOption>My account</AccountOption>
+                            </Link>
                             <Link to="/login">
                                 <AccountOption>Logout</AccountOption>
                             </Link>
