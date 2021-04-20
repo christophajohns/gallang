@@ -1,6 +1,7 @@
 import React from "react";
 import { HorizontalGrid } from "../components";
 import PropTypes from "prop-types";
+import { imageType } from "../types";
 
 /**
  * Presenter for the HorizontalGrid component
@@ -51,13 +52,7 @@ HorizontalGridPresenter.propTypes = {
     title: PropTypes.string.isRequired,
     href: PropTypes.string,
     description: PropTypes.string,
-    images: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            url: PropTypes.string.isRequired,
-            liked: PropTypes.bool.isRequired,
-        })
-    ),
+    images: PropTypes.arrayOf(imageType),
     model: PropTypes.shape({
         likedImageIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
         likeImage: PropTypes.func.isRequired,
@@ -68,8 +63,7 @@ HorizontalGridPresenter.propTypes = {
 /**
  * @typedef Image
  * @property {string} id - Unique identifier of the object or image
- * @property {string} url - Image url for the object
- * @property {bool} liked - Flag whether the user has liked this image
+ * @property {string} [url] - Image url for the object
  */
 
 export default HorizontalGridPresenter;
