@@ -35,12 +35,19 @@ class GallangModel {
         const image = this.recentlyViewedImages.find(
             (image) => image.id === imageID
         );
+        const updatedImage = { id: imageID, lastViewedAt: Date.now() };
         if (!image) {
             this.recentlyViewedImages = [
-                { id: imageID, lastViewedAt: Date.now() },
+                updatedImage,
                 ...this.recentlyViewedImages,
             ];
         } else {
+            this.recentlyViewedImages = this.recentlyViewedImages.map(
+                (currentImage) => {
+                    if (currentImage.id === imageID) return updatedImage;
+                    return currentImage;
+                }
+            );
         }
         this.notifyObservers();
     }
