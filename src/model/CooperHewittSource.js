@@ -53,7 +53,7 @@ const CooperHewittSource = {
     /**
      * Return detailed information for an object in the Cooper Hewitt collection (see https://collection.cooperhewitt.org/api/methods/cooperhewitt.objects.getInfo)
      * @param {string} objectID - Unique identifier of the object inside the Cooper Hewitt collection
-     * @returns {Promise<CooperHewittObject>} - Array holding objects with information about one Cooper Hewitt Object each matching the search parameters
+     * @returns {Promise<CooperHewittObject>} - Object holding the information of the specified object in the Cooper Hewitt collection
      */
     async getObjectInfo(objectID) {
         const params = {
