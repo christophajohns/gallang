@@ -44,6 +44,7 @@ function ImagePresenter(props) {
      * @param {string} imageID - Identifier of the image for which to display the details
      */
     function redirectToDetailsForImage(imageID) {
+        model.addImageToRecentlyViewed(imageID); // Log that user has accessed details view for the specified image
         browserHistory.push(`/details/${imageID}`);
     }
 
