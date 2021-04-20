@@ -14,9 +14,15 @@ class GallangModel {
         this.recentlyViewedImages = recentlyViewedImages;
     }
 
+    /** Setter function for the recentlyViewedImages property (required for getter function) */
+    set recentlyViewedImages(imageArray) {
+        this._recentlyViewedImages = imageArray; // Underscore before property name to avoid infinite loops with setter function
+    }
+
     /** Getter function for the recentlyViewedImages property to always return the array sorted by latest access time (desc) */
     get recentlyViewedImages() {
-        return this.recentlyViewedImages.sort(
+        // Underscore before property name to avoid infinite loops with getter function
+        return this._recentlyViewedImages.sort(
             (imageA, imageB) => imageB.lastViewedAt - imageA.lastViewedAt
         );
     }
