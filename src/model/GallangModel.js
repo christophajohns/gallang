@@ -6,10 +6,37 @@ class GallangModel {
     /**
      * @constructor
      * @param {string[]} likedImageIDs - Array of image IDs the user has liked
+     * @param {Array<{ id: string, lastViewedAt: Number}>} recentlyViewedImages - Array of images the user has viewed ordered by the timestamp of the viewing (latest first)
      */
-    constructor(likedImageIDs = []) {
+    constructor(likedImageIDs = [], recentlyViewedImages = []) {
         this.observers = [];
         this.likedImageIDs = likedImageIDs;
+        this.recentlyViewedImages = recentlyViewedImages;
+    }
+
+    /** Getter function for the recentlyViewedImages property to always return the array sorted by latest access time (desc) */
+    get recentlyViewedImages() {
+        return this.recentlyViewedImages.sort(
+            (imageA, imageB) => imageB.lastViewedAt - imageA.lastViewedAt
+        );
+    }
+
+    /**
+     * Adds an image to the recentlyViewedImages array in the model and notifies the observers
+     * @param {string} imageID - Identifier of the image the user has accessed
+     */
+    addImageToRecentlyViewed(imageID) {
+        const image = this.recentlyViewedImages.find(
+            (image) => image.id === imageID
+        );
+        if (!image) {
+            this.recentlyViewedImages = [
+                { id: imageID, lastViewedAt: Date.now() },
+                ...this.recentlyViewedImages,
+            ];
+        } else {
+        }
+        this.notifyObservers();
     }
 
     /**
