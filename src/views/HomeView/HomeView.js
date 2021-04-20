@@ -30,7 +30,7 @@ function HomeView(props) {
         <div className="HomeView">
             <CollectionCarousel collections={firstFourCollections} />
             <main>
-                {recentlyViewedImages ? (
+                {recentlyViewedImages?.length ? ( // Only show if at least one recently viewed image
                     <HorizontalGridPresenter
                         title="Recently viewed"
                         images={recentlyViewedImages}
