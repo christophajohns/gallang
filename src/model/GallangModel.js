@@ -35,16 +35,19 @@ class GallangModel {
         const image = this.recentlyViewedImages.find(
             (image) => image.id === imageID
         );
-        const updatedImage = { id: imageID, lastViewedAt: Date.now() };
+        const newImageData = { id: imageID, lastViewedAt: Date.now() }; // updated or completely new image data
         if (!image) {
+            // image not viewed before
+            // add image information to recently viewed
             this.recentlyViewedImages = [
-                updatedImage,
+                newImageData,
                 ...this.recentlyViewedImages,
             ];
         } else {
+            // replace old image information with new in recently viewed
             this.recentlyViewedImages = this.recentlyViewedImages.map(
                 (currentImage) => {
-                    if (currentImage.id === imageID) return updatedImage;
+                    if (currentImage.id === imageID) return newImageData;
                     return currentImage;
                 }
             );
