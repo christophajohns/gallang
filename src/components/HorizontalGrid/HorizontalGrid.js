@@ -36,6 +36,7 @@ import {
  * @param {string} [props.emptyStateText = "No images yet"] - Text to display if no images are supplied
  * @param {Function} props.onDragOverImagePlaceholder - Function to be called when a user drags an image over the image placeholder
  * @param {Function} props.onDropImagePlaceholder - Function to be called when a user drops a dragged image onto the image placeholder
+ * @param {boolean} [props.isDropTarget = false] - Flag whether the horizontal grid should display the image placeholder as a drop target
  * @param {ImagePresenterModelType} props.model - The model holding the application state
  * @returns
  */
@@ -53,6 +54,7 @@ function HorizontalGrid(props) {
         emptyStateText = "No images yet", // Text to display if no images are supplied
         onDragOverImagePlaceholder, // Function to be called when a user drags an image over the image placeholder
         onDropImagePlaceholder, // Function to be called when a user drops a dragged image onto the image placeholder
+        isDropTarget = false, // Flag whether the horizontal grid should display the image placeholder as a drop target
         model, // The model holding the application state
     } = props;
 
@@ -78,7 +80,7 @@ function HorizontalGrid(props) {
                 </StyledPreviousNextChevrons>
             </StyledGridTop>
             <StyledGridSection>
-                {images.length ? (
+                {!isDropTarget ? (
                     <StyledImages ref={imagesRef}>
                         {images.map((image) => (
                             <ImagePresenter
@@ -117,6 +119,7 @@ HorizontalGrid.propTypes = {
     emptyStateText: PropTypes.string,
     onDragOverImagePlaceholder: PropTypes.func.isRequired,
     onDropImagePlaceholder: PropTypes.func.isRequired,
+    isDropTarget: PropTypes.bool,
     model: imagePresenterModelType.isRequired,
 };
 

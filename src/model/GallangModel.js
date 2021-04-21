@@ -114,8 +114,8 @@ class GallangModel {
         if (!gallery) throw Error("Gallery with specified ID not found");
         const imageAlreadyInGallery = gallery.imageIDs.includes(imageID);
         if (!imageAlreadyInGallery) {
-            const updatedGallery = { ...gallery };
-            updatedGallery.imageIDs = [...gallery.imageIDs, imageID];
+            const updatedGallery = { ...gallery }; // Make a copy of the current state of the gallery
+            updatedGallery.imageIDs = [imageID, ...gallery.imageIDs]; // Add the new imageID to the front
             this.galleries = this.galleries.map((currentGallery) => {
                 if (currentGallery.id === updatedGallery.id)
                     return updatedGallery; // Replace old with updated gallery

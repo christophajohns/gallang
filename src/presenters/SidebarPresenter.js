@@ -37,6 +37,7 @@ function SidebarPresenter(props) {
             }))}
             onClickAddGallery={(e) => addGallery("Example Gallery")}
             expanded={expanded || isCurrentlyDragging}
+            isDropTarget={isCurrentlyDragging}
             onClickExpandCollapseButton={(e) => setExpanded(!expanded)}
             likedImages={likedImageIDs.map((imageID) => ({
                 id: imageID,
