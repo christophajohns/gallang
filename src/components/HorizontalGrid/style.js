@@ -7,7 +7,9 @@ export const StyledHorizontalGrid = styled.section`
 `;
 
 export const StyledGridSection = styled.div`
-    overflow: hidden;
+    overflow-x: scroll;
+    flex: 1;
+    display: flex;
 `;
 
 export const StyledGridTop = styled.div`
@@ -39,7 +41,6 @@ export const StyledPreviousNextChevrons = styled.div`
 export const StyledImages = styled.div`
     display: flex;
     flex-wrap: nowrap;
-    overflow-x: scroll;
 `;
 
 export const StyledLabel = styled.div`
@@ -59,6 +60,7 @@ export const ImagePlaceholderDiv = styled.div`
     text-align: center;
     padding: 8px;
     border: 1px dashed black;
+    margin-right: 32px;
 
     @media (max-width: 820px) {
         height: 200px;

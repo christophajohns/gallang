@@ -80,27 +80,26 @@ function HorizontalGrid(props) {
                 </StyledPreviousNextChevrons>
             </StyledGridTop>
             <StyledGridSection>
-                {!isDropTarget ? (
-                    <StyledImages ref={imagesRef}>
-                        {images.map((image) => (
-                            <ImagePresenter
-                                key={image.id}
-                                id={image.id}
-                                src={image.url}
-                                small={small}
-                                model={model}
-                            />
-                        ))}
-                    </StyledImages>
-                ) : (
-                    <ImagePlaceholderDiv
-                        small={small}
-                        onDrop={onDropImagePlaceholder}
-                        onDragOver={onDragOverImagePlaceholder}
-                    >
-                        {emptyStateText}
-                    </ImagePlaceholderDiv>
-                )}
+                <StyledImages ref={imagesRef}>
+                    {isDropTarget && (
+                        <ImagePlaceholderDiv
+                            small={small}
+                            onDrop={onDropImagePlaceholder}
+                            onDragOver={onDragOverImagePlaceholder}
+                        >
+                            {emptyStateText}
+                        </ImagePlaceholderDiv>
+                    )}
+                    {images.map((image) => (
+                        <ImagePresenter
+                            key={image.id}
+                            id={image.id}
+                            src={image.url}
+                            small={small}
+                            model={model}
+                        />
+                    ))}
+                </StyledImages>
             </StyledGridSection>
         </StyledHorizontalGrid>
     );
