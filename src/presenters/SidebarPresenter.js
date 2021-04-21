@@ -19,6 +19,7 @@ function SidebarPresenter(props) {
 
     const likedImageIDs = useModelProperty(model, "likedImageIDs");
     const galleries = useModelProperty(model, "galleries");
+    const isCurrentlyDragging = useModelProperty(model, "isCurrentlyDragging");
 
     /**
      * Create a new gallery with the specified title
@@ -35,7 +36,7 @@ function SidebarPresenter(props) {
                 images: gallery.imageIDs.map((imageID) => ({ id: imageID })),
             }))}
             onClickAddGallery={(e) => addGallery("Example Gallery")}
-            expanded={expanded}
+            expanded={expanded || isCurrentlyDragging}
             onClickExpandCollapseButton={(e) => setExpanded(!expanded)}
             likedImages={likedImageIDs.map((imageID) => ({
                 id: imageID,

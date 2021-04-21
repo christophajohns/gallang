@@ -31,6 +31,21 @@ class GallangModel {
         ];
         this.galleries = exampleGalleries;
         // this.galleries = galleries;
+        this.isCurrentlyDragging = false;
+    }
+
+    /**
+     * Setter function to always notify observers when the drag status changes
+     * @param {boolean} newValue - Updated value for the isCurrentlyDragging property
+     */
+    set isCurrentlyDragging(newValue) {
+        this._isCurrentlyDragging = newValue;
+        this.notifyObservers();
+    }
+
+    /** Getter function for the isCurrentlyDragging property (required for setter function) */
+    get isCurrentlyDragging() {
+        return this._isCurrentlyDragging;
     }
 
     /**

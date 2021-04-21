@@ -71,6 +71,7 @@ function HorizontalGridPresenter(props) {
                 `Create new gallery with image ${imageID} requested`
             );
         model.addImageToGallery(imageID, id);
+        model.isCurrentlyDragging = false;
     }
 
     return (
