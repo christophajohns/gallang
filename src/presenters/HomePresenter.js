@@ -2,7 +2,8 @@ import React from "react";
 import { HomeView } from "../views";
 import { promiseNoData } from "../components";
 import { CooperHewittSource } from "../model";
-import { usePromise } from "./customHooks";
+import { usePromise, useModelProperty } from "./customHooks";
+import { RecommendationPresenter } from "../presenters";
 import "../types";
 
 /**
@@ -26,13 +27,40 @@ function HomePresenter(props) {
     const quotePromiseStatesAndSetters = usePromise(quotePromise);
     const quoteData = quotePromiseStatesAndSetters[0];
     const quoteError = quotePromiseStatesAndSetters[2];
+    // Liked images
+    const likedImageIDs = useModelProperty(model, "likedImageIDs");
 
     // Effects
     React.useEffect(() => {
         // only at creation
         setCollectionsPromise(CooperHewittSource.getCollections(10));
         setQuotePromise(CooperHewittSource.getQuote());
-    }, []);
+    }, [model]);
+
+    const numberOfRecommendations = 3;
+
+    let recommendations = [];
+    // Only render recommendations if user has liked some images
+    if (likedImageIDs.length >= 3) {
+        for (let index = 0; index < numberOfRecommendations; index++) {
+            let recommendationProps = {
+                key: index,
+                model: model,
+            };
+            if (index < model.currentRecommendations.length) {
+                const recommendationData = model.currentRecommendations[index];
+                recommendationProps = {
+                    ...recommendationProps,
+                    title: recommendationData.title,
+                    images: recommendationData.images,
+                };
+            }
+            const recommendation = (
+                <RecommendationPresenter {...recommendationProps} />
+            );
+            recommendations.push(recommendation);
+        }
+    }
 
     const exampleRecentlyViewedImages = [
         {
@@ -42,32 +70,13 @@ function HomePresenter(props) {
             liked: false,
         },
     ];
-    const exampleRecommendations = [
-        {
-            title: "Posters",
-            images: [
-                {
-                    id: "18645651",
-                    url:
-                        "https://images.collection.cooperhewitt.org/223579_b1374fa355c2fb77_b.jpg",
-                    liked: true,
-                },
-                {
-                    id: "2318797273",
-                    url:
-                        "https://images.collection.cooperhewitt.org/348036_88262b84479c8e3d_b.jpg",
-                    liked: true,
-                },
-            ],
-        },
-    ];
 
     const homeView = (
         <HomeView
             collections={collectionsData}
             quote={quoteData}
             recentlyViewedImages={exampleRecentlyViewedImages}
-            recommendations={exampleRecommendations}
+            recommendations={recommendations.length ? recommendations : null}
             model={model}
         />
     );

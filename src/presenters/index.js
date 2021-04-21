@@ -12,6 +12,7 @@ import LoginPresenter from "./LoginPresenter";
 import SignupPresenter from "./SignupPresenter";
 import ForgotPasswordPresenter from "./ForgotPasswordPresenter";
 import SidebarPresenter from "./SidebarPresenter";
+import RecommendationPresenter from "./RecommendationPresenter";
 
 export {
     HomePresenter,
@@ -28,4 +29,5 @@ export {
     SignupPresenter,
     ForgotPasswordPresenter,
     SidebarPresenter,
+    RecommendationPresenter,
 };

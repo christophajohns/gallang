@@ -31,6 +31,7 @@ class GallangModel {
         ];
         this.galleries = exampleGalleries;
         // this.galleries = galleries;
+        this.currentRecommendations = [];
     }
 
     /**
@@ -105,13 +106,17 @@ class GallangModel {
         }
 
         // Loop through liked images until a recommendation was computed
-        let hasFoundRecommendation = false;
-        let imageIDIndex = 0;
+        let hasFoundNewRecommendation = false;
+        let imageIDIndex = Math.floor(
+            Math.random() * this.likedImageIDs.length
+        ); // pick a random image ID at first
         while (
-            !hasFoundRecommendation &&
-            imageIDIndex < this.likedImageIDs.length
+            !hasFoundNewRecommendation &&
+            imageIDIndex < 2 * this.likedImageIDs.length // Start at random index and go around in circle
         ) {
-            const currentImageID = this.likedImageIDs[imageIDIndex];
+            const currentImageID = this.likedImageIDs[
+                imageIDIndex % this.likedImageIDs.length
+            ]; // Go around in circle
             let currentRecommendation;
             try {
                 currentRecommendation = await this.getRecommendationByImageID(
@@ -121,12 +126,23 @@ class GallangModel {
             } catch (error) {
                 // console.error(error);
             }
-            hasFoundRecommendation =
+            const hasFoundRecommendation =
                 currentRecommendation.title &&
                 currentRecommendation.basisImageID &&
                 currentRecommendation.images &&
                 currentRecommendation.images.length > 0;
-            if (hasFoundRecommendation) recommendation = currentRecommendation;
+            const isNewRecommendation = !this.currentRecommendations.find(
+                (currentRecommendationInArray) => {
+                    const hasSameTitle =
+                        currentRecommendationInArray.title ===
+                        currentRecommendation.title;
+                    return hasSameTitle;
+                }
+            );
+            if (hasFoundRecommendation && isNewRecommendation) {
+                recommendation = currentRecommendation;
+                hasFoundNewRecommendation = true;
+            }
             imageIDIndex++; // Increase index to inspect next image ID on next iteration
         }
 
@@ -137,6 +153,10 @@ class GallangModel {
         if (!recommendation.basisImageID)
             Error("Recommendation has no basis image ID.");
 
+        this.currentRecommendations = [
+            ...this.currentRecommendations,
+            recommendation,
+        ];
         return recommendation;
     }
 
@@ -184,7 +204,6 @@ class GallangModel {
         ); // Search Cooper Hewitt collection for objects with that search parameters
         const recommendedImages = recommendedObjects.map((object) => ({
             id: object.id,
-            url: object.images[0].b.url, // Big version of first image for object
         })); // Transform objects into expected image array
 
         // Set recommendation images

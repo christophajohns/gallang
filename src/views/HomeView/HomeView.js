@@ -18,7 +18,7 @@ function HomeView(props) {
         collections, // Array holding all information about collections to be rendered in a HorizontalGrid
         recentlyViewedImages, // Array of image data to be rendered in a HorizontalGrid
         quote, // String representing a quote
-        recommendations, // Array of recommended images and the recommendation basis (e.g. medium, period, designer)
+        recommendations,
         model, // The model holding the application state
     } = props;
 
@@ -50,17 +50,7 @@ function HomeView(props) {
                       ))
                     : ""}
                 {quote ? <Quote quoteText={quote} /> : ""}
-                {recommendations
-                    ? recommendations.map((recommendation) => (
-                          <HorizontalGridPresenter
-                              key={recommendation.title}
-                              title={recommendation.title}
-                              description="Recommended for you."
-                              images={recommendation.images}
-                              model={model}
-                          />
-                      ))
-                    : ""}
+                {recommendations}
             </main>
         </div>
     );
