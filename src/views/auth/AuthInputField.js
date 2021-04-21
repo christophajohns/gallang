@@ -34,7 +34,7 @@ function AuthInputField(props) {
 }
 
 AuthInputField.propTypes = {
-    icon: PropTypes.node.isRequired,
+    icon: PropTypes.func.isRequired,
     placeholder: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     type: PropTypes.string,
