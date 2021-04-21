@@ -23,6 +23,7 @@ import {
  * @param {Function} props.onClickUnlikeButton - Function to be called when a user clicks the filled heart (unlike) button
  * @param {Function} props.onClickImage - Function to be called when a user clicks on the image
  * @param {Function} props.onDragStartImage - Function to be called when a user starts dragging an image
+ * @param {Function} props.onDragStopImage - Function to be called when a user stops dragging an image
  */
 function Image(props) {
     const {
@@ -33,6 +34,7 @@ function Image(props) {
         onClickUnlikeButton, // Function to be called when a user clicks the filled heart (unlike) button
         onClickImage, // Function to be called when a user clicks on the image
         onDragStartImage, // Function to be called when a user starts dragging an image
+        onDragEndImage, // Function to be called when a user stops dragging an image
         small = false, // Flag whether to render smaller versions of the images
     } = props;
 
@@ -43,6 +45,7 @@ function Image(props) {
                 variant="link"
                 draggable="true"
                 onDragStart={onDragStartImage}
+                onDragEnd={onDragEndImage}
             >
                 <GripVertical />
             </StyledGripButton>
@@ -97,6 +100,8 @@ Image.propTypes = {
     onClickImage: PropTypes.func.isRequired,
     /** Function to be called when a user starts dragging an image */
     onDragStartImage: PropTypes.func.isRequired,
+    /** Function to be called when a user stops dragging an image */
+    onDragEndImage: PropTypes.func.isRequired,
 };
 
 export default Image;
