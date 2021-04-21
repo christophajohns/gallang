@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export const StyledHorizontalGrid = styled.section`
-    margin-bottom: 64px;
+    margin-bottom: ${(props) => (props.small ? "32px" : "64px")};
     scroll-behavior: smooth;
 `;
 
@@ -20,8 +20,7 @@ export const StyledTitleAndDescription = styled.div`
     align-self: center;
 `;
 
-export const StyledTitle = styled.a`
-    color: black;
+export const StyledTitle = styled(Link)`
     font-weight: bold;
 `;
 
@@ -34,6 +33,7 @@ export const StyledDescription = styled.p`
 
 export const StyledPreviousNextChevrons = styled.div`
     align-self: flex-start;
+    min-width: 84px;
 `;
 
 export const StyledImages = styled.div`
@@ -42,9 +42,26 @@ export const StyledImages = styled.div`
     overflow-x: scroll;
 `;
 
-export const StyledIconButton = styled(Button)`
-    color: black;
-    &:hover {
-        color: grey;
+export const StyledLabel = styled.div`
+    font-weight: bold;
+    color: grey;
+    font-size: 0.8rem;
+    line-height: 0.8rem;
+`;
+
+export const ImagePlaceholderDiv = styled.div`
+    height: ${(props) => (props.small ? "200px" : "400px")};
+    width: ${(props) => (props.small ? "200px" : "400px")};
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 8px;
+    border: 1px dashed black;
+
+    @media (max-width: 820px) {
+        height: 200px;
+        width: 200px;
     }
 `;

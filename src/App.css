@@ -1,10 +1,40 @@
 main {
     padding-top: 64px;
     padding-right: 0px;
-    padding-left: 64px;
+    padding-left: 58px;
     padding-bottom: 64px;
+}
+
+a {
+    color: black;
+}
+
+a:hover {
+    color: black;
 }
 
 .hidden {
     display: none;
+}
+
+.App {
+    display: grid;
+    grid-template-areas:
+        "topnav topnav"
+        "mainContent sidebar";
+    grid-template-rows: auto;
+    grid-template-columns: 1fr auto;
+}
+
+.App > .topnav {
+    grid-area: topnav;
+}
+
+.App > .mainContent {
+    grid-area: mainContent;
+    overflow: hidden;
+}
+
+.App > aside {
+    grid-area: sidebar;
 }

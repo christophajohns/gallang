@@ -24,7 +24,6 @@ export const Logo = styled(Link)`
     font-family: Georgia, "Times New Roman", Times, serif;
     font-weight: bold;
     font-size: 1.3rem;
-    color: black;
     &:hover {
         text-decoration: none;
         color: slategray;
