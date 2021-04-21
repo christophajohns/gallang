@@ -11,6 +11,8 @@ import {
     LikedContentPresenter,
     SidebarPresenter,
 } from "./presenters";
+import { PrivateRoute } from "./components";
+import { mockCollections } from "./model/MockData";
 
 function App(props) {
     const {
@@ -43,30 +45,30 @@ function App(props) {
                         <ForgotPasswordPresenter />
                     </Route>
 
-                    <Route path="/search" exact={true}>
+                    <PrivateRoute path="/search" exact={true}>
                         <MainContent>
                             <SearchResultsPresenter model={model} />
                         </MainContent>
                         {sidebar}
-                    </Route>
+                    </PrivateRoute>
 
-                    <Route path="/liked" exact={true}>
+                    <PrivateRoute path="/liked" exact={true}>
                         <MainContent>
                             <LikedContentPresenter model={model} />
                         </MainContent>
                         {sidebar}
-                    </Route>
+                    </PrivateRoute>
 
-                    <Route path="/details/:imageID" exact={true}>
+                    <PrivateRoute path="/details/:imageID" exact={true}>
                         <DetailsPresenter model={model} />
-                    </Route>
+                    </PrivateRoute>
 
-                    <Route path="/" exact={true}>
+                    <PrivateRoute path="/" exact={true}>
                         <MainContent>
                             <HomePresenter model={model} />
                         </MainContent>
                         {sidebar}
-                    </Route>
+                    </PrivateRoute>
                 </Switch>
             </div>
         </Router>
