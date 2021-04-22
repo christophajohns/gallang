@@ -45,6 +45,10 @@ function TopNavPresenter() {
         const updatedQuery = event.target.value; // Text value of the search input field
         setQuery(updatedQuery);
     }
+    /**Redirect user to profile page */
+    function redirectToProfile() {
+        browserHistory.push(`/profile`);
+    }
 
     /**
      * Login user using the authentication model (firebase authentication)
@@ -69,6 +73,7 @@ function TopNavPresenter() {
             onSearchInput={_.debounce(updateQueryInState, 500)}
             onSearch={(e) => redirectToSearchResults()}
             onLogoutRequest={(e) => logoutUser()}
+            onProfileRedirect={(e) => redirectToProfile()}
         />
     );
 }

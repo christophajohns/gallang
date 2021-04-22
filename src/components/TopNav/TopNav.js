@@ -22,6 +22,7 @@ import {
  * @param {Function} props.onSearchInput - Function to call when the text inside the search input field changes
  * @param {Function} props.onSearch - Function to call when the user hits enter inside the search input field
  * @param {Function} props.onLogoutRequest - Function to call when a user requests a logout (clicks the logout button)
+ * @param {Function} props.onProfileRedirect - Function to call when a user clicks on their profile
  */
 function TopNav(props) {
     const {
@@ -32,6 +33,7 @@ function TopNav(props) {
         onSearchInput,
         onSearch,
         onLogoutRequest,
+        onProfileRedirect,
     } = props;
 
     const username = props.username ? props.username : "Anonymous Designer";
@@ -59,14 +61,10 @@ function TopNav(props) {
                             ref={accountOptionsRef}
                         >
                             <UserName>{username}</UserName>
-                            <Link to="/profile">
-                                <AccountOption>My account</AccountOption>
-                            </Link>
-                            <Link to="/login">
+                                <AccountOption onClick={onProfileRedirect}>My account</AccountOption>
                                 <AccountOption onClick={onLogoutRequest}>
                                     Logout
                                 </AccountOption>
-                            </Link>
                         </AccountOptions>
                     </AccountWrapper>
                 </ControlsDiv>
@@ -87,6 +85,7 @@ TopNav.propTypes = {
     ]).isRequired,
     onSearchInput: PropTypes.func.isRequired,
     onSearch: PropTypes.func.isRequired,
+    onProfileRedirect: PropTypes.func.isRequired,
 };
 
 export default TopNav;
