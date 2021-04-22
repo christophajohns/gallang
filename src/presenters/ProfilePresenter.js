@@ -1,4 +1,5 @@
 import { ProfileView } from "../views";
+import { useCurrentUser, useModelProperty } from "./customHooks";
 
 /**
  * Presenter for the profile page.
@@ -7,29 +8,17 @@ import { ProfileView } from "../views";
 function ProfilePresenter(props) {
     const { model } = props;
 
-    const exampleUser = {
-        email: "exampleuser@gallang.com",
-        displayName: "Example User",
-        creationTime: "2021-04-01",
-    };
-    const exampleGalleries = [
-        {
-            title: "Dark and Moody",
-            id: "12345",
-            imageIDs: ["18645651"],
-        },
-        {
-            title: "Happy and Cheerful",
-            id: "12346",
-            imageIDs: ["2318797273", "18644717"],
-        },
-    ];
+    const galleries = useModelProperty(model, "galleries");
+    const currentUser = useCurrentUser();
 
     return (
         <ProfileView
             model={model}
-            user={exampleUser}
-            galleries={exampleGalleries.map((gallery) => ({
+            user={{
+                ...currentUser,
+                creationTime: currentUser.metadata.creationTime,
+            }}
+            galleries={galleries.map((gallery) => ({
                 ...gallery,
                 images: gallery.imageIDs.map((imageID) => ({ id: imageID })),
             }))}
