@@ -22,7 +22,7 @@ import {
  * @param {Function} props.onSearchInput - Function to call when the text inside the search input field changes
  * @param {Function} props.onSearch - Function to call when the user hits enter inside the search input field
  * @param {Function} props.onLogoutRequest - Function to call when a user requests a logout (clicks the logout button)
- * @param {Function} props.onProfileRedirect - Function to call when a user clicks on their profile
+ * @param {Function} props.onClickMyAccountButton - Function to call when a user clicks on the "My account" button to see their profile
  */
 function TopNav(props) {
     const {
@@ -33,7 +33,7 @@ function TopNav(props) {
         onSearchInput,
         onSearch,
         onLogoutRequest,
-        onProfileRedirect,
+        onClickMyAccountButton,
     } = props;
 
     const username = props.username ? props.username : "Anonymous Designer";
@@ -61,10 +61,12 @@ function TopNav(props) {
                             ref={accountOptionsRef}
                         >
                             <UserName>{username}</UserName>
-                                <AccountOption onClick={onProfileRedirect}>My account</AccountOption>
-                                <AccountOption onClick={onLogoutRequest}>
-                                    Logout
-                                </AccountOption>
+                            <AccountOption onClick={onClickMyAccountButton}>
+                                My account
+                            </AccountOption>
+                            <AccountOption onClick={onLogoutRequest}>
+                                Logout
+                            </AccountOption>
                         </AccountOptions>
                     </AccountWrapper>
                 </ControlsDiv>
@@ -85,7 +87,8 @@ TopNav.propTypes = {
     ]).isRequired,
     onSearchInput: PropTypes.func.isRequired,
     onSearch: PropTypes.func.isRequired,
-    onProfileRedirect: PropTypes.func.isRequired,
+    onLogoutRequest: PropTypes.func.isRequired,
+    onClickMyAccountButton: PropTypes.func.isRequired,
 };
 
 export default TopNav;

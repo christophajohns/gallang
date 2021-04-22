@@ -40,12 +40,16 @@ function TopNavPresenter() {
         accountOptionsRef.current.classList.add("hidden");
     }
 
-    /** Redirect user to search results page using the query specified in the search input field */
+    /**
+     * Redirect user to search results page using the query specified in the search input field
+     * @param {Event} event
+     */
     function updateQueryInState(event) {
         const updatedQuery = event.target.value; // Text value of the search input field
         setQuery(updatedQuery);
     }
-    /**Redirect user to profile page */
+
+    /** Redirect user to profile page */
     function redirectToProfile() {
         browserHistory.push(`/profile`);
     }
@@ -73,7 +77,7 @@ function TopNavPresenter() {
             onSearchInput={_.debounce(updateQueryInState, 500)}
             onSearch={(e) => redirectToSearchResults()}
             onLogoutRequest={(e) => logoutUser()}
-            onProfileRedirect={(e) => redirectToProfile()}
+            onClickMyAccountButton={(e) => redirectToProfile()}
         />
     );
 }
