@@ -2,6 +2,8 @@ import React from "react";
 import _ from "underscore";
 import { useHistory } from "react-router-dom";
 import { TopNav } from "../components";
+import { useCurrentUser } from "./customHooks";
+import { AuthenticationModel } from "../model";
 
 /**
  * Presenter for the TopNav component
@@ -10,7 +12,9 @@ import { TopNav } from "../components";
 function TopNavPresenter() {
     const accountOptionsRef = React.useRef(null); // used to enable the mouse enter/leave behaviour
     const [query, setQuery] = React.useState("");
+
     const browserHistory = useHistory(); // used to manually navigate/redirect to the details of a specific image
+    const currentUser = useCurrentUser();
 
     /** Redirect user to search results page using the query specified in the search input field */
     const redirectToSearchResults = React.useCallback(() => {
@@ -36,21 +40,44 @@ function TopNavPresenter() {
         accountOptionsRef.current.classList.add("hidden");
     }
 
-    /** Redirect user to search results page using the query specified in the search input field */
+    /**
+     * Redirect user to search results page using the query specified in the search input field
+     * @param {Event} event
+     */
     function updateQueryInState(event) {
         const updatedQuery = event.target.value; // Text value of the search input field
         setQuery(updatedQuery);
     }
 
+    /** Redirect user to profile page */
+    function redirectToProfile() {
+        browserHistory.push(`/profile`);
+    }
+
+    /**
+     * Login user using the authentication model (firebase authentication)
+     * @param {Event} event
+     */
+    async function logoutUser(event) {
+        try {
+            await AuthenticationModel.signOut();
+            browserHistory.push("/login");
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <TopNav
-            username="GallangUser"
-            isLoggedIn={true}
+            isLoggedIn={!!currentUser}
+            username={currentUser?.displayName}
             onAccountWrapperMouseEnter={(e) => showAccountOptions()}
             onAccountOptionsMouseLeave={(e) => hideAccountOptions()}
             accountOptionsRef={accountOptionsRef}
             onSearchInput={_.debounce(updateQueryInState, 500)}
             onSearch={(e) => redirectToSearchResults()}
+            onLogoutRequest={(e) => logoutUser()}
+            onClickMyAccountButton={(e) => redirectToProfile()}
         />
     );
 }

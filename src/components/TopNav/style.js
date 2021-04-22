@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const NavBar = styled.nav`
@@ -17,13 +18,12 @@ export const NavBar = styled.nav`
     `}
 `;
 
-export const Logo = styled.a`
+export const Logo = styled(Link)`
     grid-area: center;
     justify-self: center;
     font-family: Georgia, "Times New Roman", Times, serif;
     font-weight: bold;
     font-size: 1.3rem;
-    color: black;
     &:hover {
         text-decoration: none;
         color: slategray;

@@ -43,6 +43,7 @@ function HomeView(props) {
                     ? collectionsAfterFour.map((collection) => (
                           <HorizontalGridPresenter
                               key={collection.title}
+                              type="collection"
                               title={collection.title}
                               images={collection.images}
                               model={model}

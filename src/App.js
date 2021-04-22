@@ -9,9 +9,12 @@ import {
     SignupPresenter,
     ForgotPasswordPresenter,
     LikedContentPresenter,
+    ProfilePresenter,
     CollectionPresenter,
     GalleryPresenter,
+    SidebarPresenter,
 } from "./presenters";
+import { PrivateRoute } from "./components";
 import { mockCollections } from "./model/MockData";
 
 function App(props) {
@@ -19,10 +22,19 @@ function App(props) {
         model, // Model keeping application state
     } = props;
 
+    const sidebar = (
+        <aside>
+            <SidebarPresenter model={model} />
+        </aside>
+    );
+
     return (
         <Router>
             <div className="App">
-                <TopNavPresenter model={model} />
+                <div className="topnav">
+                    <TopNavPresenter model={model} />
+                </div>
+
                 <Switch>
                     <Route path="/login" exact={true}>
                         <LoginPresenter />
@@ -36,25 +48,51 @@ function App(props) {
                         <ForgotPasswordPresenter />
                     </Route>
 
-                    <Route path="/search" exact={true}>
-                        <SearchResultsPresenter model={model} />
-                    </Route>
+                    <PrivateRoute path="/profile" exact={true}>
+                        <MainContent>
+                            <ProfilePresenter model={model} />
+                        </MainContent>
+                        {sidebar}
+                    </PrivateRoute>
 
-                    <Route path="/liked" exact={true}>
-                        <LikedContentPresenter model={model} />
-                    </Route>
+                    <PrivateRoute path="/search" exact={true}>
+                        <MainContent>
+                            <SearchResultsPresenter model={model} />
+                        </MainContent>
+                        {sidebar}
+                    </PrivateRoute>
 
-                    <Route path="/details/:imageID" exact={true}>
+                    <PrivateRoute path="/liked" exact={true}>
+                        <MainContent>
+                            <LikedContentPresenter model={model} />
+                        </MainContent>
+                        {sidebar}
+                    </PrivateRoute>
+
+                    <PrivateRoute path="/details/:imageID" exact={true}>
                         <DetailsPresenter model={model} />
-                    </Route>
+                    </PrivateRoute>
 
-                    <Route path="/" exact={true}>
-                        <HomePresenter model={model} />
-                    </Route>
+                    <PrivateRoute path="/" exact={true}>
+                        <MainContent>
+                            <HomePresenter model={model} />
+                        </MainContent>
+                        {sidebar}
+                    </PrivateRoute>
                 </Switch>
             </div>
         </Router>
     );
+}
+
+/**
+ * Wrapper component to display main content correctly in the app layout
+ * @param {Object} props - Properties passed to the object
+ * @returns div element with className "mainContent" containing the children elements
+ */
+function MainContent(props) {
+    const { children } = props;
+    return <div className="mainContent">{children}</div>;
 }
 
 export default App;

@@ -80,13 +80,12 @@ function HomePresenter(props) {
         homeView
     );
 }
-
 // -- Utility functions --
 /**
  * Properties check for collections prop
  * @param {Collection[]} collections - Array of collection objects
  */
-function checkCollectionsForRequiredFormat(collections) {
+ function checkCollectionsForRequiredFormat(collections) {
     collections.map((collection) => {
         if (!collection.hasOwnProperty("title"))
             throw Error("Each collection needs a title.");
@@ -104,5 +103,4 @@ function checkCollectionsForRequiredFormat(collections) {
         return true;
     });
 }
-
 export default HomePresenter;

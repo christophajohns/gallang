@@ -11,6 +11,8 @@ import LikedContentPresenter from "./LikedContentPresenter";
 import LoginPresenter from "./LoginPresenter";
 import SignupPresenter from "./SignupPresenter";
 import ForgotPasswordPresenter from "./ForgotPasswordPresenter";
+import ProfilePresenter from "./ProfilePresenter";
+import SidebarPresenter from "./SidebarPresenter";
 
 export {
     HomePresenter,
@@ -26,4 +28,6 @@ export {
     LoginPresenter,
     SignupPresenter,
     ForgotPasswordPresenter,
+    ProfilePresenter,
+    SidebarPresenter,
 };

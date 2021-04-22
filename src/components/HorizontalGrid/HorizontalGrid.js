@@ -7,12 +7,19 @@ import {
     StyledTitle,
     StyledDescription,
     StyledPreviousNextChevrons,
-    StyledIconButton,
     StyledImages,
     StyledGridSection,
     StyledGridTop,
+    StyledLabel,
+    ImagePlaceholderDiv,
 } from "./style";
-import { imageType } from "../../types";
+import { imageType, refType } from "../../types";
+import { IconButton } from "../../components";
+import {
+    modelType as imagePresenterModelType,
+    // eslint-disable-next-line no-unused-vars
+    ImagePresenterModelType,
+} from "../../presenters/ImagePresenter";
 
 /**
  * Horizontal (scrollable) grid of images to showcase objects in a collection or gallery
@@ -24,7 +31,12 @@ import { imageType } from "../../types";
  * @param {React.MutableRefObject} props.imagesRef - Reference to be used on the scrollable HTML element displaying the images
  * @param {Function} props.onClickPreviousButton - Function to be called when the previous button (chevron left) is clicked
  * @param {Function} props.onClickNextButton - Function to be called when the next button (chevron right) is clicked
- * @param {GallangModel} props.model - The model holding the application state
+ * @param {boolean} [props.small] - Flag whether to render smaller versions of the images
+ * @param {"collection" | "gallery"} [props.type] - Type of content that is displayed in the grid (e.g. Gallery)
+ * @param {string} [props.emptyStateText = "No images yet"] - Text to display if no images are supplied
+ * @param {Function} props.onDragOverImagePlaceholder - Function to be called when a user drags an image over the image placeholder
+ * @param {Function} props.onDropImagePlaceholder - Function to be called when a user drops a dragged image onto the image placeholder
+ * @param {ImagePresenterModelType} props.model - The model holding the application state
  * @returns
  */
 function HorizontalGrid(props) {
@@ -36,14 +48,20 @@ function HorizontalGrid(props) {
         imagesRef, // Reference to be used on the scrollable HTML element displaying the images
         onClickPreviousButton, // Function to be called when the previous button (chevron left) is clicked
         onClickNextButton, // Function to be called when the next button (chevron right) is clicked
+        small, // Flag whether to render smaller versions of the images
+        type, // Type of content that is displayed in the grid (e.g. Gallery)
+        emptyStateText = "No images yet", // Text to display if no images are supplied
+        onDragOverImagePlaceholder, // Function to be called when a user drags an image over the image placeholder
+        onDropImagePlaceholder, // Function to be called when a user drops a dragged image onto the image placeholder
         model, // The model holding the application state
     } = props;
 
     return (
-        <StyledHorizontalGrid label={title}>
+        <StyledHorizontalGrid label={title} small={small}>
             <StyledGridTop>
                 <StyledTitleAndDescription>
-                    <StyledTitle href={href ? href : "#"}>{title}</StyledTitle>
+                    {type && <StyledLabel>{type.toUpperCase()}</StyledLabel>}
+                    <StyledTitle to={href || "#"}>{title}</StyledTitle>
                     {description ? (
                         <StyledDescription>{description}</StyledDescription>
                     ) : (
@@ -51,31 +69,36 @@ function HorizontalGrid(props) {
                     )}
                 </StyledTitleAndDescription>
                 <StyledPreviousNextChevrons>
-                    <StyledIconButton
-                        variant="link"
-                        onClick={onClickPreviousButton}
-                    >
+                    <IconButton onClick={onClickPreviousButton}>
                         <ChevronLeft />
-                    </StyledIconButton>
-                    <StyledIconButton
-                        variant="link"
-                        onClick={onClickNextButton}
-                    >
+                    </IconButton>
+                    <IconButton onClick={onClickNextButton}>
                         <ChevronRight />
-                    </StyledIconButton>
+                    </IconButton>
                 </StyledPreviousNextChevrons>
             </StyledGridTop>
             <StyledGridSection>
-                <StyledImages ref={imagesRef}>
-                    {images.map((image) => (
-                        <ImagePresenter
-                            key={image.id}
-                            id={image.id}
-                            src={image.url}
-                            model={model}
-                        />
-                    ))}
-                </StyledImages>
+                {images.length ? (
+                    <StyledImages ref={imagesRef}>
+                        {images.map((image) => (
+                            <ImagePresenter
+                                key={image.id}
+                                id={image.id}
+                                src={image.url}
+                                small={small}
+                                model={model}
+                            />
+                        ))}
+                    </StyledImages>
+                ) : (
+                    <ImagePlaceholderDiv
+                        small={small}
+                        onDrop={onDropImagePlaceholder}
+                        onDragOver={onDragOverImagePlaceholder}
+                    >
+                        {emptyStateText}
+                    </ImagePlaceholderDiv>
+                )}
             </StyledGridSection>
         </StyledHorizontalGrid>
     );
@@ -86,19 +109,15 @@ HorizontalGrid.propTypes = {
     href: PropTypes.string,
     description: PropTypes.string,
     images: PropTypes.arrayOf(imageType).isRequired,
-    imagesRef: PropTypes.oneOfType([
-        // Either a function
-        PropTypes.func,
-        // Or the instance of a DOM native element (see the note about SSR)
-        PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-    ]).isRequired,
+    imagesRef: refType.isRequired,
     onClickPreviousButton: PropTypes.func.isRequired,
     onClickNextButton: PropTypes.func.isRequired,
-    model: PropTypes.shape({
-        likedImageIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
-        likeImage: PropTypes.func.isRequired,
-        unlikeImage: PropTypes.func.isRequired,
-    }),
+    small: PropTypes.bool,
+    type: PropTypes.string,
+    emptyStateText: PropTypes.string,
+    onDragOverImagePlaceholder: PropTypes.func.isRequired,
+    onDropImagePlaceholder: PropTypes.func.isRequired,
+    model: imagePresenterModelType.isRequired,
 };
 
 export default HorizontalGrid;

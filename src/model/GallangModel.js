@@ -7,12 +7,36 @@ class GallangModel {
      * @constructor
      * @param {string[]} likedImageIDs - Array of image IDs the user has liked
      * @param {Array<{ id: string, lastViewedAt: Number}>} recentlyViewedImages - Array of images the user has viewed ordered by the timestamp of the viewing (latest first)
+     * @param {Gallery[]} galleries - Array of galleries the user has created
      */
-    constructor(likedImageIDs = [], recentlyViewedImages = []) {
+     
+    constructor(likedImageIDs = [], recentlyViewedImages = [], galleries = []) {
         this.observers = [];
         this.likedImageIDs = likedImageIDs;
         this.recentlyViewedImages = recentlyViewedImages;
+         // Placeholder galleries for now
+        const exampleGalleries = [
+            {
+                title: "Dark and Moody",
+                id: "12345",
+                imageIDs: [],
+            },
+            {
+                title: "Happy and Cheerful",
+                id: "12346",
+                imageIDs: [],
+            },
+            {
+                title: "Almost Disgusting (but in a fun way)",
+                id: "12347",
+                imageIDs: [],
+            },
+        ];
+        this.galleries = exampleGalleries;
+        // this.galleries = galleries;
     }
+
+    
 
     /** Setter function for the recentlyViewedImages property (required for getter function) */
     set recentlyViewedImages(imageArray) {
@@ -84,8 +108,31 @@ class GallangModel {
     }
 
     /**
+     * Adds an image ID to the specified gallery
+     * @param {string} imageID - Identifier of the image to add
+     * @param {string} galleryID - Identifier of the gallery to add the image to
+     */
+    addImageToGallery(imageID, galleryID) {
+        const gallery = this.galleries.find(
+            (gallery) => gallery.id === galleryID
+        );
+        if (!gallery) throw Error("Gallery with specified ID not found");
+        const imageAlreadyInGallery = gallery.imageIDs.includes(imageID);
+        if (!imageAlreadyInGallery) {
+            const updatedGallery = { ...gallery };
+            updatedGallery.imageIDs = [...gallery.imageIDs, imageID];
+            this.galleries = this.galleries.map((currentGallery) => {
+                if (currentGallery.id === updatedGallery.id)
+                    return updatedGallery; // Replace old with updated gallery
+                return currentGallery;
+            });
+            this.notifyObservers();
+        }
+    }
+
+    /**
      * Evaluates a user's liked content to return recommended images including title/recommendation basis (e.g. medium, period, person)
-     * @param {"type" | "medium" | "person"} [recommendationBasis] - Basis/type of the recommendation
+     * @param {"type" | "medium" | "person"} [recommendationBasis = "type"] - Basis/type of the recommendation
      * @returns {Recommendation} - Collection of recommended images including title/recommendation basis (e.g. medium, period, person)
      */
     async getRecommendation(recommendationBasis = "type") {
@@ -142,7 +189,7 @@ class GallangModel {
     /**
      *
      * @param {string} imageID - Unique identifier of the image (object in the Cooper Hewitt collection)
-     * @param {"type" | "medium" | "person"} [recommendationBasis] - Basis/type of the recommendation
+     * @param {"type" | "medium" | "person"} [recommendationBasis = "type"] - Basis/type of the recommendation
      * @returns {Recommendation} - Collection of recommended images including title/recommendation basis (e.g. medium, period, person)
      */
     async getRecommendationByImageID(imageID, recommendationBasis = "type") {
