@@ -1,4 +1,5 @@
 import { ProfileView } from "../views";
+import { AccountSettingPresenter } from "../presenters";
 import { useCurrentUser, useModelProperty } from "./customHooks";
 
 /**
@@ -11,6 +12,40 @@ function ProfilePresenter(props) {
     const galleries = useModelProperty(model, "galleries");
     const currentUser = useCurrentUser();
 
+    /**
+     * Wrapper function around the authentication model's updateProfile method for easier use
+     * @param {string} newUsername - The new username (display name) for the user
+     */
+    async function updateUsername(newUsername) {
+        await currentUser.updateProfile({
+            displayName: newUsername,
+        });
+    }
+
+    const usernameSetting = (
+        <AccountSettingPresenter
+            updateSetting={(newUsername) => updateUsername(newUsername)}
+            label="username"
+            initialValue={currentUser.displayName}
+        />
+    );
+    const emailSetting = (
+        <AccountSettingPresenter
+            updateSetting={(newEmail) => currentUser.updateEmail(newEmail)}
+            label="email"
+            initialValue={currentUser.email}
+        />
+    );
+    const passwordSetting = (
+        <AccountSettingPresenter
+            updateSetting={(newPassword) =>
+                currentUser.updatePassword(newPassword)
+            }
+            label="password"
+            initialValue="********"
+        />
+    );
+
     return (
         <ProfileView
             model={model}
@@ -22,18 +57,10 @@ function ProfilePresenter(props) {
                 ...gallery,
                 images: gallery.imageIDs.map((imageID) => ({ id: imageID })),
             }))}
-            onClickEditUserDisplayName={(e) =>
-                console.log("edit user display name requested")
-            }
-            onClickEditUserEmail={(e) =>
-                console.log("edit user email requested")
-            }
-            onClickEditUserPassword={(e) =>
-                console.log("edit user password requested")
-            }
-            onClickDeleteAccount={(e) =>
-                console.log("delete user account requested")
-            }
+            usernameSetting={usernameSetting}
+            emailSetting={emailSetting}
+            passwordSetting={passwordSetting}
+            onClickDeleteAccount={(e) => currentUser.delete()}
         />
     );
 }

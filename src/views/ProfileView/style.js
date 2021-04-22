@@ -1,5 +1,5 @@
 import { Button } from "react-bootstrap";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const ProfileViewMain = styled.main`
     h3 {
@@ -29,26 +29,6 @@ export const UserDataDiv = styled.div`
     grid-column-gap: 16px;
     margin-top: 8px;
     margin-bottom: 8px;
-`;
-
-export const UserDataLabel = styled.label`
-    grid-column: 1 / 2;
-    margin-bottom: 0px;
-`;
-
-export const UserDataValueInput = styled.input`
-    grid-column: 2 / 3;
-    ${(props) =>
-        props.readOnly &&
-        css`
-            outline: none;
-            border: none;
-            box-shadow: none;
-        `}
-`;
-
-export const UserDataEditButton = styled(Button)`
-    grid-column: 3 / 4;
 `;
 
 export const UserSection = styled.section`

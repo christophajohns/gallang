@@ -6,6 +6,7 @@ import PrivateRoute from "./PrivateRoute";
 import promiseNoData from "./promiseNoData";
 import Sidebar from "./Sidebar";
 import IconButton from "./IconButton";
+import AccountSetting from "./AccountSetting";
 
 export {
     HorizontalGrid,
@@ -16,4 +17,5 @@ export {
     Sidebar,
     IconButton,
     PrivateRoute,
+    AccountSetting,
 };
