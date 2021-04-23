@@ -103,9 +103,20 @@ HorizontalGridPresenter.propTypes = {
     href: PropTypes.string,
     description: PropTypes.string,
     images: PropTypes.arrayOf(imageType),
+    model: PropTypes.shape({
+        likedImageIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
+        likeImage: PropTypes.func.isRequired,
+        unlikeImage: PropTypes.func.isRequired,
+    }),
     small: PropTypes.bool,
     emptyStateText: PropTypes.string,
     model: modelType.isRequired,
 };
+
+/**
+ * @typedef Image
+ * @property {string} id - Unique identifier of the object or image
+ * @property {string} [url] - Image url for the object
+ */
 
 export default HorizontalGridPresenter;
