@@ -103,11 +103,6 @@ HorizontalGridPresenter.propTypes = {
     href: PropTypes.string,
     description: PropTypes.string,
     images: PropTypes.arrayOf(imageType),
-    model: PropTypes.shape({
-        likedImageIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
-        likeImage: PropTypes.func.isRequired,
-        unlikeImage: PropTypes.func.isRequired,
-    }),
     small: PropTypes.bool,
     emptyStateText: PropTypes.string,
     model: modelType.isRequired,

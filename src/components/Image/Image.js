@@ -37,13 +37,13 @@ function Image(props) {
     } = props;
 
     return (
-        <StyledImage small={small}>
+        <StyledImage
+            small={small}
+            draggable="true"
+            onDragStart={onDragStartImage}
+        >
             <img id={id} src={src} alt={id} onClick={onClickImage} />
-            <StyledGripButton
-                variant="link"
-                draggable="true"
-                onDragStart={onDragStartImage}
-            >
+            <StyledGripButton variant="link">
                 <GripVertical />
             </StyledGripButton>
             <StyledImageButtons>
