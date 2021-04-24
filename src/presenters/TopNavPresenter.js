@@ -14,7 +14,7 @@ function TopNavPresenter() {
     const [query, setQuery] = React.useState("");
 
     const browserHistory = useHistory(); // used to manually navigate/redirect to the details of a specific image
-    const currentUser = useCurrentUser();
+    const currentUserJSON = useCurrentUser(true);
 
     /** Redirect user to search results page using the query specified in the search input field */
     const redirectToSearchResults = React.useCallback(() => {
@@ -69,8 +69,8 @@ function TopNavPresenter() {
 
     return (
         <TopNav
-            isLoggedIn={!!currentUser}
-            username={currentUser?.displayName}
+            isLoggedIn={!!currentUserJSON}
+            username={currentUserJSON.displayName}
             onAccountWrapperMouseEnter={(e) => showAccountOptions()}
             onAccountOptionsMouseLeave={(e) => hideAccountOptions()}
             accountOptionsRef={accountOptionsRef}
