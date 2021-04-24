@@ -1,4 +1,6 @@
 import { ProfileView } from "../views";
+import { AccountSettingPresenter } from "../presenters";
+import { useCurrentUser, useModelProperty } from "./customHooks";
 
 /**
  * Presenter for the profile page.
@@ -7,44 +9,58 @@ import { ProfileView } from "../views";
 function ProfilePresenter(props) {
     const { model } = props;
 
-    const exampleUser = {
-        email: "exampleuser@gallang.com",
-        displayName: "Example User",
-        creationTime: "2021-04-01",
-    };
-    const exampleGalleries = [
-        {
-            title: "Dark and Moody",
-            id: "12345",
-            imageIDs: ["18645651"],
-        },
-        {
-            title: "Happy and Cheerful",
-            id: "12346",
-            imageIDs: ["2318797273", "18644717"],
-        },
-    ];
+    const galleries = useModelProperty(model, "galleries");
+    const currentUser = useCurrentUser();
+
+    /**
+     * Wrapper function around the authentication model's updateProfile method for easier use
+     * @param {string} newUsername - The new username (display name) for the user
+     */
+    async function updateUsername(newUsername) {
+        await currentUser.updateProfile({
+            displayName: newUsername,
+        });
+    }
+
+    const usernameSetting = (
+        <AccountSettingPresenter
+            updateSetting={(newUsername) => updateUsername(newUsername)}
+            label="username"
+            initialValue={currentUser.displayName}
+        />
+    );
+    const emailSetting = (
+        <AccountSettingPresenter
+            updateSetting={(newEmail) => currentUser.updateEmail(newEmail)}
+            label="email"
+            initialValue={currentUser.email}
+        />
+    );
+    const passwordSetting = (
+        <AccountSettingPresenter
+            updateSetting={(newPassword) =>
+                currentUser.updatePassword(newPassword)
+            }
+            label="password"
+            initialValue="********"
+        />
+    );
 
     return (
         <ProfileView
             model={model}
-            user={exampleUser}
-            galleries={exampleGalleries.map((gallery) => ({
+            user={{
+                ...currentUser,
+                creationTime: currentUser.metadata.creationTime,
+            }}
+            galleries={galleries.map((gallery) => ({
                 ...gallery,
                 images: gallery.imageIDs.map((imageID) => ({ id: imageID })),
             }))}
-            onClickEditUserDisplayName={(e) =>
-                console.log("edit user display name requested")
-            }
-            onClickEditUserEmail={(e) =>
-                console.log("edit user email requested")
-            }
-            onClickEditUserPassword={(e) =>
-                console.log("edit user password requested")
-            }
-            onClickDeleteAccount={(e) =>
-                console.log("delete user account requested")
-            }
+            usernameSetting={usernameSetting}
+            emailSetting={emailSetting}
+            passwordSetting={passwordSetting}
+            onClickDeleteAccount={(e) => currentUser.delete()}
         />
     );
 }
