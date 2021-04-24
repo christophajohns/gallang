@@ -28,7 +28,7 @@ import {
  * @param {string} props.href - (optional) URL to link to on click on the title
  * @param {string} props.description - (optional) Further description for the grid
  * @param {Image[]} props.images - Array of images to render in the grid
- * @param {React.MutableRefObject} props.imagesRef - Reference to be used on the scrollable HTML element displaying the images
+ * @param {React.MutableRefObject} props.gridRef - Reference to be used on the scrollable HTML element displaying the images
  * @param {Function} props.onClickPreviousButton - Function to be called when the previous button (chevron left) is clicked
  * @param {Function} props.onClickNextButton - Function to be called when the next button (chevron right) is clicked
  * @param {boolean} [props.small] - Flag whether to render smaller versions of the images
@@ -46,7 +46,7 @@ function HorizontalGrid(props) {
         href, // (optional) URL to link to when clicking the title
         description, // (optional) Short (preferably less than 60 characters) description for the images in the grid
         images, // Array of image data to be rendered in a horizontal grid
-        imagesRef, // Reference to be used on the scrollable HTML element displaying the images
+        gridRef, // Reference to be used on the scrollable HTML element displaying the images
         onClickPreviousButton, // Function to be called when the previous button (chevron left) is clicked
         onClickNextButton, // Function to be called when the next button (chevron right) is clicked
         small, // Flag whether to render smaller versions of the images
@@ -79,8 +79,8 @@ function HorizontalGrid(props) {
                     </IconButton>
                 </StyledPreviousNextChevrons>
             </StyledGridTop>
-            <StyledGridSection>
-                <StyledImages ref={imagesRef}>
+            <StyledGridSection ref={gridRef}>
+                <StyledImages>
                     {isDropTarget && (
                         <ImagePlaceholderDiv
                             small={small}
@@ -110,7 +110,7 @@ HorizontalGrid.propTypes = {
     href: PropTypes.string,
     description: PropTypes.string,
     images: PropTypes.arrayOf(imageType).isRequired,
-    imagesRef: refType.isRequired,
+    gridRef: refType.isRequired,
     onClickPreviousButton: PropTypes.func.isRequired,
     onClickNextButton: PropTypes.func.isRequired,
     small: PropTypes.bool,

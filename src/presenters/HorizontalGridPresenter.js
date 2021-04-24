@@ -38,16 +38,16 @@ function HorizontalGridPresenter(props) {
         model, // The model holding the application state
     } = props;
 
-    const imagesRef = React.useRef(null); // used to enable the automatic scrolling behaviour
+    const gridRef = React.useRef(null); // used to enable the automatic scrolling behaviour
 
-    /** Scrolls the HTML element referenced via imagesRef one full width to the left. */
+    /** Scrolls the HTML element referenced via gridRef one full width to the left. */
     function scrollLeft() {
-        imagesRef.current.scrollLeft -= imagesRef.current.clientWidth;
+        gridRef.current.scrollLeft -= gridRef.current.clientWidth;
     }
 
-    /** Scrolls the HTML element referenced via imagesRef one full width to the right. */
+    /** Scrolls the HTML element referenced via gridRef one full width to the right. */
     function scrollRight() {
-        imagesRef.current.scrollLeft += imagesRef.current.clientWidth;
+        gridRef.current.scrollLeft += gridRef.current.clientWidth;
     }
 
     /**
@@ -78,7 +78,7 @@ function HorizontalGridPresenter(props) {
 
     return (
         <HorizontalGrid
-            imagesRef={imagesRef}
+            gridRef={gridRef}
             onClickPreviousButton={scrollLeft}
             onClickNextButton={scrollRight}
             title={title}
