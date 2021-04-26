@@ -101,7 +101,6 @@ function AccountSettings(props) {
 
     return (
         <AccountSettingsSection>
-            <h3 className="bold grey">Account settings</h3>
             <UserDataDiv>
                 {usernameSetting}
                 {emailSetting}
@@ -167,7 +166,6 @@ function Galleries(props) {
 
     return (
         <section>
-            <h3 className="bold grey">My Galleries</h3>
             <div>
                 {galleries.map((gallery) => (
                     <HorizontalGridPresenter
