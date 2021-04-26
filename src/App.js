@@ -13,6 +13,7 @@ import {
     CollectionPresenter,
     GalleryPresenter,
     SidebarPresenter,
+    CreateGalleryPresenter,
 } from "./presenters";
 import { PrivateRoute } from "./components";
 import { mockCollections } from "./model/MockData";
@@ -65,6 +66,14 @@ function App(props) {
                     <PrivateRoute path="/liked" exact={true}>
                         <MainContent>
                             <LikedContentPresenter model={model} />
+                        </MainContent>
+                        {sidebar}
+                    </PrivateRoute>
+
+                    <PrivateRoute path="/new-gallery" exact={true}>
+                        <MainContent>
+                            <CreateGalleryPresenter model={model}/>
+                            {console.log("App.js")}
                         </MainContent>
                         {sidebar}
                     </PrivateRoute>

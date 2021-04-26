@@ -157,7 +157,9 @@ function AddGalleryButton(props) {
 
     return (
         <SidebarButton onClick={onClickAddGallery} name="Add gallery">
-            <Plus />
+            <Link to="/new-gallery">
+                <Plus />
+            </Link>
         </SidebarButton>
     );
 }
