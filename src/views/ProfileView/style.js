@@ -35,6 +35,7 @@ export const UserSection = styled.section`
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
+    text-transform: capitalize;
 `;
 
 export const Account = styled.div`
