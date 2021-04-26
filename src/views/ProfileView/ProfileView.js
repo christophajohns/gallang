@@ -10,7 +10,9 @@ import {
     CreationTimeDiv,
     DeleteAccountButton,
     UserDataDiv,
+    StyledTabs,
 } from "./style";
+import { Tab } from "react-bootstrap";
 
 /**
  * Profile view to update a user's account and view all galleries
@@ -42,13 +44,19 @@ function ProfileView(props) {
     return (
         <ProfileViewMain className="ProfileView">
             <User name={user.displayName} creationTime={user.creationTime} />
-            <AccountSettings
-                usernameSetting={usernameSetting}
-                emailSetting={emailSetting}
-                passwordSetting={passwordSetting}
-                onClickDeleteAccount={onClickDeleteAccount}
-            />
-            <Galleries galleries={galleries} model={model} />
+            <StyledTabs defaultActiveKey="profileGalleries" id="profileTabs" variant="pills">
+                <Tab eventKey="profileGalleries" title="My Galleries">
+                    <Galleries galleries={galleries} model={model} />
+                </Tab>
+                <Tab eventKey="profileSettings" title="Account Settings">
+                    <AccountSettings
+                        usernameSetting={usernameSetting}
+                        emailSetting={emailSetting}
+                        passwordSetting={passwordSetting}
+                        onClickDeleteAccount={onClickDeleteAccount}
+                    />
+                </Tab>
+            </StyledTabs>
         </ProfileViewMain>
     );
 }
