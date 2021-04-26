@@ -22,6 +22,7 @@ function ProfilePresenter(props) {
         });
     }
 
+    /**Function to reformat a stringified date */
     function formatDate(string){
         var options = { year: 'numeric', month: 'long', day: 'numeric' };
         return new Date(string).toLocaleDateString([],options);
