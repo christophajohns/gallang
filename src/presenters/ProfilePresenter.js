@@ -22,6 +22,11 @@ function ProfilePresenter(props) {
         });
     }
 
+    function formatDate(string){
+        var options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(string).toLocaleDateString([],options);
+    }
+
     const usernameSetting = (
         <AccountSettingPresenter
             updateSetting={(newUsername) => updateUsername(newUsername)}
@@ -51,7 +56,7 @@ function ProfilePresenter(props) {
             model={model}
             user={{
                 ...currentUser,
-                creationTime: currentUser.metadata.creationTime,
+                creationTime: formatDate(currentUser.metadata.creationTime),
             }}
             galleries={galleries.map((gallery) => ({
                 ...gallery,
