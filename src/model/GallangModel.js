@@ -1,3 +1,4 @@
+import _ from "underscore";
 import "../types";
 import CooperHewittSource from "./CooperHewittSource";
 
@@ -9,12 +10,12 @@ class GallangModel {
      * @param {Array<{ id: string, lastViewedAt: Number}>} recentlyViewedImages - Array of images the user has viewed ordered by the timestamp of the viewing (latest first)
      * @param {Gallery[]} galleries - Array of galleries the user has created
      */
-     
+
     constructor(likedImageIDs = [], recentlyViewedImages = [], galleries = []) {
         this.observers = [];
         this.likedImageIDs = likedImageIDs;
         this.recentlyViewedImages = recentlyViewedImages;
-         // Placeholder galleries for now
+        // Placeholder galleries for now
         const exampleGalleries = [
             {
                 title: "Dark and Moody",
@@ -36,8 +37,6 @@ class GallangModel {
         // this.galleries = galleries;
         this.currentRecommendations = [];
     }
-
-    
 
     /** Setter function for the recentlyViewedImages property (required for getter function) */
     set recentlyViewedImages(imageArray) {
@@ -132,6 +131,19 @@ class GallangModel {
     }
 
     /**
+     * Uses the getRecommendation method to compute a recommendation based on the users liked images and a random recommendation basis
+     * @returns {Recommendation} - Collection of recommended images including title/recommendation basis (e.g. medium, period, person)
+     */
+    async getRandomRecommendation() {
+        const recommendationBases = ["type", "medium", "person"];
+        const randomRecommendationBasis = _.sample(recommendationBases);
+        const recommendation = await this.getRecommendation(
+            randomRecommendationBasis
+        );
+        return recommendation;
+    }
+
+    /**
      * Evaluates a user's liked content to return recommended images including title/recommendation basis (e.g. medium, period, person)
      * @param {"type" | "medium" | "person"} [recommendationBasis = "type"] - Basis/type of the recommendation
      * @returns {Recommendation} - Collection of recommended images including title/recommendation basis (e.g. medium, period, person)
@@ -153,12 +165,13 @@ class GallangModel {
 
         // Loop through liked images until a recommendation was computed
         let hasFoundNewRecommendation = false;
-        let imageIDIndex = Math.floor(
+        const randomImageIDIndex = Math.floor(
             Math.random() * this.likedImageIDs.length
         ); // pick a random image ID at first
+        let imageIDIndex = randomImageIDIndex;
         while (
             !hasFoundNewRecommendation &&
-            imageIDIndex < 2 * this.likedImageIDs.length // Start at random index and go around in circle
+            imageIDIndex < randomImageIDIndex + this.likedImageIDs.length // Start at random index and go around in circle
         ) {
             const currentImageID = this.likedImageIDs[
                 imageIDIndex % this.likedImageIDs.length
@@ -189,20 +202,30 @@ class GallangModel {
                 recommendation = currentRecommendation;
                 hasFoundNewRecommendation = true;
             }
+            console.log({
+                recommendation,
+                currentRecommendation,
+                hasFoundNewRecommendation,
+                imageIDIndex,
+                currentImageID,
+                isNewRecommendation,
+            });
             imageIDIndex++; // Increase index to inspect next image ID on next iteration
         }
 
         // Check recommendation object for valid data
-        if (!recommendation.title) Error("Recommendation has invalid title.");
+        if (!recommendation.title)
+            throw Error("Recommendation has invalid title.");
         if (!recommendation.images || recommendation.images.length === 0)
-            Error("Recommendation has no images.");
+            throw Error("Recommendation has no images.");
         if (!recommendation.basisImageID)
-            Error("Recommendation has no basis image ID.");
+            throw Error("Recommendation has no basis image ID.");
 
         this.currentRecommendations = [
             ...this.currentRecommendations,
             recommendation,
         ];
+
         return recommendation;
     }
 
