@@ -19,14 +19,12 @@ function HomePresenter(props) {
     // State
     // Collections
     const [collectionsPromise, setCollectionsPromise] = React.useState(null);
-    const collectionsPromiseStatesAndSetters = usePromise(collectionsPromise);
-    const collectionsData = collectionsPromiseStatesAndSetters[0];
-    const collectionsError = collectionsPromiseStatesAndSetters[2];
+    const [collectionsData, , collectionsError] = usePromise(
+        collectionsPromise
+    );
     // Quote
     const [quotePromise, setQuotePromise] = React.useState(null);
-    const quotePromiseStatesAndSetters = usePromise(quotePromise);
-    const quoteData = quotePromiseStatesAndSetters[0];
-    const quoteError = quotePromiseStatesAndSetters[2];
+    const [quoteData, , quoteError] = usePromise(quotePromise);
     // Liked images
     const likedImageIDs = useModelProperty(model, "likedImageIDs");
     // Recently viewed images
@@ -42,30 +40,39 @@ function HomePresenter(props) {
         setQuotePromise(CooperHewittSource.getQuote());
     }, [model]);
 
-    const numberOfRecommendations = 3;
+    React.useEffect(() => {
+        // cleanup on teardown
+        return () => {
+            setCollectionsPromise(null);
+            setQuotePromise(null);
+        };
+    }, []);
 
-    let recommendations = [];
-    // Only render recommendations if user has liked some images
-    if (likedImageIDs.length >= 3) {
-        for (let index = 0; index < numberOfRecommendations; index++) {
-            let recommendationProps = {
-                key: index,
-                model: model,
-            };
-            if (index < model.currentRecommendations.length) {
-                const recommendationData = model.currentRecommendations[index];
-                recommendationProps = {
-                    ...recommendationProps,
-                    title: recommendationData.title,
-                    images: recommendationData.images,
-                };
+    /**
+     * Utility function to
+     * @param {number} [numberOfRecommendations = 3] - Number of recommendations to render in home view
+     * @returns - Array of RecommendationPresenters to pass as prop
+     */
+    function getRecommendationPresenters(numberOfRecommendations = 3) {
+        let recommendations = [];
+
+        // Only render recommendations if user has liked some images
+        const minimumNumberOfLikedImages = 3; // user has to have liked at least this many images
+        if (likedImageIDs.length >= minimumNumberOfLikedImages) {
+            // Create as many recommendation presenters as specified
+            for (let index = 0; index < numberOfRecommendations; index++) {
+                // Add recommendation presenter to recommendations array
+                const recommendation = (
+                    <RecommendationPresenter key={index} model={model} />
+                );
+                recommendations.push(recommendation);
             }
-            const recommendation = (
-                <RecommendationPresenter {...recommendationProps} />
-            );
-            recommendations.push(recommendation);
         }
+
+        return recommendations;
     }
+
+    const recommendations = getRecommendationPresenters(3);
 
     const homeView = (
         <HomeView
