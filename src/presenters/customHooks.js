@@ -58,24 +58,30 @@ function useURLSearchParams() {
 
 /**
  * Custom hook to access the current user from the authentication model
- * @param {boolean} [returnJSON = false] - Flag whether to return firebase.auth.User or JSON object
  */
-function useCurrentUser(returnJSON = false) {
-    const [currentUser, setCurrentUser] = React.useState(
-        returnJSON && AuthenticationModel.currentUser
-            ? AuthenticationModel.currentUser.toJSON()
-            : AuthenticationModel.currentUser
-    );
+function useCurrentUser() {
+    const [currentUser, setCurrentUser] = React.useState({
+        auth: AuthenticationModel.currentUser, // firebase User object
+        stateLastUpdated: Date.now(), // timestamp when the state and thereby the user object was last updated
+    });
 
     // Subscribe to changes in the authentication model on creation
     React.useEffect(() => {
         const unsubscribeFromAuthState = AuthenticationModel.onIdTokenChanged(
             (user) => {
-                if (user) setCurrentUser(returnJSON ? user.toJSON() : user);
+                if (user)
+                    setCurrentUser({
+                        auth: user,
+                        stateLastUpdated: Date.now(),
+                    });
             }
         );
         return unsubscribeFromAuthState; // unsubscribe on teardown
-    }, [returnJSON]);
+    }, []);
+
+    React.useEffect(() => {
+        console.log({ currentUser });
+    }, [currentUser]);
 
     return currentUser;
 }

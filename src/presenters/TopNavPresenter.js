@@ -14,7 +14,11 @@ function TopNavPresenter() {
     const [query, setQuery] = React.useState("");
 
     const browserHistory = useHistory(); // used to manually navigate/redirect to the details of a specific image
-    const currentUserJSON = useCurrentUser(true);
+    const currentUser = useCurrentUser();
+
+    React.useEffect(() => {
+        console.log({ currentUser });
+    }, [currentUser]);
 
     /** Redirect user to search results page using the query specified in the search input field */
     const redirectToSearchResults = React.useCallback(() => {
@@ -55,13 +59,13 @@ function TopNavPresenter() {
     }
 
     /**
-     * Login user using the authentication model (firebase authentication)
+     * Logout user using the authentication model (firebase authentication)
      * @param {Event} event
      */
     async function logoutUser(event) {
         try {
-            await AuthenticationModel.signOut();
             browserHistory.push("/login");
+            await AuthenticationModel.signOut();
         } catch (error) {
             console.log(error);
         }
@@ -69,8 +73,8 @@ function TopNavPresenter() {
 
     return (
         <TopNav
-            isLoggedIn={!!currentUserJSON}
-            username={currentUserJSON.displayName}
+            isLoggedIn={!!currentUser.auth}
+            username={currentUser.auth ? currentUser.auth.displayName : null}
             onAccountWrapperMouseEnter={(e) => showAccountOptions()}
             onAccountOptionsMouseLeave={(e) => hideAccountOptions()}
             accountOptionsRef={accountOptionsRef}
