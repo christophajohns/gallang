@@ -108,4 +108,10 @@ HorizontalGridPresenter.propTypes = {
     model: modelType.isRequired,
 };
 
+/**
+ * @typedef Image
+ * @property {string} id - Unique identifier of the object or image
+ * @property {string} [url] - Image url for the object
+ */
+
 export default HorizontalGridPresenter;

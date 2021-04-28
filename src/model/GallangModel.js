@@ -6,12 +6,15 @@ class GallangModel {
     /**
      * @constructor
      * @param {string[]} likedImageIDs - Array of image IDs the user has liked
+     * @param {Array<{ id: string, lastViewedAt: Number}>} recentlyViewedImages - Array of images the user has viewed ordered by the timestamp of the viewing (latest first)
      * @param {Gallery[]} galleries - Array of galleries the user has created
      */
-    constructor(likedImageIDs = [], galleries = []) {
+     
+    constructor(likedImageIDs = [], recentlyViewedImages = [], galleries = []) {
         this.observers = [];
         this.likedImageIDs = likedImageIDs;
-        // Placeholder galleries for now
+        this.recentlyViewedImages = recentlyViewedImages;
+         // Placeholder galleries for now
         const exampleGalleries = [
             {
                 title: "Dark and Moody",
@@ -32,6 +35,49 @@ class GallangModel {
         this.galleries = exampleGalleries;
         // this.galleries = galleries;
         this.currentRecommendations = [];
+    }
+
+    
+
+    /** Setter function for the recentlyViewedImages property (required for getter function) */
+    set recentlyViewedImages(imageArray) {
+        this._recentlyViewedImages = imageArray; // Underscore before property name to avoid infinite loops with setter function
+    }
+
+    /** Getter function for the recentlyViewedImages property to always return the array sorted by latest access time (desc) */
+    get recentlyViewedImages() {
+        // Underscore before property name to avoid infinite loops with getter function
+        return this._recentlyViewedImages.sort(
+            (imageA, imageB) => imageB.lastViewedAt - imageA.lastViewedAt
+        );
+    }
+
+    /**
+     * Adds an image to the recentlyViewedImages array in the model and notifies the observers
+     * @param {string} imageID - Identifier of the image the user has accessed
+     */
+    addImageToRecentlyViewed(imageID) {
+        const image = this.recentlyViewedImages.find(
+            (image) => image.id === imageID
+        );
+        const newImageData = { id: imageID, lastViewedAt: Date.now() }; // updated or completely new image data
+        if (!image) {
+            // image not viewed before
+            // add image information to recently viewed
+            this.recentlyViewedImages = [
+                newImageData,
+                ...this.recentlyViewedImages,
+            ];
+        } else {
+            // replace old image information with new in recently viewed
+            this.recentlyViewedImages = this.recentlyViewedImages.map(
+                (currentImage) => {
+                    if (currentImage.id === imageID) return newImageData;
+                    return currentImage;
+                }
+            );
+        }
+        this.notifyObservers();
     }
 
     /**

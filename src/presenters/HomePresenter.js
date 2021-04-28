@@ -29,6 +29,11 @@ function HomePresenter(props) {
     const quoteError = quotePromiseStatesAndSetters[2];
     // Liked images
     const likedImageIDs = useModelProperty(model, "likedImageIDs");
+    // Recently viewed images
+    const recentlyViewedImages = useModelProperty(
+        model,
+        "recentlyViewedImages"
+    );
 
     // Effects
     React.useEffect(() => {
@@ -62,21 +67,12 @@ function HomePresenter(props) {
         }
     }
 
-    const exampleRecentlyViewedImages = [
-        {
-            id: "18644717",
-            url:
-                "https://images.collection.cooperhewitt.org/12030_fa96a748c7d67fd9_b.jpg",
-            liked: false,
-        },
-    ];
-
     const homeView = (
         <HomeView
             collections={collectionsData}
             quote={quoteData}
-            recentlyViewedImages={exampleRecentlyViewedImages}
             recommendations={recommendations.length ? recommendations : null}
+            recentlyViewedImages={recentlyViewedImages.slice(0, 12)} // Only render latest 12 images
             model={model}
         />
     );
