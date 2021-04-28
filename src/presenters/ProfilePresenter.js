@@ -35,6 +35,12 @@ function ProfilePresenter(props) {
         await currentUser.auth.getIdToken(true); // force refresh of ID token to trigger state change in currentUserJSON
     }
 
+    /** Function to reformat a stringified date */
+    function formatDate(string) {
+        var options = { year: "numeric", month: "long", day: "numeric" };
+        return new Date(string).toLocaleDateString([], options);
+    }
+
     const usernameSetting = (
         <AccountSettingPresenter
             updateSetting={(newUsername) =>
@@ -66,7 +72,9 @@ function ProfilePresenter(props) {
             model={model}
             user={{
                 ...currentUser.auth,
-                creationTime: currentUser.auth.metadata.creationTime,
+                creationTime: formatDate(
+                    currentUser.auth.metadata.creationTime
+                ),
             }}
             galleries={galleries.map((gallery) => ({
                 ...gallery,
