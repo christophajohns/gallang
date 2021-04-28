@@ -1,7 +1,8 @@
 import React from "react";
 import _ from "underscore";
-import { promiseNoData, Recommendation } from "../components";
+import { promiseNoData } from "../components";
 import { usePromise } from "./customHooks";
+import { HorizontalGridPresenter } from "../presenters";
 
 function RecommendationPresenter(props) {
     const { title, images, model } = props;
@@ -24,10 +25,6 @@ function RecommendationPresenter(props) {
         }
     }, [model, title, images]);
 
-    if (title && images && images.length) {
-        return <Recommendation title={title} images={images} model={model} />;
-    }
-
     return (
         promiseNoData(
             recommendationsPromise,
@@ -35,9 +32,10 @@ function RecommendationPresenter(props) {
             recommendationsError
         ) ||
         (!!recommendationsData.images.length && (
-            <Recommendation
+            <HorizontalGridPresenter
                 title={recommendationsData.title}
                 images={recommendationsData.images}
+                description="Recommended for you."
                 model={model}
             />
         ))
