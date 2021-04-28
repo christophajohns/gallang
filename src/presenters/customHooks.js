@@ -69,19 +69,14 @@ function useCurrentUser() {
     React.useEffect(() => {
         const unsubscribeFromAuthState = AuthenticationModel.onIdTokenChanged(
             (user) => {
-                if (user)
-                    setCurrentUser({
-                        auth: user,
-                        stateLastUpdated: Date.now(),
-                    });
+                setCurrentUser({
+                    auth: user,
+                    stateLastUpdated: Date.now(),
+                });
             }
         );
         return unsubscribeFromAuthState; // unsubscribe on teardown
     }, []);
-
-    React.useEffect(() => {
-        console.log({ currentUser });
-    }, [currentUser]);
 
     return currentUser;
 }
