@@ -132,15 +132,45 @@ class GallangModel {
 
     /**
      * Uses the getRecommendation method to compute a recommendation based on the users liked images and a random recommendation basis
-     * @returns {Recommendation} - Collection of recommended images including title/recommendation basis (e.g. medium, period, person)
+     * @returns {Recommendation | null} - Collection of recommended images including title/recommendation basis (e.g. medium, period, person)
      */
     async getRandomRecommendation() {
         const recommendationBases = ["type", "medium", "person"];
-        const randomRecommendationBasis = _.sample(recommendationBases);
-        const recommendation = await this.getRecommendation(
-            randomRecommendationBasis
+
+        // Pick a random recommendation basis at first
+        const randomIndex = Math.floor(
+            Math.random() * recommendationBases.length
         );
-        return recommendation;
+        let currentRecommendationBasisIndex = randomIndex;
+
+        // Loop through recommendation bases until a new recommendation was found
+        let hasFoundNewRecommendation = false;
+        let recommendation = null;
+        while (
+            !hasFoundNewRecommendation &&
+            currentRecommendationBasisIndex <
+                randomIndex + recommendationBases.length // Start at random index and go around in circle
+        ) {
+            const currentRecommendationBasis =
+                recommendationBases[
+                    currentRecommendationBasisIndex % recommendationBases.length
+                ];
+            let currentRecommendation = null;
+            try {
+                currentRecommendation = await this.getRecommendation(
+                    currentRecommendationBasis
+                );
+            } catch (error) {
+                // console.error(error);
+            }
+            if (currentRecommendation) {
+                recommendation = currentRecommendation;
+                hasFoundNewRecommendation = true;
+            }
+            currentRecommendationBasisIndex++;
+        }
+
+        return recommendation; // null if no new recommendation could be computed
     }
 
     /**
@@ -259,13 +289,26 @@ class GallangModel {
         if (recommendationBasis === "person") {
             if (imageInfo.participants.length === 0)
                 Error("Object has no participants to base recommendation off.");
-            const person = imageInfo.participants[0];
-            searchParams.person_id = person.person_id;
-            recommendation.title = person.person_name;
+            const randomPerson = _.sample(imageInfo.participants); // Select a random participant
+            searchParams.person_id = randomPerson.person_id;
+            recommendation.title = randomPerson.person_name;
         }
 
         // Check recommendation object for valid data
         if (!recommendation.title) Error("Recommendation has invalid title.");
+
+        // Check in current recommendations whether the images were fetched earlier
+        const earlierRecommendation = this.currentRecommendations.find(
+            (currentRecommendationInArray) => {
+                const hasSameTitle =
+                    currentRecommendationInArray.title === recommendation.title;
+                return hasSameTitle;
+            }
+        );
+        const isNewRecommendation = !earlierRecommendation;
+
+        // If images were fetched before return recommendation from earlier
+        if (!isNewRecommendation) return earlierRecommendation;
 
         // Get recommended images
         const recommendedObjects = await CooperHewittSource.searchObjects(
