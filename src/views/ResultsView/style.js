@@ -34,3 +34,18 @@ export const LoadMoreButton = styled(Button)`
     }
     margin: auto;
 `;
+
+export const BottomRightFixed = styled.div`
+    position: fixed;
+    bottom: 32px;
+    right: 16px;
+`;
+
+export const StyledIconButton = styled(Button)`
+    color: grey;
+
+    &:hover,
+    .active {
+        color: black;
+    }
+`;

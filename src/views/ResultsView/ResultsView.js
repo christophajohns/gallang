@@ -9,8 +9,14 @@ import {
     ContentTypeDiv,
     StyledButton,
     TopDiv,
-    LoadMoreButton
+    LoadMoreButton,
+    StyledIconButton,
+    BottomRightFixed
 } from "./style";
+import {
+    CaretUpFill
+} from "react-bootstrap-icons";
+import { Link as ScrollLink } from "react-scroll";
 
 /**
  * View component for the Results (e.g. search results, collection, liked content, gallery) page content.
@@ -41,7 +47,7 @@ function ResultsView(props) {
     return (
         <main className="ResultsView">
             <TopDiv>
-                <TitleAndDescriptionDiv>
+                <TitleAndDescriptionDiv id="info">
                     {contentType ? (
                         <ContentTypeDiv>
                             {contentType.toUpperCase()}
@@ -62,7 +68,28 @@ function ResultsView(props) {
             </TopDiv>
             <VerticalGrid images={images.slice(0, visiable)} model={model} />
             <LoadMoreButton variant="success" onClick={onClickLoadMore}>Load more</LoadMoreButton>
+            <BottomRightFixed>
+                <ScrollToTopButton />
+            </BottomRightFixed>
         </main>
+    );
+}
+
+/** Button to scroll up to the image */
+function ScrollToTopButton() {
+    return (
+        <StyledIconButton variant="link">
+            <ScrollLink
+                activeClass="active"
+                to="info"
+                spy={true}
+                smooth={true}
+                offset={0}
+                duration={700}
+            >
+                <CaretUpFill />
+            </ScrollLink>
+        </StyledIconButton>
     );
 }
 
