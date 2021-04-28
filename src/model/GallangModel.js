@@ -232,14 +232,6 @@ class GallangModel {
                 recommendation = currentRecommendation;
                 hasFoundNewRecommendation = true;
             }
-            console.log({
-                recommendation,
-                currentRecommendation,
-                hasFoundNewRecommendation,
-                imageIDIndex,
-                currentImageID,
-                isNewRecommendation,
-            });
             imageIDIndex++; // Increase index to inspect next image ID on next iteration
         }
 
