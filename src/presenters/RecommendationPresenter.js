@@ -1,11 +1,10 @@
 import React from "react";
-import _ from "underscore";
 import { promiseNoData } from "../components";
 import { usePromise } from "./customHooks";
 import { HorizontalGridPresenter } from "../presenters";
 
 function RecommendationPresenter(props) {
-    const { title, images, model } = props;
+    const { model } = props;
 
     const [recommendationsPromise, setRecommendationsPromise] = React.useState(
         null
@@ -16,14 +15,15 @@ function RecommendationPresenter(props) {
 
     React.useEffect(() => {
         // only at creation
-        const recommendationBases = ["type", "medium", "person"];
-        const randomRecommendationBasis = _.sample(recommendationBases);
-        if (!title && !images) {
-            setRecommendationsPromise(
-                model.getRecommendation(randomRecommendationBasis)
-            );
-        }
-    }, [model, title, images]);
+        setRecommendationsPromise(model.getRandomRecommendation());
+    }, [model]);
+
+    React.useEffect(() => {
+        // cleanup at teardown
+        return () => {
+            setRecommendationsPromise(null);
+        };
+    }, []);
 
     return (
         promiseNoData(
@@ -31,7 +31,7 @@ function RecommendationPresenter(props) {
             recommendationsData,
             recommendationsError
         ) ||
-        (!!recommendationsData.images.length && (
+        (recommendationsData.images.length > 0 && (
             <HorizontalGridPresenter
                 title={recommendationsData.title}
                 images={recommendationsData.images}
