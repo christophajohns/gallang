@@ -36,7 +36,7 @@ const CooperHewittSource = {
      * @param {number} maximumNumberOfResults - Maximum number of objects to return (i.e. objects per page since only one page is returned; maximum 500)
      * @returns {Promise<CooperHewittObject[]>} - Array holding objects with information about one Cooper Hewitt Object each matching the search parameters
      */
-    async searchObjects(searchParams, maximumNumberOfResults = 12) {
+    async searchObjects(searchParams, maximumNumberOfResults = 500) {
         if (maximumNumberOfResults > 500) {
             throw Error("Maximum 500 objects can be returned on one page.");
         }

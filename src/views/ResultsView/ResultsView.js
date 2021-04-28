@@ -9,6 +9,7 @@ import {
     ContentTypeDiv,
     StyledButton,
     TopDiv,
+    LoadMoreButton
 } from "./style";
 
 /**
@@ -33,6 +34,8 @@ function ResultsView(props) {
         images,
         allowDownloadAll,
         onClickDownloadAll,
+        onClickLoadMore,
+        visiable,
         model,
     } = props;
     return (
@@ -57,7 +60,8 @@ function ResultsView(props) {
                     ""
                 )}
             </TopDiv>
-            <VerticalGrid images={images} model={model} />
+            <VerticalGrid images={images.slice(0, visiable)} model={model} />
+            <LoadMoreButton variant="success" onClick={onClickLoadMore}>Load more</LoadMoreButton>
         </main>
     );
 }

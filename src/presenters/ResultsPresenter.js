@@ -1,3 +1,4 @@
+import React from "react";
 import { ResultsView } from "../views";
 import { resultsViewPropTypes } from "../views/ResultsView";
 
@@ -24,6 +25,7 @@ function ResultsPresenter(props) {
         allowDownloadAll = true,
         model,
     } = props;
+    const [visiable, setVisiable] = React.useState(12);
 
     function downloadAllImagesAsZipFile() {
         const imageURLs = images.map((image) => image.url);
@@ -38,6 +40,8 @@ function ResultsPresenter(props) {
             images={images}
             allowDownloadAll={allowDownloadAll}
             onClickDownloadAll={(e) => downloadAllImagesAsZipFile()}
+            onClickLoadMore={(e) => setVisiable(visiable+12)}
+            visiable = {visiable}
             model={model}
         />
     );

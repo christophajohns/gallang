@@ -27,3 +27,10 @@ export const TopDiv = styled.div`
     align-items: flex-end;
     margin-bottom: 32px;
 `;
+
+export const LoadMoreButton = styled(Button)`
+    & > svg {
+        margin-right: 8px;
+    }
+    margin: auto;
+`;
