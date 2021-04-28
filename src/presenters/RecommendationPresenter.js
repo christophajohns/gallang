@@ -31,7 +31,7 @@ function RecommendationPresenter(props) {
             recommendationsData,
             recommendationsError
         ) ||
-        (recommendationsData.images.length > 0 && (
+        (!!recommendationsData && (
             <HorizontalGridPresenter
                 title={recommendationsData.title}
                 images={recommendationsData.images}
