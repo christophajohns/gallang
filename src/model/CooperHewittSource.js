@@ -33,10 +33,10 @@ const CooperHewittSource = {
      * @param {Object} searchParams - Object representing of the search parameters
      * @param {string} [searchParams.query] - Search for objects matching terms across all the text fields
      * @param {string} [searchParams.media_id] - Identifier for the medium (e.g. "screenprint on paper") in the Cooper Hewitt collection
-     * @param {number} maximumNumberOfResults - Maximum number of objects to return (i.e. objects per page since only one page is returned; maximum 500)
+     * @param {number} [maximumNumberOfResults = 100] - Maximum number of objects to return (i.e. objects per page since only one page is returned; maximum 500)
      * @returns {Promise<CooperHewittObject[]>} - Array holding objects with information about one Cooper Hewitt Object each matching the search parameters
      */
-    async searchObjects(searchParams, maximumNumberOfResults = 500) {
+    async searchObjects(searchParams, maximumNumberOfResults = 100) {
         if (maximumNumberOfResults > 500) {
             throw Error("Maximum 500 objects can be returned on one page.");
         }
