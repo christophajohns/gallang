@@ -28,17 +28,10 @@ export const TopDiv = styled.div`
     margin-bottom: 32px;
 `;
 
-export const LoadMoreButton = styled(Button)`
-    & > svg {
-        margin-right: 8px;
-    }
-    margin: auto;
-`;
-
 export const BottomRightFixed = styled.div`
     position: fixed;
     bottom: 32px;
-    right: 16px;
+    right: 8px;
 `;
 
 export const StyledIconButton = styled(Button)`
