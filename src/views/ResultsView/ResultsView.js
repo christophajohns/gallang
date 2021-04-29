@@ -69,7 +69,7 @@ function ResultsView(props) {
                 images={images.slice(0, numberOfVisibleObjects)}
                 model={model}
             />
-            {numberOfVisibleObjects < numberOfObjects ? (
+            {numberOfVisibleObjects < images.length ? (
                 <LoadMoreButton onClickLoadMore={onClickLoadMore} />
             ) : (
                 <div>This is the end. You have seen it all!</div>
