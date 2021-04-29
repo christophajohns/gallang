@@ -69,7 +69,11 @@ function ResultsView(props) {
                 images={images.slice(0, numberOfVisibleObjects)}
                 model={model}
             />
-            <LoadMoreButton onClickLoadMore={onClickLoadMore} />
+            {numberOfVisibleObjects < numberOfObjects ? (
+                <LoadMoreButton onClickLoadMore={onClickLoadMore} />
+            ) : (
+                <div>This is the end. You have seen it all!</div>
+            )}
             <BottomRightFixed>
                 <ScrollToTopButton />
             </BottomRightFixed>
