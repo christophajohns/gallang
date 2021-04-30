@@ -96,13 +96,14 @@ const CooperHewittSource = {
         return collections;
     },
     /**
-     * Get a list of periods from the API.
+     * Get a list of periods from the API (see https://collection.cooperhewitt.org/api/methods/cooperhewitt.periods.getList/explore/)
+     * @param {number} maximumNumberOfPeriods - Maximum number of periods to be fetched
      * @returns {Promise<PeriodWithoutImages[]>} - Promise object holding an array of objects representing the period's content
      */
-    async getPeriodsList(maximumNumberOfResults = 10) {
+    async getPeriodsList(maximumNumberOfPeriods = 10) {
         const params = {
             method: "cooperhewitt.periods.getList",
-            per_page: maximumNumberOfResults,
+            per_page: maximumNumberOfPeriods,
         };
         const data = await CooperHewittSource.apiCall(params);
 
@@ -110,6 +111,7 @@ const CooperHewittSource = {
     },
     /**
      * Get a list of periods including their images from the API.
+     * @param {number} maximumNumberOfPeriods - Maximum number of periods to be fetched
      * @returns {Promise<Period[]>} - Promise object holding an array of objects representing the period's content (incl. its images)
      */
     async getPeriods(maximumNumberOfResults = 10) {
@@ -119,13 +121,10 @@ const CooperHewittSource = {
 
         const periods = await Promise.all(
             periodsWithoutImages.map(async (periodWithoutImages) => {
-                const periodObjects = await CooperHewittSource.searchObjects({
-                    period_id: periodWithoutImages.id,
-                });
-                const periodImages = periodObjects.map((object) => ({
-                    id: object.id,
-                    url: object.images[0].b.url,
-                }));
+                const periodImages = await CooperHewittSource.getPeriodImages(
+                    periodWithoutImages.id
+                );
+
                 return {
                     ...periodWithoutImages,
                     title: periodWithoutImages.name,
@@ -136,6 +135,21 @@ const CooperHewittSource = {
         );
 
         return periods;
+    },
+    /**
+     * Get the images of the objects from a certain period
+     * @param {string} periodID - Unique identifier of the period
+     * @returns {Promise<Image[]>} - Promise object holding an array of images of objects from the specified period
+     */
+    async getPeriodImages(periodID) {
+        const periodObjects = await CooperHewittSource.searchObjects({
+            period_id: periodID,
+        });
+        const periodImages = periodObjects.map((object) => ({
+            id: object.id,
+            url: object.images[0].b.url,
+        }));
+        return periodImages;
     },
     /**
      * Get a random Micah Walter quote from the API.
