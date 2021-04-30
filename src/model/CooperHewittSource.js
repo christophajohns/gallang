@@ -124,7 +124,7 @@ const CooperHewittSource = {
                 });
                 const periodImages = periodObjects.map((object) => ({
                     id: object.id,
-                    url: object.images[0].n.url,
+                    url: object.images[0].b.url,
                 }));
                 return {
                     ...periodWithoutImages,
