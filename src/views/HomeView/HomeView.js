@@ -11,7 +11,7 @@ import { imageType } from "../../types";
  * @param {Collection[]} props.collections - Array holding all information about collections to be rendered in a HorizontalGrid
  * @param {Image[]} props.recentlyViewedImages - Array of image data to be rendered in a HorizontalGrid
  * @param {string} props.quote - String representing a quote
- * @param {Recommendation[]} props.recommendations - Array of recommended images and the recommendation basis (e.g. medium, period, designer)
+ * @param {Function} props.recommendations - Array of or single component to show recommended images and the recommendation basis (e.g. medium, period, designer)
  * @param {GallangModel} props.model - The model holding the application state
  */
 function HomeView(props) {
@@ -72,14 +72,7 @@ HomeView.propTypes = {
     /** String representing a quote */
     quote: PropTypes.string,
     /** Array of recommended images and the recommendation basis (e.g. medium, period, designer) */
-    recommendations: PropTypes.arrayOf(
-        PropTypes.shape({
-            /** Name or title for the recommendation basis (e.g. medium, period, designer) */
-            title: PropTypes.string.isRequired,
-            /** Array of objects or images that are being recommended */
-            images: PropTypes.arrayOf(imageType.isRequired),
-        })
-    ),
+    recommendations: PropTypes.node,
     /** The model holding the application state */
     model: PropTypes.shape({
         likedImageIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
