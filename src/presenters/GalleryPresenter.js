@@ -1,8 +1,7 @@
-import PropTypes from "prop-types";
+
 import { ResultsPresenter } from "../presenters";
 import { useParams } from "react-router-dom";
 import { useModelProperty } from "./customHooks";
-import { imageType } from "../types";
 import { modelType as imagePresenterModelType } from "./ImagePresenter";
 
 /**
@@ -13,7 +12,7 @@ function GalleryPresenter(props) {
     const { model } = props;
 
     const { galleryID } = useParams();
-    const gallery = useModelProperty(model, "galleries").find((e) => e.id == galleryID);
+    const gallery = useModelProperty(model, "galleries").find((e) => e.id === galleryID);
 
     return (
         <ResultsPresenter
