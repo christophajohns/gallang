@@ -51,6 +51,7 @@ function Sidebar(props) {
                             key={gallery.id}
                             id={gallery.id}
                             type="gallery"
+                            href="/gallery/:galleryID"
                             title={gallery.title}
                             images={gallery.images}
                             small={true}

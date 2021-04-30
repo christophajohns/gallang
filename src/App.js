@@ -69,6 +69,13 @@ function App(props) {
                         {sidebar}
                     </PrivateRoute>
 
+                    <PrivateRoute path="/gallery/:galleryID" exact={true}>
+                        <MainContent>
+                            <GalleryPresenter model={model} />
+                        </MainContent>
+                        {sidebar}
+                    </PrivateRoute>
+
                     <PrivateRoute path="/details/:imageID" exact={true}>
                         <DetailsPresenter model={model} />
                     </PrivateRoute>
