@@ -10,12 +10,10 @@ import {
     ForgotPasswordPresenter,
     LikedContentPresenter,
     ProfilePresenter,
-    CollectionPresenter,
     GalleryPresenter,
     SidebarPresenter,
 } from "./presenters";
 import { PrivateRoute } from "./components";
-import { mockCollections } from "./model/MockData";
 
 function App(props) {
     const {
