@@ -34,6 +34,49 @@ class GallangModel {
         ];
         this.galleries = exampleGalleries;
         // this.galleries = galleries;
+        this.isCurrentlyDragging = false;
+    }
+
+    /**
+     * Setter function to always notify observers when the liked images are updated
+     * @param {boolean} newValue - Updated value for the likedImageIDs property
+     */
+    set likedImageIDs(newValue) {
+        this._likedImageIDs = newValue;
+        this.notifyObservers();
+    }
+
+    /** Getter function for the likedImageIDs property (required for setter function) */
+    get likedImageIDs() {
+        return this._likedImageIDs;
+    }
+
+    /**
+     * Setter function to always notify observers when the user's galleries are updated
+     * @param {boolean} newValue - Updated value for the galleries property
+     */
+    set galleries(newValue) {
+        this._galleries = newValue;
+        this.notifyObservers();
+    }
+
+    /** Getter function for the galleries property (required for setter function) */
+    get galleries() {
+        return this._galleries;
+    }
+
+    /**
+     * Setter function to always notify observers when the drag status changes
+     * @param {boolean} newValue - Updated value for the isCurrentlyDragging property
+     */
+    set isCurrentlyDragging(newValue) {
+        this._isCurrentlyDragging = newValue;
+        this.notifyObservers();
+    }
+
+    /** Getter function for the isCurrentlyDragging property (required for setter function) */
+    get isCurrentlyDragging() {
+        return this._isCurrentlyDragging;
     }
 
     
@@ -87,7 +130,6 @@ class GallangModel {
         const imageAlreadyLiked = this.likedImageIDs.includes(imageID);
         if (!imageAlreadyLiked) {
             this.likedImageIDs = [...this.likedImageIDs, imageID];
-            this.notifyObservers();
         }
     }
 
@@ -103,7 +145,6 @@ class GallangModel {
             this.likedImageIDs = this.likedImageIDs.filter(
                 (currentImageID) => currentImageID !== imageID
             );
-            this.notifyObservers();
         }
     }
 
@@ -119,14 +160,13 @@ class GallangModel {
         if (!gallery) throw Error("Gallery with specified ID not found");
         const imageAlreadyInGallery = gallery.imageIDs.includes(imageID);
         if (!imageAlreadyInGallery) {
-            const updatedGallery = { ...gallery };
-            updatedGallery.imageIDs = [...gallery.imageIDs, imageID];
+            const updatedGallery = { ...gallery }; // Make a copy of the current state of the gallery
+            updatedGallery.imageIDs = [imageID, ...gallery.imageIDs]; // Add the new imageID to the front
             this.galleries = this.galleries.map((currentGallery) => {
                 if (currentGallery.id === updatedGallery.id)
                     return updatedGallery; // Replace old with updated gallery
                 return currentGallery;
             });
-            this.notifyObservers();
         }
     }
 

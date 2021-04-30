@@ -21,6 +21,7 @@ import {
  * @param {string} [props.emptyStateText] - Text to display if no images are supplied
  * @param {ImagePresenterModelType} props.model - The model holding the application state
  * @param {Function} props.model.addImageToGallery - Function to add the specified image to the specified gallery
+ * @param {boolean} [props.isDropTarget] - Flag whether the horizontal grid should display the image placeholder as a drop target
  * @returns HorizontalGrid component
  */
 function HorizontalGridPresenter(props) {
@@ -33,19 +34,20 @@ function HorizontalGridPresenter(props) {
         small, // Flag whether to render smaller versions of the images
         type, // Type of content that is displayed in the grid (e.g. Gallery)
         emptyStateText, // Text to display if no images are supplied
+        isDropTarget, // Flag whether the horizontal grid should display the image placeholder as a drop target
         model, // The model holding the application state
     } = props;
 
-    const imagesRef = React.useRef(null); // used to enable the automatic scrolling behaviour
+    const gridRef = React.useRef(null); // used to enable the automatic scrolling behaviour
 
-    /** Scrolls the HTML element referenced via imagesRef one full width to the left. */
+    /** Scrolls the HTML element referenced via gridRef one full width to the left. */
     function scrollLeft() {
-        imagesRef.current.scrollLeft -= imagesRef.current.clientWidth;
+        gridRef.current.scrollLeft -= gridRef.current.clientWidth;
     }
 
-    /** Scrolls the HTML element referenced via imagesRef one full width to the right. */
+    /** Scrolls the HTML element referenced via gridRef one full width to the right. */
     function scrollRight() {
-        imagesRef.current.scrollLeft += imagesRef.current.clientWidth;
+        gridRef.current.scrollLeft += gridRef.current.clientWidth;
     }
 
     /**
@@ -71,11 +73,12 @@ function HorizontalGridPresenter(props) {
                 `Create new gallery with image ${imageID} requested`
             );
         model.addImageToGallery(imageID, id);
+        model.isCurrentlyDragging = false;
     }
 
     return (
         <HorizontalGrid
-            imagesRef={imagesRef}
+            gridRef={gridRef}
             onClickPreviousButton={scrollLeft}
             onClickNextButton={scrollRight}
             title={title}
@@ -87,6 +90,7 @@ function HorizontalGridPresenter(props) {
             emptyStateText={emptyStateText}
             onDragOverImagePlaceholder={(e) => showDropEffectCopy(e)}
             onDropImagePlaceholder={(e) => addImageToLikedOrGallery(e)}
+            isDropTarget={!images.length || isDropTarget}
             model={model}
         />
     );
@@ -105,6 +109,7 @@ HorizontalGridPresenter.propTypes = {
     images: PropTypes.arrayOf(imageType),
     small: PropTypes.bool,
     emptyStateText: PropTypes.string,
+    isDropTarget: PropTypes.bool,
     model: modelType.isRequired,
 };
 
