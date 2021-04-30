@@ -57,6 +57,7 @@ function Sidebar(props) {
                             key={gallery.id}
                             id={gallery.id}
                             type="gallery"
+                            href={`/gallery/${gallery.id}`}
                             title={gallery.title}
                             images={gallery.images}
                             small={true}
@@ -125,11 +126,11 @@ LikedContent.propTypes = {
 /** Button linking to the user's liked content */
 function LikedContentButton() {
     return (
-        <SidebarButton name="Liked content">
-            <Link to="/liked">
+        <Link to="/liked">
+            <SidebarButton name="Liked content">
                 <Heart />
-            </Link>
-        </SidebarButton>
+            </SidebarButton>
+        </Link>
     );
 }
 
@@ -146,9 +147,11 @@ function GalleryButton(props) {
     const galleryInitial = title && title.charAt(0).toUpperCase();
 
     return (
-        <SidebarButton name={title}>
-            <div>{galleryInitial}</div>
-        </SidebarButton>
+        <Link to={`/gallery/${gallery.id}`}>
+            <SidebarButton name={title}>
+                <div>{galleryInitial}</div>
+            </SidebarButton>
+        </Link>
     );
 }
 
