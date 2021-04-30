@@ -22,7 +22,7 @@ function UsernameInput(props) {
 }
 
 UsernameInput.propTypes = {
-    userNameRef: refType.isRequired,
+    usernameRef: refType.isRequired,
 };
 
 export default UsernameInput;

@@ -55,13 +55,13 @@ function TopNavPresenter() {
     }
 
     /**
-     * Login user using the authentication model (firebase authentication)
+     * Logout user using the authentication model (firebase authentication)
      * @param {Event} event
      */
     async function logoutUser(event) {
         try {
-            await AuthenticationModel.signOut();
             browserHistory.push("/login");
+            await AuthenticationModel.signOut();
         } catch (error) {
             console.log(error);
         }
@@ -69,15 +69,15 @@ function TopNavPresenter() {
 
     return (
         <TopNav
-            isLoggedIn={!!currentUser}
-            username={currentUser?.displayName}
-            onAccountWrapperMouseEnter={(e) => showAccountOptions()}
-            onAccountOptionsMouseLeave={(e) => hideAccountOptions()}
+            isLoggedIn={!!currentUser.auth}
+            username={currentUser.auth ? currentUser.auth.displayName : null}
+            onAccountWrapperMouseEnter={showAccountOptions}
+            onAccountOptionsMouseLeave={hideAccountOptions}
             accountOptionsRef={accountOptionsRef}
             onSearchInput={_.debounce(updateQueryInState, 500)}
-            onSearch={(e) => redirectToSearchResults()}
-            onLogoutRequest={(e) => logoutUser()}
-            onClickMyAccountButton={(e) => redirectToProfile()}
+            onSearch={redirectToSearchResults}
+            onLogoutRequest={logoutUser}
+            onClickMyAccountButton={redirectToProfile}
         />
     );
 }

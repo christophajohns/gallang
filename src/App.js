@@ -10,12 +10,10 @@ import {
     ForgotPasswordPresenter,
     LikedContentPresenter,
     ProfilePresenter,
-    CollectionPresenter,
     GalleryPresenter,
     SidebarPresenter,
 } from "./presenters";
 import { PrivateRoute } from "./components";
-import { mockCollections } from "./model/MockData";
 
 function App(props) {
     const {
@@ -65,6 +63,13 @@ function App(props) {
                     <PrivateRoute path="/liked" exact={true}>
                         <MainContent>
                             <LikedContentPresenter model={model} />
+                        </MainContent>
+                        {sidebar}
+                    </PrivateRoute>
+
+                    <PrivateRoute path="/gallery/:galleryID" exact={true}>
+                        <MainContent>
+                            <GalleryPresenter model={model} />
                         </MainContent>
                         {sidebar}
                     </PrivateRoute>

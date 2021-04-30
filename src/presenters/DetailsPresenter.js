@@ -31,9 +31,9 @@ function DetailsPresenter(props) {
         setPromise(CooperHewittSource.getObjectInfo(imageID));
     }, [imageID]);
 
-    /** Redirect user to home page ("/") when a user clicks on the return button */
-    function redirectToHome() {
-        browserHistory.push(`/`);
+    /** Redirect user to the previous page when a user clicks on the return button */
+    function goToPreviousPage() {
+        browserHistory.goBack();
     }
 
     return (
@@ -56,7 +56,7 @@ function DetailsPresenter(props) {
                     onClickLikeButton={(e) =>
                         model.likeImage(objectInfoData.id)
                     }
-                    onClickBackButton={(e) => redirectToHome()}
+                    onClickBackButton={(e) => goToPreviousPage()}
                 />
             )}
         </>

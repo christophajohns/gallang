@@ -14,11 +14,13 @@ import { refType } from "../../../types";
  * View component for the login page.
  * @param {Object} props - Properties passed to the view
  * @param {Function} props.onRequestSignup - Function to call when the signup form is submitted
- * @param {React.MutableRefObject} props.emailRef - Reference to the email/username input field to handle signup request
+ * @param {React.MutableRefObject} props.usernameRef - Reference to the username input field to handle signup request
+ * @param {React.MutableRefObject} props.emailRef - Reference to the email input field to handle signup request
  * @param {React.MutableRefObject} props.passwordRef - Reference to the password input field to handle signup request
  * @param {React.MutableRefObject} props.confirmPasswordRef - Reference to the confirm password input field to handle signup request
  * @param {boolean} [props.isLoading = false] - Flag whether the user is currently being logged in
- * @param {Error} props.error - Error from the login request */
+ * @param {Error} props.error - Error from the login request
+ */
 function SignupView(props) {
     const {
         onRequestSignup,
