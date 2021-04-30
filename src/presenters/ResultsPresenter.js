@@ -1,5 +1,8 @@
+import React from "react";
+import PropTypes from "prop-types";
 import { ResultsView } from "../views";
-import { resultsViewPropTypes } from "../views/ResultsView";
+import { imageType } from "../types";
+import { modelType as imagePresenterModelType } from "./ImagePresenter";
 
 /**
  * Presenter for the Results view
@@ -25,6 +28,11 @@ function ResultsPresenter(props) {
         model,
     } = props;
 
+    const [numberOfVisibleObjects, setNumberOfVisibleObjects] = React.useState(
+        12
+    ); // start with 12 visible images on first load
+
+    /** Placeholder for the download all function */
     function downloadAllImagesAsZipFile() {
         const imageURLs = images.map((image) => image.url);
         console.log({ message: "download all requested", imageURLs });
@@ -38,11 +46,22 @@ function ResultsPresenter(props) {
             images={images}
             allowDownloadAll={allowDownloadAll}
             onClickDownloadAll={(e) => downloadAllImagesAsZipFile()}
+            onClickLoadMore={(e) =>
+                setNumberOfVisibleObjects(numberOfVisibleObjects + 12)
+            }
+            numberOfVisibleObjects={numberOfVisibleObjects}
             model={model}
         />
     );
 }
 
-ResultsPresenter.propTypes = resultsViewPropTypes;
+ResultsPresenter.propTypes = {
+    contentType: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    numberOfObjects: PropTypes.number.isRequired,
+    images: PropTypes.arrayOf(imageType).isRequired,
+    allowDownloadAll: PropTypes.bool,
+    model: imagePresenterModelType.isRequired,
+};
 
 export default ResultsPresenter;

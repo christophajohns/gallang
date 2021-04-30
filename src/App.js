@@ -10,13 +10,11 @@ import {
     ForgotPasswordPresenter,
     LikedContentPresenter,
     ProfilePresenter,
-    CollectionPresenter,
     GalleryPresenter,
     SidebarPresenter,
     CreateGalleryPresenter,
 } from "./presenters";
 import { PrivateRoute } from "./components";
-import { mockCollections } from "./model/MockData";
 
 function App(props) {
     const {
@@ -74,6 +72,13 @@ function App(props) {
                         <MainContent>
                             <CreateGalleryPresenter model={model}/>
                             {console.log("App.js")}
+                        </ MainContent>
+                        {sidebar}
+                    </ PrivateRoute>
+                    
+                    <PrivateRoute path="/gallery/:galleryID" exact={true}>
+                        <MainContent>
+                            <GalleryPresenter model={model} />
                         </MainContent>
                         {sidebar}
                     </PrivateRoute>

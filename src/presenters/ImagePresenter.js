@@ -64,6 +64,7 @@ function ImagePresenter(props) {
      * @param {Event} event
      */
     function setDataTransferToCopyImageID(event) {
+        model.isCurrentlyDragging = true;
         event.dataTransfer.dropEffect = "copy";
         event.dataTransfer.setData("text/plain", id);
     }
@@ -77,6 +78,7 @@ function ImagePresenter(props) {
         liked: likedImageIDs.includes(id),
         small,
         onDragStartImage: setDataTransferToCopyImageID,
+        onDragEndImage: (e) => (model.isCurrentlyDragging = false),
     };
 
     if (!src) {

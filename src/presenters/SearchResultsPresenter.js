@@ -41,10 +41,19 @@ function SearchResultsPresenter(props) {
                 contentType="search results"
                 title={!query ? "All images" : `"${query}"`} // Set title to "All images" if user enters via /search (without parameters)
                 numberOfObjects={searchData.length}
-                images={searchData.map((object) => ({
-                    id: object.id,
-                    url: object.images[0].b.url,
-                }))}
+                images={searchData.reduce((objects, currentObject) => {
+                    if (
+                        !!currentObject.id &&
+                        !!currentObject.images?.length &&
+                        !!currentObject.images[0].b?.url
+                    ) {
+                        objects.push({
+                            id: currentObject.id,
+                            url: currentObject.images[0].b.url,
+                        });
+                    }
+                    return objects; // Skip over objects with missing properties
+                }, [])}
                 allowDownloadAll={false}
                 model={model}
             />

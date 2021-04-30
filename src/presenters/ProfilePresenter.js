@@ -13,33 +13,54 @@ function ProfilePresenter(props) {
     const currentUser = useCurrentUser();
 
     /**
-     * Wrapper function around the authentication model's updateProfile method for easier use
-     * @param {string} newUsername - The new username (display name) for the user
+     * Wrapper function around the authentication model's methods to update an account
+     * @param {"username" | "email" | "password"} property - The property of the account (user) to update
+     * @param {string} newValue - The new value for the user
      */
-    async function updateUsername(newUsername) {
-        await currentUser.updateProfile({
-            displayName: newUsername,
-        });
+    async function updateAccount(property, newValue) {
+        if (property === "username") {
+            await currentUser.auth.updateProfile({
+                displayName: newValue,
+            });
+        } else if (property === "email") {
+            await currentUser.auth.updateEmail(newValue);
+        } else if (property === "password") {
+            await currentUser.auth.updatePassword(newValue);
+        }
+        await refreshCurrentUserJSON(); // force refresh of currentUserJSON
+    }
+
+    /** Helper function to refresh user ID token to trigger state change for currentUserJSON and thereby re-render */
+    async function refreshCurrentUserJSON() {
+        await currentUser.auth.getIdToken(true); // force refresh of ID token to trigger state change in currentUserJSON
+    }
+
+    /** Function to reformat a stringified date */
+    function formatDate(string) {
+        var options = { year: "numeric", month: "long", day: "numeric" };
+        return new Date(string).toLocaleDateString([], options);
     }
 
     const usernameSetting = (
         <AccountSettingPresenter
-            updateSetting={(newUsername) => updateUsername(newUsername)}
+            updateSetting={(newUsername) =>
+                updateAccount("username", newUsername)
+            }
             label="username"
-            initialValue={currentUser.displayName}
+            initialValue={currentUser.auth.displayName}
         />
     );
     const emailSetting = (
         <AccountSettingPresenter
-            updateSetting={(newEmail) => currentUser.updateEmail(newEmail)}
+            updateSetting={(newEmail) => updateAccount("email", newEmail)}
             label="email"
-            initialValue={currentUser.email}
+            initialValue={currentUser.auth.email}
         />
     );
     const passwordSetting = (
         <AccountSettingPresenter
             updateSetting={(newPassword) =>
-                currentUser.updatePassword(newPassword)
+                updateAccount("password", newPassword)
             }
             label="password"
             initialValue="********"
@@ -50,8 +71,10 @@ function ProfilePresenter(props) {
         <ProfileView
             model={model}
             user={{
-                ...currentUser,
-                creationTime: currentUser.metadata.creationTime,
+                ...currentUser.auth,
+                creationTime: formatDate(
+                    currentUser.auth.metadata.creationTime
+                ),
             }}
             galleries={galleries.map((gallery) => ({
                 ...gallery,

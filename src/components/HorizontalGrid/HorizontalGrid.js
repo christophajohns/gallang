@@ -28,7 +28,7 @@ import {
  * @param {string} props.href - (optional) URL to link to on click on the title
  * @param {string} props.description - (optional) Further description for the grid
  * @param {Image[]} props.images - Array of images to render in the grid
- * @param {React.MutableRefObject} props.imagesRef - Reference to be used on the scrollable HTML element displaying the images
+ * @param {React.MutableRefObject} props.gridRef - Reference to be used on the scrollable HTML element displaying the images
  * @param {Function} props.onClickPreviousButton - Function to be called when the previous button (chevron left) is clicked
  * @param {Function} props.onClickNextButton - Function to be called when the next button (chevron right) is clicked
  * @param {boolean} [props.small] - Flag whether to render smaller versions of the images
@@ -36,6 +36,7 @@ import {
  * @param {string} [props.emptyStateText = "No images yet"] - Text to display if no images are supplied
  * @param {Function} props.onDragOverImagePlaceholder - Function to be called when a user drags an image over the image placeholder
  * @param {Function} props.onDropImagePlaceholder - Function to be called when a user drops a dragged image onto the image placeholder
+ * @param {boolean} [props.isDropTarget = false] - Flag whether the horizontal grid should display the image placeholder as a drop target
  * @param {ImagePresenterModelType} props.model - The model holding the application state
  * @returns
  */
@@ -45,7 +46,7 @@ function HorizontalGrid(props) {
         href, // (optional) URL to link to when clicking the title
         description, // (optional) Short (preferably less than 60 characters) description for the images in the grid
         images, // Array of image data to be rendered in a horizontal grid
-        imagesRef, // Reference to be used on the scrollable HTML element displaying the images
+        gridRef, // Reference to be used on the scrollable HTML element displaying the images
         onClickPreviousButton, // Function to be called when the previous button (chevron left) is clicked
         onClickNextButton, // Function to be called when the next button (chevron right) is clicked
         small, // Flag whether to render smaller versions of the images
@@ -53,6 +54,7 @@ function HorizontalGrid(props) {
         emptyStateText = "No images yet", // Text to display if no images are supplied
         onDragOverImagePlaceholder, // Function to be called when a user drags an image over the image placeholder
         onDropImagePlaceholder, // Function to be called when a user drops a dragged image onto the image placeholder
+        isDropTarget = false, // Flag whether the horizontal grid should display the image placeholder as a drop target
         model, // The model holding the application state
     } = props;
 
@@ -77,28 +79,27 @@ function HorizontalGrid(props) {
                     </IconButton>
                 </StyledPreviousNextChevrons>
             </StyledGridTop>
-            <StyledGridSection>
-                {images.length ? (
-                    <StyledImages ref={imagesRef}>
-                        {images.map((image) => (
-                            <ImagePresenter
-                                key={image.id}
-                                id={image.id}
-                                src={image.url}
-                                small={small}
-                                model={model}
-                            />
-                        ))}
-                    </StyledImages>
-                ) : (
-                    <ImagePlaceholderDiv
-                        small={small}
-                        onDrop={onDropImagePlaceholder}
-                        onDragOver={onDragOverImagePlaceholder}
-                    >
-                        {emptyStateText}
-                    </ImagePlaceholderDiv>
-                )}
+            <StyledGridSection ref={gridRef}>
+                <StyledImages>
+                    {isDropTarget && (
+                        <ImagePlaceholderDiv
+                            small={small}
+                            onDrop={onDropImagePlaceholder}
+                            onDragOver={onDragOverImagePlaceholder}
+                        >
+                            {emptyStateText}
+                        </ImagePlaceholderDiv>
+                    )}
+                    {images.map((image) => (
+                        <ImagePresenter
+                            key={image.id}
+                            id={image.id}
+                            src={image.url}
+                            small={small}
+                            model={model}
+                        />
+                    ))}
+                </StyledImages>
             </StyledGridSection>
         </StyledHorizontalGrid>
     );
@@ -109,7 +110,7 @@ HorizontalGrid.propTypes = {
     href: PropTypes.string,
     description: PropTypes.string,
     images: PropTypes.arrayOf(imageType).isRequired,
-    imagesRef: refType.isRequired,
+    gridRef: refType.isRequired,
     onClickPreviousButton: PropTypes.func.isRequired,
     onClickNextButton: PropTypes.func.isRequired,
     small: PropTypes.bool,
@@ -117,6 +118,7 @@ HorizontalGrid.propTypes = {
     emptyStateText: PropTypes.string,
     onDragOverImagePlaceholder: PropTypes.func.isRequired,
     onDropImagePlaceholder: PropTypes.func.isRequired,
+    isDropTarget: PropTypes.bool,
     model: imagePresenterModelType.isRequired,
 };
 

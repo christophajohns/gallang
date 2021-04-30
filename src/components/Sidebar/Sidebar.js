@@ -20,6 +20,7 @@ import { modelType } from "../../presenters/ImagePresenter";
  * @param {boolean} [props.expanded = false] - Flag whether the sidebar should be expanded or not
  * @param {Function} props.onClickExpandCollapseButton - Function to be called when a user clicks on the button to expand/collapse the sidebar
  * @param {Image[]} props.likedImages - Array of images that the user has liked
+ * @param {boolean} [props.isDropTarget] - Flag whether the horizontal grids should display the image placeholder as a drop target
  * @param {Object} props.model - Model keeping the application state
  * @param {Function} props.model.likeImage - Function to like an image by its ID
  * @param {Function} props.model.unlikeImage - Function to unlike an image by its ID
@@ -32,6 +33,7 @@ function Sidebar(props) {
         expanded = false,
         onClickExpandCollapseButton,
         likedImages,
+        isDropTarget,
         model,
     } = props;
 
@@ -45,16 +47,22 @@ function Sidebar(props) {
             </StyledIconButton>
             {expanded ? (
                 <ExpandedSidebarDiv>
-                    <LikedContent likedImages={likedImages} model={model} />
+                    <LikedContent
+                        likedImages={likedImages}
+                        model={model}
+                        isDropTarget={isDropTarget}
+                    />
                     {galleries.map((gallery) => (
                         <HorizontalGridPresenter
                             key={gallery.id}
                             id={gallery.id}
                             type="gallery"
+                            href={`/gallery/${gallery.id}`}
                             title={gallery.title}
                             images={gallery.images}
                             small={true}
                             emptyStateText={"Drag here to add to gallery"}
+                            isDropTarget={isDropTarget}
                             model={model}
                         />
                     ))}
@@ -65,6 +73,7 @@ function Sidebar(props) {
                         images={[]}
                         small={true}
                         emptyStateText={"Drag here to create a new gallery"}
+                        isDropTarget={isDropTarget}
                         model={model}
                     />
                 </ExpandedSidebarDiv>
@@ -85,6 +94,7 @@ function Sidebar(props) {
  *
  * @param {Object} props - Properties passed to the component
  * @param {Image[]} props.likedImages - Array of images that the user has liked
+ * @param {boolean} [props.isDropTarget] - Flag whether the horizontal grid should display the image placeholder as a drop target
  * @param {Object} props.model - Model keeping the application state
  * @param {Function} props.model.likeImage - Function to like an image by its ID
  * @param {Function} props.model.unlikeImage - Function to unlike an image by its ID
@@ -92,7 +102,7 @@ function Sidebar(props) {
  * @returns HorizontalGridPresenter displaying the images specified
  */
 function LikedContent(props) {
-    const { likedImages, model } = props;
+    const { likedImages, isDropTarget, model } = props;
 
     return (
         <HorizontalGridPresenter
@@ -103,6 +113,7 @@ function LikedContent(props) {
             model={model}
             small={true}
             emptyStateText={"Click on the heart icon to like an image"}
+            isDropTarget={isDropTarget}
         />
     );
 }
@@ -115,11 +126,11 @@ LikedContent.propTypes = {
 /** Button linking to the user's liked content */
 function LikedContentButton() {
     return (
-        <SidebarButton name="Liked content">
-            <Link to="/liked">
+        <Link to="/liked">
+            <SidebarButton name="Liked content">
                 <Heart />
-            </Link>
-        </SidebarButton>
+            </SidebarButton>
+        </Link>
     );
 }
 
@@ -136,9 +147,11 @@ function GalleryButton(props) {
     const galleryInitial = title && title.charAt(0).toUpperCase();
 
     return (
-        <SidebarButton name={title}>
-            <div>{galleryInitial}</div>
-        </SidebarButton>
+        <Link to={`/gallery/${gallery.id}`}>
+            <SidebarButton name={title}>
+                <div>{galleryInitial}</div>
+            </SidebarButton>
+        </Link>
     );
 }
 

@@ -22,7 +22,7 @@ function SignupPresenter() {
 
     // Redirect to home page when the authentication signals that the user is already logged in
     React.useEffect(() => {
-        if (currentUser) browserHistory.push("/");
+        if (currentUser.auth) browserHistory.push("/");
     }, [currentUser, browserHistory]);
 
     /**
