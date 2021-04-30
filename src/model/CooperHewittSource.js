@@ -98,25 +98,33 @@ const CooperHewittSource = {
     /**
      * Get a list of periods from the API (see https://collection.cooperhewitt.org/api/methods/cooperhewitt.periods.getList/explore/)
      * @param {number} maximumNumberOfPeriods - Maximum number of periods to be fetched
+     * @param {number} offset - Number of periods to skip for the results
      * @returns {Promise<PeriodWithoutImages[]>} - Promise object holding an array of objects representing the period's content
      */
-    async getPeriodsList(maximumNumberOfPeriods = 10) {
+    async getPeriodsList(maximumNumberOfPeriods = 10, offset = 0) {
         const params = {
             method: "cooperhewitt.periods.getList",
-            per_page: maximumNumberOfPeriods,
+            per_page: maximumNumberOfPeriods + offset,
         };
         const data = await CooperHewittSource.apiCall(params);
 
-        return data.periods;
+        const periods = data.periods.slice(
+            offset,
+            maximumNumberOfPeriods + offset
+        );
+
+        return periods;
     },
     /**
      * Get a list of periods including their images from the API.
      * @param {number} maximumNumberOfPeriods - Maximum number of periods to be fetched
+     * @param {number} offset - Number of periods to skip for the results
      * @returns {Promise<Period[]>} - Promise object holding an array of objects representing the period's content (incl. its images)
      */
-    async getPeriods(maximumNumberOfResults = 10) {
+    async getPeriods(maximumNumberOfPeriods = 10, offset = 0) {
         const periodsWithoutImages = await CooperHewittSource.getPeriodsList(
-            maximumNumberOfResults
+            maximumNumberOfPeriods,
+            offset
         );
 
         const periods = await Promise.all(

@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { HorizontalGridPresenter } from "../../presenters";
-import CollectionCarousel from "./CollectionCarousel";
 import Quote from "./Quote";
 import "../../types";
 import { imageType } from "../../types";
@@ -8,7 +7,8 @@ import { imageType } from "../../types";
 /**
  * View component for the Home/Browse page content.
  * @param {Object} props - Properties to be passed to the view
- * @param {Collection[]} props.collections - Array holding all information about collections to be rendered in a HorizontalGrid
+ * @param {Function} props.collections - Component or components that render an image grid for collections
+ * @param {Function} props.carousel - Carousel component to highlight featured collections
  * @param {Image[]} props.recentlyViewedImages - Array of image data to be rendered in a HorizontalGrid
  * @param {string} props.quote - String representing a quote
  * @param {Recommendation[]} props.recommendations - Array of recommended images and the recommendation basis (e.g. medium, period, designer)
@@ -16,20 +16,17 @@ import { imageType } from "../../types";
  */
 function HomeView(props) {
     const {
-        collections, // Array holding all information about collections to be rendered in a HorizontalGrid
         recentlyViewedImages, // Array of image data to be rendered in a HorizontalGrid
         quote, // String representing a quote
         recommendations, // Array of recommended images and the recommendation basis (e.g. medium, period, designer)
         model, // The model holding the application state
-        periods,
+        collections, // Component or components that render an image grid for collections
+        carousel, // Carousel component to highlight featured collections
     } = props;
-
-    const firstFourCollections = collections.slice(0, 4);
-    const collectionsAfterFour = collections.slice(4, 10);
 
     return (
         <div className="HomeView">
-            <CollectionCarousel collections={firstFourCollections} />
+            {carousel}
             <main>
                 {recentlyViewedImages?.length ? ( // Only show if at least one recently viewed image
                     <HorizontalGridPresenter
@@ -40,18 +37,7 @@ function HomeView(props) {
                 ) : (
                     ""
                 )}
-                {periods}
-                {collections
-                    ? collectionsAfterFour.map((collection) => (
-                          <HorizontalGridPresenter
-                              key={collection.title}
-                              type="collection"
-                              title={collection.title}
-                              images={collection.images.slice(0, 12)} // only display first 12 images
-                              model={model}
-                          />
-                      ))
-                    : ""}
+                {collections}
                 {quote ? <Quote quoteText={quote} /> : ""}
                 {recommendations
                     ? recommendations.map((recommendation) => (
@@ -70,15 +56,10 @@ function HomeView(props) {
 }
 
 HomeView.propTypes = {
-    /** Array holding all information about collections to be rendered in a HorizontalGrid */
-    collections: PropTypes.arrayOf(
-        PropTypes.shape({
-            /** Name or title of the collection */
-            title: PropTypes.string.isRequired,
-            /** Array of objects or images within the collection */
-            images: PropTypes.arrayOf(imageType).isRequired,
-        })
-    ),
+    /** Component or components that render an image grid for collections */
+    collections: PropTypes.node,
+    /** Carousel component to highlight featured collections */
+    carousel: PropTypes.node.isRequired,
     /** Array of image data to be rendered in a HorizontalGrid */
     recentlyViewedImages: PropTypes.arrayOf(imageType.isRequired),
     /** String representing a quote */

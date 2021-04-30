@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
-import "../../../types";
+import "../../types";
 import {
     StyledCollectionCarousel,
     StyledCarouselItem,

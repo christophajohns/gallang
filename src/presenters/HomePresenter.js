@@ -4,7 +4,7 @@ import { promiseNoData } from "../components";
 import { CooperHewittSource } from "../model";
 import { useModelProperty, usePromise } from "./customHooks";
 import "../types";
-import { PeriodPresenter } from ".";
+import { CollectionCarouselPresenter, PeriodPresenter } from ".";
 
 /**
  * Presenter for the Home/Browse view
@@ -36,7 +36,7 @@ function HomePresenter(props) {
     // Effects
     React.useEffect(() => {
         // only at creation
-        setCollectionsPromise(CooperHewittSource.getPeriods(7));
+        setCollectionsPromise(CooperHewittSource.getPeriodsList(2, 4));
         setQuotePromise(CooperHewittSource.getQuote());
         return () => {
             // cleanup on teardown
@@ -67,23 +67,18 @@ function HomePresenter(props) {
 
     const homeView = (
         <HomeView
-            collections={collectionsData}
             quote={quoteData}
             recentlyViewedImages={recentlyViewedImages.slice(0, 12)} // Only render latest 12 images
             recommendations={exampleRecommendations}
-            periods={
-                collectionsData &&
-                collectionsData
-                    .slice(4, 6)
-                    .map((collection) => (
-                        <PeriodPresenter
-                            key={collection.id}
-                            title={collection.title}
-                            id={collection.id}
-                            model={model}
-                        />
-                    ))
-            }
+            collections={collectionsData?.map((collection) => (
+                <PeriodPresenter
+                    key={collection.id}
+                    title={collection.name}
+                    id={collection.id}
+                    model={model}
+                />
+            ))}
+            carousel={<CollectionCarouselPresenter />}
             model={model}
         />
     );
