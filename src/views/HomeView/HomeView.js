@@ -45,7 +45,7 @@ function HomeView(props) {
                               key={collection.title}
                               type="collection"
                               title={collection.title}
-                              images={collection.images}
+                              images={collection.images.slice(0, 12)} // only display first 12 images
                               model={model}
                           />
                       ))
