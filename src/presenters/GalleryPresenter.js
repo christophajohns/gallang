@@ -1,4 +1,3 @@
-
 import { ResultsPresenter } from "../presenters";
 import { useParams } from "react-router-dom";
 import { useModelProperty } from "./customHooks";
@@ -12,7 +11,10 @@ function GalleryPresenter(props) {
     const { model } = props;
 
     const { galleryID } = useParams();
-    const gallery = useModelProperty(model, "galleries").find((e) => e.id === galleryID);
+    const galleries = useModelProperty(model, "galleries");
+    const gallery = galleries.find(
+        (currentGallery) => currentGallery.id === galleryID
+    );
 
     return (
         <ResultsPresenter
@@ -26,7 +28,7 @@ function GalleryPresenter(props) {
 }
 
 GalleryPresenter.propTypes = {
-    model: imagePresenterModelType.isRequired
+    model: imagePresenterModelType.isRequired,
 };
 
 export default GalleryPresenter;
