@@ -353,6 +353,7 @@ class GallangModel {
         ); // Search Cooper Hewitt collection for objects with that search parameters
         const recommendedImages = recommendedObjects.map((object) => ({
             id: object.id,
+            url: object.images[0].b.url,
         })); // Transform objects into expected image array
 
         // Set recommendation images
