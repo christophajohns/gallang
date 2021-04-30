@@ -12,19 +12,15 @@ import { modelType as imagePresenterModelType } from "./ImagePresenter";
 function GalleryPresenter(props) {
     const { model } = props;
 
-   // const galleries = useModelProperty(model, "galleries");
-    //console.log(galleries);
     const { galleryID } = useParams();
-    const gallery = useModelProperty(model, "galleries").find((e) => e.id==galleryID);
-    console.log(gallery);
-    console.log(gallery.imageIDs);
+    const gallery = useModelProperty(model, "galleries").find((e) => e.id == galleryID);
 
     return (
         <ResultsPresenter
             contentType="gallery"
             title={gallery.title}
             numberOfObjects={gallery.imageIDs.length}
-            images={[]}//has to be changed to the image objects somehow..
+            images={gallery.imageIDs.map((imageID) => ({ id: imageID }))}
             model={model}
         />
     );
