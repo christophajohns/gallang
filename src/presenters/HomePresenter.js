@@ -35,14 +35,14 @@ function HomePresenter(props) {
     // Effects
     React.useEffect(() => {
         // only at creation
-        setCollectionsPromise(CooperHewittSource.getCollections(10));
+        setCollectionsPromise(CooperHewittSource.getPeriods(7));
         setQuotePromise(CooperHewittSource.getQuote());
+        return () => {
+            // cleanup on teardown
+            setCollectionsPromise(null);
+            setQuotePromise(null);
+        };
     }, []);
-
-    React.useEffect(() => {
-        // check for valid format when collectionsData is set
-        if (collectionsData) checkCollectionsForRequiredFormat(collectionsData);
-    }, [collectionsData]);
 
     const exampleRecommendations = [
         {
@@ -80,27 +80,5 @@ function HomePresenter(props) {
         homeView
     );
 }
-// -- Utility functions --
-/**
- * Properties check for collections prop
- * @param {Collection[]} collections - Array of collection objects
- */
- function checkCollectionsForRequiredFormat(collections) {
-    collections.map((collection) => {
-        if (!collection.hasOwnProperty("title"))
-            throw Error("Each collection needs a title.");
-        if (!collection.hasOwnProperty("images"))
-            throw Error("Each collection needs an image property.");
-        collection.images.map((image) => {
-            if (!image.hasOwnProperty("id"))
-                throw Error("Each image in collection needs an ID.");
-            if (!image.hasOwnProperty("url"))
-                throw Error("Each image in collection needs a URL.");
-            if (!image.hasOwnProperty("liked"))
-                throw Error("Each image in collection needs a liked.");
-            return true;
-        });
-        return true;
-    });
-}
+
 export default HomePresenter;
