@@ -2,7 +2,7 @@ import React from "react";
 import { HomeView } from "../views";
 import { promiseNoData } from "../components";
 import { CooperHewittSource } from "../model";
-import { usePromise } from "./customHooks";
+import { useModelProperty, usePromise } from "./customHooks";
 import "../types";
 
 /**
@@ -26,6 +26,11 @@ function HomePresenter(props) {
     const quotePromiseStatesAndSetters = usePromise(quotePromise);
     const quoteData = quotePromiseStatesAndSetters[0];
     const quoteError = quotePromiseStatesAndSetters[2];
+    // Recently viewed images
+    const recentlyViewedImages = useModelProperty(
+        model,
+        "recentlyViewedImages"
+    );
 
     // Effects
     React.useEffect(() => {
@@ -34,14 +39,11 @@ function HomePresenter(props) {
         setQuotePromise(CooperHewittSource.getQuote());
     }, []);
 
-    const exampleRecentlyViewedImages = [
-        {
-            id: "18644717",
-            url:
-                "https://images.collection.cooperhewitt.org/12030_fa96a748c7d67fd9_b.jpg",
-            liked: false,
-        },
-    ];
+    React.useEffect(() => {
+        // check for valid format when collectionsData is set
+        if (collectionsData) checkCollectionsForRequiredFormat(collectionsData);
+    }, [collectionsData]);
+
     const exampleRecommendations = [
         {
             title: "Posters",
@@ -66,7 +68,7 @@ function HomePresenter(props) {
         <HomeView
             collections={collectionsData}
             quote={quoteData}
-            recentlyViewedImages={exampleRecentlyViewedImages}
+            recentlyViewedImages={recentlyViewedImages.slice(0, 12)} // Only render latest 12 images
             recommendations={exampleRecommendations}
             model={model}
         />
@@ -78,5 +80,27 @@ function HomePresenter(props) {
         homeView
     );
 }
-
+// -- Utility functions --
+/**
+ * Properties check for collections prop
+ * @param {Collection[]} collections - Array of collection objects
+ */
+ function checkCollectionsForRequiredFormat(collections) {
+    collections.map((collection) => {
+        if (!collection.hasOwnProperty("title"))
+            throw Error("Each collection needs a title.");
+        if (!collection.hasOwnProperty("images"))
+            throw Error("Each collection needs an image property.");
+        collection.images.map((image) => {
+            if (!image.hasOwnProperty("id"))
+                throw Error("Each image in collection needs an ID.");
+            if (!image.hasOwnProperty("url"))
+                throw Error("Each image in collection needs a URL.");
+            if (!image.hasOwnProperty("liked"))
+                throw Error("Each image in collection needs a liked.");
+            return true;
+        });
+        return true;
+    });
+}
 export default HomePresenter;

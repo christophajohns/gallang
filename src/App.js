@@ -9,6 +9,9 @@ import {
     SignupPresenter,
     ForgotPasswordPresenter,
     LikedContentPresenter,
+    ProfilePresenter,
+    CollectionPresenter,
+    GalleryPresenter,
     SidebarPresenter,
 } from "./presenters";
 import { PrivateRoute } from "./components";
@@ -44,6 +47,13 @@ function App(props) {
                     <Route path="/forgot-password" exact={true}>
                         <ForgotPasswordPresenter />
                     </Route>
+
+                    <PrivateRoute path="/profile" exact={true}>
+                        <MainContent>
+                            <ProfilePresenter model={model} />
+                        </MainContent>
+                        {sidebar}
+                    </PrivateRoute>
 
                     <PrivateRoute path="/search" exact={true}>
                         <MainContent>

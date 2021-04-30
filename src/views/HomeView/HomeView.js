@@ -3,6 +3,7 @@ import { HorizontalGridPresenter } from "../../presenters";
 import CollectionCarousel from "./CollectionCarousel";
 import Quote from "./Quote";
 import "../../types";
+import { imageType } from "../../types";
 
 /**
  * View component for the Home/Browse page content.
@@ -29,7 +30,7 @@ function HomeView(props) {
         <div className="HomeView">
             <CollectionCarousel collections={firstFourCollections} />
             <main>
-                {recentlyViewedImages ? (
+                {recentlyViewedImages?.length ? ( // Only show if at least one recently viewed image
                     <HorizontalGridPresenter
                         title="Recently viewed"
                         images={recentlyViewedImages}
@@ -73,29 +74,11 @@ HomeView.propTypes = {
             /** Name or title of the collection */
             title: PropTypes.string.isRequired,
             /** Array of objects or images within the collection */
-            images: PropTypes.arrayOf(
-                PropTypes.shape({
-                    /** Unique identifier of the object and thereby image */
-                    id: PropTypes.string.isRequired,
-                    /** Image url for the object */
-                    url: PropTypes.string.isRequired,
-                    /** Flag whether the user has liked this image */
-                    liked: PropTypes.bool.isRequired,
-                }).isRequired
-            ),
+            images: PropTypes.arrayOf(imageType).isRequired,
         })
     ),
     /** Array of image data to be rendered in a HorizontalGrid */
-    recentlyViewedImages: PropTypes.arrayOf(
-        PropTypes.shape({
-            /** Unique identifier of the object and thereby image */
-            id: PropTypes.string.isRequired,
-            /** Image url for the object */
-            url: PropTypes.string.isRequired,
-            /** Flag whether the user has liked this image */
-            liked: PropTypes.bool.isRequired,
-        }).isRequired
-    ),
+    recentlyViewedImages: PropTypes.arrayOf(imageType.isRequired),
     /** String representing a quote */
     quote: PropTypes.string,
     /** Array of recommended images and the recommendation basis (e.g. medium, period, designer) */
@@ -104,16 +87,7 @@ HomeView.propTypes = {
             /** Name or title for the recommendation basis (e.g. medium, period, designer) */
             title: PropTypes.string.isRequired,
             /** Array of objects or images that are being recommended */
-            images: PropTypes.arrayOf(
-                PropTypes.shape({
-                    /** Unique identifier of the object and thereby image */
-                    id: PropTypes.string.isRequired,
-                    /** Image url for the object */
-                    url: PropTypes.string.isRequired,
-                    /** Flag whether the user has liked this image */
-                    liked: PropTypes.bool.isRequired,
-                }).isRequired
-            ),
+            images: PropTypes.arrayOf(imageType.isRequired),
         })
     ),
     /** The model holding the application state */
