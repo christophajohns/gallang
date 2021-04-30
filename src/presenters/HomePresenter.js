@@ -54,6 +54,9 @@ function HomePresenter(props) {
      * @returns - Array of RecommendationPresenters to pass as prop
      */
     function getRecommendationPresenters(numberOfRecommendations = 3) {
+        // make sure that a fresh set of recommendations is computed every time the home page is opened
+        model.resetCurrentRecommendations();
+
         let recommendations = [];
 
         // Only render recommendations if user has liked some images

@@ -94,6 +94,11 @@ class GallangModel {
         );
     }
 
+    /** Sets the currentRecommendations property back to an empty array */
+    resetCurrentRecommendations() {
+        this.currentRecommendations = [];
+    }
+
     /**
      * Adds an image to the recentlyViewedImages array in the model and notifies the observers
      * @param {string} imageID - Identifier of the image the user has accessed
