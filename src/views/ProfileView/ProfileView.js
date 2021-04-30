@@ -165,7 +165,7 @@ function Galleries(props) {
                     <HorizontalGridPresenter
                         key={gallery.id}
                         title={gallery.title}
-                        href={"/gallery/" + gallery.id}
+                        href={`/gallery/${gallery.id}`}
                         images={gallery.images}
                         model={model}
                     />

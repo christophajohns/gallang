@@ -51,7 +51,7 @@ function Sidebar(props) {
                             key={gallery.id}
                             id={gallery.id}
                             type="gallery"
-                            href={"/gallery/" + gallery.id}
+                            href={`/gallery/${gallery.id}`}
                             title={gallery.title}
                             images={gallery.images}
                             small={true}
@@ -137,7 +137,7 @@ function GalleryButton(props) {
     const galleryInitial = title && title.charAt(0).toUpperCase();
 
     return (
-        <Link to={"/gallery/" + gallery.id}>
+        <Link to={`/gallery/${gallery.id}`}>
             <SidebarButton name={title}>
                 <div>{galleryInitial}</div>
             </SidebarButton>
