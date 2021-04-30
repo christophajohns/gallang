@@ -4,6 +4,7 @@ import { promiseNoData } from "../components";
 import { CooperHewittSource } from "../model";
 import { useModelProperty, usePromise } from "./customHooks";
 import "../types";
+import { PeriodPresenter } from ".";
 
 /**
  * Presenter for the Home/Browse view
@@ -70,6 +71,18 @@ function HomePresenter(props) {
             quote={quoteData}
             recentlyViewedImages={recentlyViewedImages.slice(0, 12)} // Only render latest 12 images
             recommendations={exampleRecommendations}
+            periods={
+                collectionsData &&
+                collectionsData
+                    .slice(4, 6)
+                    .map((collection) => (
+                        <PeriodPresenter
+                            title={collection.title}
+                            id={collection.id}
+                            model={model}
+                        />
+                    ))
+            }
             model={model}
         />
     );

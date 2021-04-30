@@ -21,6 +21,7 @@ function HomeView(props) {
         quote, // String representing a quote
         recommendations, // Array of recommended images and the recommendation basis (e.g. medium, period, designer)
         model, // The model holding the application state
+        periods,
     } = props;
 
     const firstFourCollections = collections.slice(0, 4);
@@ -39,6 +40,7 @@ function HomeView(props) {
                 ) : (
                     ""
                 )}
+                {periods}
                 {collections
                     ? collectionsAfterFour.map((collection) => (
                           <HorizontalGridPresenter
