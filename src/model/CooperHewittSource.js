@@ -33,6 +33,9 @@ const CooperHewittSource = {
      * @param {Object} searchParams - Object representing of the search parameters
      * @param {string} [searchParams.query] - Search for objects matching terms across all the text fields
      * @param {string} [searchParams.media_id] - Identifier for the medium (e.g. "screenprint on paper") in the Cooper Hewitt collection
+     * @param {string} [searchParams.person_id] - Identifier for the person (e.g. "Andy Warhol") in the Cooper Hewitt collection
+     * @param {string} [searchParams.type_id] - Identifier for the object type (e.g. "Poster") in the Cooper Hewitt collection
+     * @param {string} [searchParams.period_id] - Identifier for the period (e.g. "Baroque") in the Cooper Hewitt collection
      * @param {number} [maximumNumberOfResults = 100] - Maximum number of objects to return (i.e. objects per page since only one page is returned; maximum 500)
      * @returns {Promise<CooperHewittObject[]>} - Array holding objects with information about one Cooper Hewitt Object each matching the search parameters
      */
@@ -91,6 +94,48 @@ const CooperHewittSource = {
         // Return mock data instead of making API call if useMockData flag is set to true
         const collections = await getMockData("collections");
         return collections;
+    },
+    /**
+     * Get a list of periods from the API.
+     * @returns {Promise<PeriodWithoutImages[]>} - Promise object holding an array of objects representing the period's content
+     */
+    async getPeriodsList(maximumNumberOfResults = 10) {
+        const params = {
+            method: "cooperhewitt.periods.getList",
+            per_page: maximumNumberOfResults,
+        };
+        const data = await CooperHewittSource.apiCall(params);
+
+        return data.periods;
+    },
+    /**
+     * Get a list of periods including their images from the API.
+     * @returns {Promise<Period[]>} - Promise object holding an array of objects representing the period's content (incl. its images)
+     */
+    async getPeriods(maximumNumberOfResults = 10) {
+        const periodsWithoutImages = await CooperHewittSource.getPeriodsList(
+            maximumNumberOfResults
+        );
+
+        const periods = await Promise.all(
+            periodsWithoutImages.map(async (periodWithoutImages) => {
+                const periodObjects = await CooperHewittSource.searchObjects({
+                    period_id: periodWithoutImages.id,
+                });
+                const periodImages = periodObjects.map((object) => ({
+                    id: object.id,
+                    url: object.images[0].n.url,
+                }));
+                return {
+                    ...periodWithoutImages,
+                    title: periodWithoutImages.name,
+                    images: periodImages,
+                    numberOfImages: periodImages.length,
+                };
+            })
+        );
+
+        return periods;
     },
     /**
      * Get a random Micah Walter quote from the API.
