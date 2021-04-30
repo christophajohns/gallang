@@ -15,8 +15,6 @@ import "../types";
 function PeriodPresenter(props) {
     const { model, title, id } = props;
 
-    console.log({ props });
-
     const [periodImagesPromise, setPeriodImagesPromise] = React.useState(null);
     const [periodImagesData, , periodImagesError] = usePromise(
         periodImagesPromise
@@ -38,7 +36,6 @@ function PeriodPresenter(props) {
             periodImagesError
         ) || (
             <HorizontalGridPresenter
-                key={id}
                 type="collection"
                 title={title}
                 images={periodImagesData.slice(0, 12)} // only display first 12 images

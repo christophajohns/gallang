@@ -77,6 +77,7 @@ function HomePresenter(props) {
                     .slice(4, 6)
                     .map((collection) => (
                         <PeriodPresenter
+                            key={collection.id}
                             title={collection.title}
                             id={collection.id}
                             model={model}
