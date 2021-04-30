@@ -34,7 +34,7 @@ function RecommendationPresenter(props) {
         (!!recommendationsData && (
             <HorizontalGridPresenter
                 title={recommendationsData.title}
-                images={recommendationsData.images}
+                images={recommendationsData.images.slice(0, 12)} // only display first 12 images
                 description="Recommended for you."
                 model={model}
             />
