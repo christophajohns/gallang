@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { StyledIconButton } from "./style";
 import { CaretUpFill } from "react-bootstrap-icons";
 import { Link as ScrollLink } from "react-scroll";
