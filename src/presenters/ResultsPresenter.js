@@ -59,7 +59,6 @@ function ResultsPresenter(props) {
                 setNumberOfVisibleObjects(numberOfVisibleObjects + 12)
             }
             numberOfVisibleObjects={numberOfVisibleObjects}
-            model={model}
         />
     );
 }

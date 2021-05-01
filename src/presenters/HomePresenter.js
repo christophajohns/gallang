@@ -96,7 +96,6 @@ function HomePresenter(props) {
                     model={model}
                 />
             ))}
-            model={model}
         />
     );
 
