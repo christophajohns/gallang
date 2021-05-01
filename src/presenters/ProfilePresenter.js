@@ -1,5 +1,8 @@
 import { ProfileView } from "../views";
-import { AccountSettingPresenter } from "../presenters";
+import {
+    AccountSettingPresenter,
+    HorizontalGridPresenter,
+} from "../presenters";
 import { useCurrentUser, useModelProperty } from "./customHooks";
 
 /**
@@ -69,17 +72,23 @@ function ProfilePresenter(props) {
 
     return (
         <ProfileView
-            model={model}
             user={{
                 ...currentUser.auth,
                 creationTime: formatDate(
                     currentUser.auth.metadata.creationTime
                 ),
             }}
-            galleries={galleries.map((gallery) => ({
-                ...gallery,
-                images: gallery.imageIDs.map((imageID) => ({ id: imageID })),
-            }))}
+            galleries={galleries.map((gallery) => (
+                <HorizontalGridPresenter
+                    key={gallery.id}
+                    title={gallery.title}
+                    href={`/gallery/${gallery.id}`}
+                    images={gallery.imageIDs.map((imageID) => ({
+                        id: imageID,
+                    }))}
+                    model={model}
+                />
+            ))}
             usernameSetting={usernameSetting}
             emailSetting={emailSetting}
             passwordSetting={passwordSetting}
