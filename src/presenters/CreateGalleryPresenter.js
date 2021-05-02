@@ -5,8 +5,9 @@ function CreateGalleryPresenter(props){
     const {
         model,
     } = props;
+    
     return (
-        <CreateGalleryView model={model}/>
+        <CreateGalleryView model={model} />
     )
 }
 

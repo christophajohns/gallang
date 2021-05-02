@@ -169,11 +169,11 @@ function AddGalleryButton(props) {
     const { onClickAddGallery } = props;
 
     return (
-        <SidebarButton onClick={onClickAddGallery} name="Add gallery">
-            <Link to="/new-gallery">
+        <Link to="/new-gallery">
+            <SidebarButton onClick={onClickAddGallery} name="Add gallery">
                 <Plus />
-            </Link>
-        </SidebarButton>
+            </SidebarButton>
+        </Link>
     );
 }
 

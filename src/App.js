@@ -71,11 +71,10 @@ function App(props) {
                     <PrivateRoute path="/new-gallery" exact={true}>
                         <MainContent>
                             <CreateGalleryPresenter model={model}/>
-                            {console.log("App.js")}
                         </ MainContent>
                         {sidebar}
                     </ PrivateRoute>
-                    
+
                     <PrivateRoute path="/gallery/:galleryID" exact={true}>
                         <MainContent>
                             <GalleryPresenter model={model} />

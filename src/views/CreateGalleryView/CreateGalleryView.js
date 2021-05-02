@@ -1,6 +1,6 @@
-
+import { CenterContentDiv } from ".style.js";
 /**
- * Profile view to update a user's account and view all galleries
+ * View for naming and creating a new gallery
  * @param {Object} props - Properties passed to the view
  * @param {Function} props.requestCreateGallery - Function that created the gallery
  * */
@@ -11,12 +11,14 @@ function CreateGalleryView(props) {
     } = props;
 
     return (
-        <div>
+        <CenterContentDiv className="">
+                    <div>
           <h1>create a new gallery</h1>
           <input type="text"></input>
           <button>save</button>
         </div>
         
+        </CenterContentDiv>
     );
 }
 
