@@ -20,7 +20,7 @@ function DownloadAllButton(props) {
 }
 
 DownloadAllButton.propTypes = {
-    allowDownloadAll: PropTypes.bool.isRequired,
+    onClickDownloadAll: PropTypes.func.isRequired,
 };
 
 export default DownloadAllButton;

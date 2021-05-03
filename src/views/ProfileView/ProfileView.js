@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { modelType as imagePresenterModelType } from "../../presenters/ImagePresenter";
-import { imageType } from "../../types";
 import { ProfileViewMain, StyledTabs } from "./style";
 import User from "./User";
 import Galleries from "./Galleries";
@@ -58,18 +57,12 @@ function ProfileView(props) {
     );
 }
 
-export const galleryType = PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    images: PropTypes.arrayOf(imageType),
-});
-
 ProfileView.propTypes = {
     user: PropTypes.shape({
         displayName: PropTypes.string.isRequired,
         creationTime: PropTypes.string.isRequired,
     }).isRequired,
-    galleries: PropTypes.arrayOf(galleryType),
+    galleries: Galleries.propTypes.galleries,
     onClickDeleteAccount: PropTypes.func.isRequired,
     model: imagePresenterModelType,
     usernameSetting: PropTypes.oneOfType([PropTypes.func, PropTypes.object])

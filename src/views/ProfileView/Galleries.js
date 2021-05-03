@@ -1,7 +1,7 @@
-import { HorizontalGridPresenter } from "../../presenters";
-import { galleryType } from "./ProfileView";
-import { modelType as imagePresenterModelType } from "../../presenters/ImagePresenter";
 import PropTypes from "prop-types";
+import { HorizontalGridPresenter } from "../../presenters";
+import { modelType as imagePresenterModelType } from "../../presenters/ImagePresenter";
+import { imageType } from "../../types";
 
 /**
  * Section to display the currently logged in user's galleries
@@ -31,6 +31,20 @@ function Galleries(props) {
         </section>
     );
 }
+
+/** Type definition (prop-types) for gallery data */
+export const galleryType = PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    images: PropTypes.arrayOf(imageType),
+});
+
+/**
+ * @typedef Gallery
+ * @property {string} title - Name or title for the recommendation basis (e.g. medium, period, designer)
+ * @property {Image[]} images - Array of objects or images that are being recommended
+ * @property {string} id - Identifier of the gallery
+ */
 
 Galleries.propTypes = {
     galleries: PropTypes.arrayOf(galleryType).isRequired,
