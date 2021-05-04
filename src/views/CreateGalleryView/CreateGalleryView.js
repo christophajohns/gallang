@@ -26,7 +26,7 @@ function CreateGalleryView(props) {
             {error && <Alert variant="danger">{error}</Alert>}
             <p>create gallery here</p>
             <Inputs>
-                <CreateGalleryInput passwordRef={galleryNameRef} />
+                <CreateGalleryInput galleryNameRef={galleryNameRef} />
             </Inputs>
             <Button type="submit" disabled={isLoading}>
                 {isLoading ? "Logging in…" : "Login"}
