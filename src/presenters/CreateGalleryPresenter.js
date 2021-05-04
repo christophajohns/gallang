@@ -14,8 +14,8 @@ function CreateGalleryPresenter(props){
 
     const browserHistory = useHistory();
 
-    const galleries = model.galleries();
-    console.log(galleries);
+   //const galleries = model.galleries();
+   // onsole.log(galleries);
 
     // const createGallery = (e) => model.addGallery(e);
 
