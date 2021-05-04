@@ -14,35 +14,24 @@ function CreateGalleryPresenter(props){
 
     const browserHistory = useHistory();
 
-   //const galleries = model.galleries();
-   // console.log(galleries);
-
-    // const createGallery = (e) => model.addGallery(e);
-
     //redirect user to new gallery after creation
-    /*function redirectToNewGallery(newGalleryID){
+    function redirectToNewGallery(newGalleryID){
         browserHistory.push(`/gallery/${newGalleryID}`);
     }
-    */
-  
 
+    //creates the new gallery with the specified name
     function createGallery(event){
         event.preventDefault(); // Do not reload page on submit
 
         const galleryname = galleryNameRef.current.value;
-        console.log(galleryname);
-        const newGalleryID = model.addGallery(galleryname);
-        //get the gallery id from model
-       
-        //const gallery = galleries[galleries.length - 1];
-        //console.log(gallery);
-        //browserHistory.push(`/gallery/${gallery.id}`);
-        console.log(newGalleryID);
-        ///redirectToNewGallery(newGalleryID);
+        const newGalleryID = model.addGallery(galleryname, imageID);
+    
+        //if the user triggered the presenter by dropping an image into the sidebar, add image to the new gallery
+        //console.log(imageID);
+        //model.addImageToGallery(imageID,)
+
+        redirectToNewGallery(newGalleryID);
     }
-
-
-
     
     return (
         <CreateGalleryView 

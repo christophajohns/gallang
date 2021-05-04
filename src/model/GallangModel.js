@@ -170,6 +170,11 @@ class GallangModel {
         }
     }
 
+    /**
+     * Adds a new gallery to the users galleries.
+     * @param {string} galleryName - Name of the gallery to add
+     * @returns {newGalleryID} - The ID of the newly created gallery
+     */
     addGallery(galleryName){
         const newGalleryID = String(Math.floor(Math.random() * (40000 - 12348) + 12348)); // replace with the unique gallery ID from firebase
         const newGallery = {
@@ -177,9 +182,8 @@ class GallangModel {
             id: newGalleryID,
             imageIDs: [],
         }
-        this.galleries = [...this.galleries, newGallery];
-        console.log("model" + newGalleryID)
-        console.log(this.galleries);
+        this.galleries = [...this.galleries, newGallery]; //add the new gallery object to the galleries array.
+
         return newGalleryID;
     }
 
