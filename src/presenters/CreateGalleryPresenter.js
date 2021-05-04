@@ -15,15 +15,15 @@ function CreateGalleryPresenter(props){
     const browserHistory = useHistory();
 
    //const galleries = model.galleries();
-   // onsole.log(galleries);
+   // console.log(galleries);
 
     // const createGallery = (e) => model.addGallery(e);
 
     //redirect user to new gallery after creation
-    function redirectToNewGallery(){
-        
+    /*function redirectToNewGallery(newGalleryID){
+        browserHistory.push(`/gallery/${newGalleryID}`);
     }
-
+    */
   
 
     function createGallery(event){
@@ -31,13 +31,14 @@ function CreateGalleryPresenter(props){
 
         const galleryname = galleryNameRef.current.value;
         console.log(galleryname);
-
+        const newGalleryID = model.addGallery(galleryname);
         //get the gallery id from model
        
         //const gallery = galleries[galleries.length - 1];
         //console.log(gallery);
         //browserHistory.push(`/gallery/${gallery.id}`);
-
+        console.log(newGalleryID);
+        ///redirectToNewGallery(newGalleryID);
     }
 
 

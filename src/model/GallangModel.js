@@ -170,6 +170,19 @@ class GallangModel {
         }
     }
 
+    addGallery(galleryName){
+        const newGalleryID = String(Math.floor(Math.random() * (40000 - 12348) + 12348)); // replace with the unique gallery ID from firebase
+        const newGallery = {
+            title: galleryName,
+            id: newGalleryID,
+            imageIDs: [],
+        }
+        this.galleries = [...this.galleries, newGallery];
+        console.log("model" + newGalleryID)
+        console.log(this.galleries);
+        return newGalleryID;
+    }
+
     /**
      * Evaluates a user's liked content to return recommended images including title/recommendation basis (e.g. medium, period, person)
      * @param {"type" | "medium" | "person"} [recommendationBasis = "type"] - Basis/type of the recommendation
