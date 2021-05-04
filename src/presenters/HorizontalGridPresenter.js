@@ -7,6 +7,7 @@ import {
     // eslint-disable-next-line no-unused-vars
     ImagePresenterModelType,
 } from "./ImagePresenter";
+import { useHistory } from "react-router";
 
 /**
  * Presenter for the HorizontalGrid component
@@ -40,6 +41,8 @@ function HorizontalGridPresenter(props) {
 
     const gridRef = React.useRef(null); // used to enable the automatic scrolling behaviour
 
+    const browserHistory = useHistory();
+
     /** Scrolls the HTML element referenced via gridRef one full width to the left. */
     function scrollLeft() {
         gridRef.current.scrollLeft -= gridRef.current.clientWidth;
@@ -69,9 +72,7 @@ function HorizontalGridPresenter(props) {
         if (!id) return;
         if (id === "likedContent") return model.likeImage(imageID);
         if (id === "newGallery")
-            return console.log(
-                `Create new gallery with image ${imageID} requested`
-            );
+           return browserHistory.push("/new-gallery");
         model.addImageToGallery(imageID, id);
         model.isCurrentlyDragging = false;
     }
