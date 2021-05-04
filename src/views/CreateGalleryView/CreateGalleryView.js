@@ -1,4 +1,4 @@
-import { CenterContentDiv, StyledForm, Inputs, } from "./style.js";
+import { CenterContentDiv, StyledForm, Inputs, StyledButton } from "./style.js";
 import { Alert, Button } from "react-bootstrap";
 import { refType } from "../../types";
 import CreateGalleryInput from "./CreateGalleryInput";
@@ -29,12 +29,12 @@ function CreateGalleryView(props) {
             <Inputs>
                 <CreateGalleryInput galleryNameRef={galleryNameRef} />
             </Inputs>
-            <Button type="submit" disabled={isLoading}>
+            <StyledButton type="submit" disabled={isLoading}>
                 {isLoading ? "Creating..." : "Create gallery"}
-            </Button>
-            <Button type="button" disabled={isLoading} onClick={onCancel}>
+            </StyledButton>
+            <StyledButton type="button" disabled={isLoading} onClick={onCancel}>
                 Cancel
-            </Button>
+            </StyledButton>
         </StyledForm>
     </CenterContentDiv>
     );

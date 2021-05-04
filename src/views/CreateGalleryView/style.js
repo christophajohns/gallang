@@ -26,7 +26,7 @@ export const StyledForm = styled(Form)`
     }
 `;
 
-export const AuthButton = styled(Button)`
+export const StyledButton = styled(Button)`
     background-color: gainsboro;
     color: black;
     border: none;
