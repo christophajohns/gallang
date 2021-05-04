@@ -16,20 +16,24 @@ function CreateGalleryView(props) {
     const {
         onRequestCreateGallery,
         galleryNameRef, 
-        isLoading = false,
+        isLoading,
         error,
+        onCancel,
     } = props;
 
     return (
         <CenterContentDiv className="CreateGalleryView">
         <StyledForm onSubmit={onRequestCreateGallery}>
             {error && <Alert variant="danger">{error}</Alert>}
-            <p>create gallery here</p>
+            <p>Create a new gallery</p>
             <Inputs>
                 <CreateGalleryInput galleryNameRef={galleryNameRef} />
             </Inputs>
             <Button type="submit" disabled={isLoading}>
-                {isLoading ? "Logging in…" : "Login"}
+                {isLoading ? "Creating..." : "Create gallery"}
+            </Button>
+            <Button type="button" disabled={isLoading} onClick={onCancel}>
+                Cancel
             </Button>
         </StyledForm>
     </CenterContentDiv>

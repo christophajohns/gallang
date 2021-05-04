@@ -8,6 +8,8 @@ function CreateGalleryPresenter(props){
     const {
         model,
         imageID = null, //the image ID from a drag and drop to new gallery
+        isLoading = false, //replace with loading status while it is saving to firebase
+        errorMessage = "", //replace with errormessage if there is an error to save in firebase
     } = props;
 
     const galleryNameRef = React.useRef(null);
@@ -19,6 +21,10 @@ function CreateGalleryPresenter(props){
         browserHistory.push(`/gallery/${newGalleryID}`);
     }
 
+    function redirectBack(){
+        browserHistory.goBack();
+    }
+
     //creates the new gallery with the specified name
     function createGallery(event){
         event.preventDefault(); // Do not reload page on submit
@@ -27,8 +33,7 @@ function CreateGalleryPresenter(props){
         const newGalleryID = model.addGallery(galleryname, imageID);
     
         //if the user triggered the presenter by dropping an image into the sidebar, add image to the new gallery
-        //console.log(imageID);
-        //model.addImageToGallery(imageID,)
+        //model.addImageToGallery(imageID, newGalleryID);
 
         redirectToNewGallery(newGalleryID);
     }
@@ -37,8 +42,9 @@ function CreateGalleryPresenter(props){
         <CreateGalleryView 
             onRequestCreateGallery={(e)=>createGallery(e)} 
             galleryNameRef={galleryNameRef}
-            isLoading={false}
-            error={""}
+            isLoading={isLoading} 
+            error={errorMessage} 
+            onCancel={(e)=>redirectBack(e)}
         />
     )
 }
