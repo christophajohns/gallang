@@ -7,10 +7,11 @@ import { useHistory } from "react-router";
 function CreateGalleryPresenter(props){
     const {
         model,
-        imageID = null, //the image ID from a drag and drop to new gallery
-        isLoading = false, //replace with loading status while it is saving to firebase
-        errorMessage = "", //replace with errormessage if there is an error to save in firebase
+        imageID, //the image ID from a drag and drop to new gallery
     } = props;
+
+    const isLoading = false; //replace with loading status while it is saving to firebase
+    const errorMessage = ""; //replace with errormessage if there is an error to save in firebase
 
     const galleryNameRef = React.useRef(null);
 
@@ -30,6 +31,7 @@ function CreateGalleryPresenter(props){
         event.preventDefault(); // Do not reload page on submit
 
         const galleryname = galleryNameRef.current.value;
+
         const newGalleryID = model.addGallery(galleryname, imageID);
     
         //if the user triggered the presenter by dropping an image into the sidebar, add image to the new gallery
