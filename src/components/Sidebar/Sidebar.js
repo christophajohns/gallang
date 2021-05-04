@@ -83,7 +83,7 @@ function Sidebar(props) {
                     {galleries.map((gallery) => (
                         <GalleryButton key={gallery.id} gallery={gallery} />
                     ))}
-                    <AddGalleryButton onClickAddGallery={onClickAddGallery} />
+                    <AddGalleryButton />
                 </>
             )}
         </SidebarAside>
@@ -159,27 +159,17 @@ GalleryButton.propTypes = {
     gallery: galleryType.isRequired,
 };
 
-/**
- * Button to add a gallery
- * @param {Object} props - Properties passed to the component
- * @param {Function} props.onClickAddGallery - Function to be called when a user clicks the button to add a gallery
- * @returns SidebarButton to add a gallery
- */
-function AddGalleryButton(props) {
-    const { onClickAddGallery } = props;
 
+//Button to add a gallery
+function AddGalleryButton() {
     return (
         <Link to="/new-gallery">
-            <SidebarButton onClick={onClickAddGallery} name="Add gallery">
+            <SidebarButton name="Add gallery">
                 <Plus />
             </SidebarButton>
         </Link>
     );
 }
-
-AddGalleryButton.propTypes = {
-    onClickAddGallery: PropTypes.func.isRequired,
-};
 
 /**
  * Button in the collapsed sidebar
