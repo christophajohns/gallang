@@ -9,12 +9,12 @@ class GallangModel {
      * @param {Array<{ id: string, lastViewedAt: Number}>} recentlyViewedImages - Array of images the user has viewed ordered by the timestamp of the viewing (latest first)
      * @param {Gallery[]} galleries - Array of galleries the user has created
      */
-     
+
     constructor(likedImageIDs = [], recentlyViewedImages = [], galleries = []) {
         this.observers = [];
         this.likedImageIDs = likedImageIDs;
         this.recentlyViewedImages = recentlyViewedImages;
-         // Placeholder galleries for now
+        // Placeholder galleries for now
         const exampleGalleries = [
             {
                 title: "Dark and Moody",
@@ -78,8 +78,6 @@ class GallangModel {
     get isCurrentlyDragging() {
         return this._isCurrentlyDragging;
     }
-
-    
 
     /** Setter function for the recentlyViewedImages property (required for getter function) */
     set recentlyViewedImages(imageArray) {
@@ -168,6 +166,20 @@ class GallangModel {
                 return currentGallery;
             });
         }
+    }
+
+    /**
+     * Remove/delete a gallery from the model
+     * @param {string} galleryID - Identifier of the gallery to remove
+     */
+    removeGallery(galleryID) {
+        const gallery = this.galleries.find(
+            (gallery) => gallery.id === galleryID
+        );
+        if (!gallery) throw Error("Gallery with specified ID not found");
+        this.galleries = this.galleries.filter(
+            (currentGallery) => currentGallery.id !== galleryID
+        );
     }
 
     /**
