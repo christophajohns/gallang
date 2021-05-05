@@ -3,6 +3,7 @@ import {
     GripVertical,
     Heart,
     HeartFill,
+    X,
 } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
@@ -11,6 +12,7 @@ import {
     StyledImage,
     StyledIconButton,
     StyledImageButtons,
+    StyledTopRightButton,
 } from "./style";
 
 /**
@@ -36,6 +38,8 @@ function Image(props) {
         onDragStartImage, // Function to be called when a user starts dragging an image
         onDragEndImage, // Function to be called when a user stops dragging an image
         small = false, // Flag whether to render smaller versions of the images
+        isRemovable,
+        onClickRemoveButton,
     } = props;
 
     return (
@@ -45,14 +49,24 @@ function Image(props) {
             onDragStart={onDragStartImage}
         >
             <img id={id} src={src} alt={id} onClick={onClickImage} />
-            <StyledGripButton
-                variant="link"
-                draggable="true"
-                onDragStart={onDragStartImage}
-                onDragEnd={onDragEndImage}
-            >
-                <GripVertical />
-            </StyledGripButton>
+            {isRemovable ? (
+                <StyledTopRightButton
+                    variant="link"
+                    draggable="true"
+                    onClick={onClickRemoveButton}
+                >
+                    <X />
+                </StyledTopRightButton>
+            ) : (
+                <StyledGripButton
+                    variant="link"
+                    draggable="true"
+                    onDragStart={onDragStartImage}
+                    onDragEnd={onDragEndImage}
+                >
+                    <GripVertical />
+                </StyledGripButton>
+            )}
             <StyledImageButtons>
                 <OverlayTrigger
                     placement="bottom"
