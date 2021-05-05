@@ -27,6 +27,7 @@ function ResultsPresenter(props) {
         numberOfObjects,
         images,
         allowDownloadAll = true,
+        imagesAreRemovable = false,
         model,
     } = props;
 
@@ -50,6 +51,8 @@ function ResultsPresenter(props) {
                     key={image.id}
                     id={image.id}
                     src={image.url}
+                    isRemovable={imagesAreRemovable}
+                    removeImage={image.removeImage}
                     model={model}
                 />
             ))}

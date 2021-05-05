@@ -86,6 +86,7 @@ function ProfilePresenter(props) {
                     images={gallery.imageIDs.map((imageID) => ({
                         id: imageID,
                     }))}
+                    imagesAreRemovable={true}
                     model={model}
                 />
             ))}

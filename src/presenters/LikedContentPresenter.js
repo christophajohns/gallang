@@ -18,7 +18,11 @@ function LikedContentPresenter(props) {
         <ResultsPresenter
             title="Liked Content"
             numberOfObjects={likedImageIDs.length}
-            images={likedImageIDs.map((imageID) => ({ id: imageID }))}
+            images={likedImageIDs.map((imageID) => ({
+                id: imageID,
+                removeImage: (e) => model.unlikeImage(imageID),
+            }))}
+            imagesAreRemovable={true}
             model={model}
         />
     );
