@@ -35,6 +35,7 @@ function HorizontalGridPresenter(props) {
         type, // Type of content that is displayed in the grid (e.g. Gallery)
         emptyStateText, // Text to display if no images are supplied
         isDropTarget, // Flag whether the horizontal grid should display the image placeholder as a drop target
+        imagesAreRemovable,
         model, // The model holding the application state
     } = props;
 
@@ -76,12 +77,24 @@ function HorizontalGridPresenter(props) {
         model.isCurrentlyDragging = false;
     }
 
+    /**
+     * Removes the specified image ID from liked content or the specified gallery
+     * @param {string} imageID - Unique identifier of the image to remove
+     */
+    function removeImageFromLikedOrGallery(imageID) {
+        if (!id) return;
+        if (id === "likedContent") return model.unlikeImage(imageID);
+        model.removeImageFromGallery(imageID, id);
+    }
+
     const imagePresenters = images.map((image) => (
         <ImagePresenter
             key={image.id}
             id={image.id}
             src={image.url}
             small={small}
+            isRemovable={imagesAreRemovable}
+            removeImage={(e) => removeImageFromLikedOrGallery(image.id)}
             model={model}
         />
     ));

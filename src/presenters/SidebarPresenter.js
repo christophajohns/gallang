@@ -51,6 +51,7 @@ function SidebarPresenter(props) {
                     small={true}
                     emptyStateText={"Drag here to add to gallery"}
                     isDropTarget={isCurrentlyDragging}
+                    imagesAreRemovable={true}
                     model={model}
                 />
             ))}
@@ -66,6 +67,7 @@ function SidebarPresenter(props) {
                     small={true}
                     emptyStateText={"Click on the heart icon to like an image"}
                     isDropTarget={isCurrentlyDragging}
+                    imagesAreRemovable={true}
                 />
             }
             newGallery={

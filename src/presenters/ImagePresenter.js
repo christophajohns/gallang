@@ -19,6 +19,8 @@ function ImagePresenter(props) {
         id, // Unique identifier of the object and thereby image
         src, // Image url for the object image
         small, // Flag whether to render smaller versions of the images
+        isRemovable,
+        removeImage,
         model, // The model holding the application state
     } = props;
 
@@ -79,6 +81,8 @@ function ImagePresenter(props) {
         small,
         onDragStartImage: setDataTransferToCopyImageID,
         onDragEndImage: (e) => (model.isCurrentlyDragging = false),
+        isRemovable: isRemovable,
+        onClickRemoveButton: removeImage,
     };
 
     if (!src) {
