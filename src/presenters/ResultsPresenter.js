@@ -14,6 +14,7 @@ import ImagePresenter, {
  * @param {number} props.numberOfObjects - Total number of objects to be displayed
  * @param {Image[]} props.images - Array of images to render in the grid
  * @param {boolean} [props.allowDownloadAll=true] - Flag whether to have a "Download all" button on the page (default: true)
+ * @param {boolean} [props.imagesAreRemovable=false] - Flag whether the images presented in the results view should be removable on request
  * @param {Object} props.model - Model keeping the application state
  * @param {Function} props.model.likeImage - Function to like an image by its ID
  * @param {Function} props.model.unlikeImage - Function to unlike an image by its ID
@@ -72,6 +73,7 @@ ResultsPresenter.propTypes = {
     numberOfObjects: PropTypes.number.isRequired,
     images: PropTypes.arrayOf(imageType).isRequired,
     allowDownloadAll: PropTypes.bool,
+    imagesAreRemovable: PropTypes.bool,
     model: imagePresenterModelType.isRequired,
 };
 

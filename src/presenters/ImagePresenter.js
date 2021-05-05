@@ -12,6 +12,8 @@ import PropTypes from "prop-types";
  * @param {string} [props.src] - Image url for the object image
  * @param {ImagePresenterModelType} props.model - The model holding the application state
  * @param {boolean} [props.small] - Flag whether to render smaller versions of the images
+ * @param {boolean} props.isRemovable - Flag whether the presented image can be removed on request
+ * @param {Function} props.removeImage - Function to be called when a user clicks requests to remove an image
  * @returns Image component
  */
 function ImagePresenter(props) {
@@ -19,8 +21,8 @@ function ImagePresenter(props) {
         id, // Unique identifier of the object and thereby image
         src, // Image url for the object image
         small, // Flag whether to render smaller versions of the images
-        isRemovable,
-        removeImage,
+        isRemovable, // Flag whether the presented image can be removed on request
+        removeImage, // Function to be called when a user clicks requests to remove an image
         model, // The model holding the application state
     } = props;
 
@@ -114,6 +116,8 @@ ImagePresenter.propTypes = {
     id: PropTypes.string.isRequired,
     src: PropTypes.string,
     small: PropTypes.bool,
+    isRemovable: PropTypes.bool,
+    removeImage: PropTypes.func,
     model: modelType.isRequired,
 };
 

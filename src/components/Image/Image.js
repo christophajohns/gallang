@@ -26,6 +26,8 @@ import {
  * @param {Function} props.onClickImage - Function to be called when a user clicks on the image
  * @param {Function} props.onDragStartImage - Function to be called when a user starts dragging an image
  * @param {Function} props.onDragStopImage - Function to be called when a user stops dragging an image
+ * @param {boolean} props.isRemovable - Flag whether to render a remove button in the top right corner
+ * @param {Function} props.onClickRemoveButton - Function to be called when a user clicks the button to remove an image
  */
 function Image(props) {
     const {
@@ -38,8 +40,8 @@ function Image(props) {
         onDragStartImage, // Function to be called when a user starts dragging an image
         onDragEndImage, // Function to be called when a user stops dragging an image
         small = false, // Flag whether to render smaller versions of the images
-        isRemovable,
-        onClickRemoveButton,
+        isRemovable, // Flag whether to render a remove button in the top right corner
+        onClickRemoveButton, // Function to be called when a user clicks the button to remove an image
     } = props;
 
     return (
@@ -120,6 +122,10 @@ Image.propTypes = {
     onDragStartImage: PropTypes.func.isRequired,
     /** Function to be called when a user stops dragging an image */
     onDragEndImage: PropTypes.func.isRequired,
+    /** Flag whether to render a remove button in the top right corner */
+    isRemovable: PropTypes.bool.isRequired,
+    /** Function to be called when a user clicks the button to remove an image */
+    onClickRemoveButton: PropTypes.func.isRequired,
 };
 
 export default Image;
