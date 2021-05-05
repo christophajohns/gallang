@@ -9,12 +9,12 @@ class GallangModel {
      * @param {Array<{ id: string, lastViewedAt: Number}>} recentlyViewedImages - Array of images the user has viewed ordered by the timestamp of the viewing (latest first)
      * @param {Gallery[]} galleries - Array of galleries the user has created
      */
-     
+
     constructor(likedImageIDs = [], recentlyViewedImages = [], galleries = []) {
         this.observers = [];
         this.likedImageIDs = likedImageIDs;
         this.recentlyViewedImages = recentlyViewedImages;
-         // Placeholder galleries for now
+        // Placeholder galleries for now
         const exampleGalleries = [
             {
                 title: "Dark and Moody",
@@ -78,8 +78,6 @@ class GallangModel {
     get isCurrentlyDragging() {
         return this._isCurrentlyDragging;
     }
-
-    
 
     /** Setter function for the recentlyViewedImages property (required for getter function) */
     set recentlyViewedImages(imageArray) {
@@ -162,6 +160,30 @@ class GallangModel {
         if (!imageAlreadyInGallery) {
             const updatedGallery = { ...gallery }; // Make a copy of the current state of the gallery
             updatedGallery.imageIDs = [imageID, ...gallery.imageIDs]; // Add the new imageID to the front
+            this.galleries = this.galleries.map((currentGallery) => {
+                if (currentGallery.id === updatedGallery.id)
+                    return updatedGallery; // Replace old with updated gallery
+                return currentGallery;
+            });
+        }
+    }
+
+    /**
+     * Removes an image ID from the specified gallery
+     * @param {string} imageID - Identifier of the image to remove
+     * @param {string} galleryID - Identifier of the gallery to remove the image to
+     */
+    removeImageFromGallery(imageID, galleryID) {
+        const gallery = this.galleries.find(
+            (gallery) => gallery.id === galleryID
+        );
+        if (!gallery) throw Error("Gallery with specified ID not found");
+        const imageInGallery = gallery.imageIDs.includes(imageID);
+        if (imageInGallery) {
+            const updatedGallery = { ...gallery }; // Make a copy of the current state of the gallery
+            updatedGallery.imageIDs = gallery.imageIDs.filter(
+                (currentImageID) => currentImageID !== imageID
+            ); // Keeps all but the specified image ID
             this.galleries = this.galleries.map((currentGallery) => {
                 if (currentGallery.id === updatedGallery.id)
                     return updatedGallery; // Replace old with updated gallery
