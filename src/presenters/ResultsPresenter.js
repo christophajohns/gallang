@@ -2,9 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { ResultsView } from "../views";
 import { imageType } from "../types";
-import ImagePresenter, {
-    modelType as imagePresenterModelType,
-} from "./ImagePresenter";
+import { modelType as imagePresenterModelType } from "./ImagePresenter";
 
 /**
  * Presenter for the Results view
@@ -45,20 +43,14 @@ function ResultsPresenter(props) {
             contentType={contentType}
             title={title}
             numberOfObjects={numberOfObjects}
-            images={images?.slice(0, numberOfVisibleObjects).map((image) => (
-                <ImagePresenter
-                    key={image.id}
-                    id={image.id}
-                    src={image.url}
-                    model={model}
-                />
-            ))}
+            images={images}
             allowDownloadAll={allowDownloadAll}
             onClickDownloadAll={(e) => downloadAllImagesAsZipFile()}
             onClickLoadMore={(e) =>
                 setNumberOfVisibleObjects(numberOfVisibleObjects + 12)
             }
             numberOfVisibleObjects={numberOfVisibleObjects}
+            model={model}
         />
     );
 }
