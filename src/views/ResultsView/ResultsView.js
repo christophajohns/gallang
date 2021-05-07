@@ -1,8 +1,6 @@
 import PropTypes from "prop-types";
 import { Download } from "react-bootstrap-icons";
 import { VerticalGrid } from "../../components";
-import { imageType } from "../../types";
-import { modelType as imagePresenterModelType } from "../../presenters/ImagePresenter";
 import {
     TitleAndDescriptionDiv,
     TitleH3,
@@ -21,15 +19,11 @@ import { Link as ScrollLink } from "react-scroll";
  * @param {string} [props.contentType] - Type of results to display
  * @param {string} props.title - Title or name for the results
  * @param {number} props.numberOfObjects - Total number of objects to be displayed
- * @param {Image[]} props.images - Array of images to render in the grid
+ * @param {Object | Function} props.images - Slot to display images
  * @param {boolean} props.allowDownloadAll - Flag whether to have a "Download all" button on the page
  * @param {Function} [props.onClickDownloadAll] - Function to be called when the button is clicked (default: empty function)
  * @param {Function} props.onClickLoadMore - Function to be called when a user clicks on the load more button
  * @param {number} props.numberOfVisibleObjects - Number of objects (images) to display
- * @param {Object} props.model - Model keeping the application state
- * @param {Function} props.model.likeImage - Function to like an image by its ID
- * @param {Function} props.model.unlikeImage - Function to unlike an image by its ID
- * @param {string[]} props.model.likedImageIDs - Array of image IDs the user has liked already
  */
 function ResultsView(props) {
     const {
@@ -41,7 +35,6 @@ function ResultsView(props) {
         onClickDownloadAll,
         onClickLoadMore,
         numberOfVisibleObjects,
-        model,
     } = props;
     return (
         <main className="ResultsView">
@@ -65,11 +58,8 @@ function ResultsView(props) {
                     ""
                 )}
             </TopDiv>
-            <VerticalGrid
-                images={images.slice(0, numberOfVisibleObjects)}
-                model={model}
-            />
-            {numberOfVisibleObjects < images.length ? (
+            <VerticalGrid images={images} />
+            {numberOfVisibleObjects < numberOfObjects ? (
                 <LoadMoreButton onClickLoadMore={onClickLoadMore} />
             ) : (
                 <div>This is the end. You have seen it all!</div>
@@ -136,12 +126,11 @@ ResultsView.propTypes = {
     contentType: PropTypes.string,
     title: PropTypes.string.isRequired,
     numberOfObjects: PropTypes.number.isRequired,
-    images: PropTypes.arrayOf(imageType).isRequired,
+    images: PropTypes.node,
     allowDownloadAll: PropTypes.bool.isRequired,
     onClickDownloadAll: PropTypes.func,
     onClickLoadMore: PropTypes.func.isRequired,
     numberOfVisibleObjects: PropTypes.number.isRequired,
-    model: imagePresenterModelType.isRequired,
 };
 
 export default ResultsView;

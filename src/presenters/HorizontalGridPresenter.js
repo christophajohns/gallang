@@ -2,7 +2,7 @@ import React from "react";
 import { HorizontalGrid } from "../components";
 import PropTypes from "prop-types";
 import { imageType } from "../types";
-import {
+import ImagePresenter, {
     modelType as imagePresenterModelType,
     // eslint-disable-next-line no-unused-vars
     ImagePresenterModelType,
@@ -76,6 +76,16 @@ function HorizontalGridPresenter(props) {
         model.isCurrentlyDragging = false;
     }
 
+    const imagePresenters = images.map((image) => (
+        <ImagePresenter
+            key={image.id}
+            id={image.id}
+            src={image.url}
+            small={small}
+            model={model}
+        />
+    ));
+
     return (
         <HorizontalGrid
             gridRef={gridRef}
@@ -84,14 +94,13 @@ function HorizontalGridPresenter(props) {
             title={title}
             href={href}
             description={description}
-            images={images}
+            images={imagePresenters}
             small={small}
             type={type}
             emptyStateText={emptyStateText}
             onDragOverImagePlaceholder={(e) => showDropEffectCopy(e)}
             onDropImagePlaceholder={(e) => addImageToLikedOrGallery(e)}
             isDropTarget={!images.length || isDropTarget}
-            model={model}
         />
     );
 }
