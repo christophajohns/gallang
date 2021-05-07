@@ -3,7 +3,7 @@ import { HomeView } from "../views";
 import { promiseNoData } from "../components";
 import { CooperHewittSource } from "../model";
 import { usePromise, useModelProperty } from "./customHooks";
-import { RecommendationPresenter } from "../presenters";
+import { RecommendationPresenter, HorizontalGridPresenter } from "../presenters";
 import "../types";
 
 /**
@@ -79,11 +79,37 @@ function HomePresenter(props) {
 
     const homeView = (
         <HomeView
-            collections={collectionsData}
+            collectionsData={collectionsData?.slice(0, 4)}
+            collections={collectionsData?.slice(4, 10).map((collection) => (
+                <HorizontalGridPresenter
+                    key={collection.title}
+                    type="collection"
+                    title={collection.title}
+                    images={collection.images}
+                    model={model}
+                />
+            ))}
             quote={quoteData}
             recommendations={recommendations.length ? recommendations : null}
-            recentlyViewedImages={recentlyViewedImages.slice(0, 12)} // Only render latest 12 images
-            model={model}
+            recentlyViewedImages={
+                recentlyViewedImages.length > 0 && (
+                    <HorizontalGridPresenter
+                        title="Recently viewed"
+                        images={recentlyViewedImages.slice(0, 12)} // Only render latest 12 images
+                        model={model}
+                    />
+                )
+            }
+            /*
+            recommendations={exampleRecommendations.map((recommendation) => (
+                <HorizontalGridPresenter
+                    key={recommendation.title}
+                    title={recommendation.title}
+                    description="Recommended for you."
+                    images={recommendation.images}
+                    model={model}
+                />
+            ))}*/
         />
     );
 
@@ -93,5 +119,27 @@ function HomePresenter(props) {
         homeView
     );
 }
-
+// -- Utility functions --
+/**
+ * Properties check for collections prop
+ * @param {Collection[]} collections - Array of collection objects
+ */
+function checkCollectionsForRequiredFormat(collections) {
+    collections.map((collection) => {
+        if (!collection.hasOwnProperty("title"))
+            throw Error("Each collection needs a title.");
+        if (!collection.hasOwnProperty("images"))
+            throw Error("Each collection needs an image property.");
+        collection.images.map((image) => {
+            if (!image.hasOwnProperty("id"))
+                throw Error("Each image in collection needs an ID.");
+            if (!image.hasOwnProperty("url"))
+                throw Error("Each image in collection needs a URL.");
+            if (!image.hasOwnProperty("liked"))
+                throw Error("Each image in collection needs a liked.");
+            return true;
+        });
+        return true;
+    });
+}
 export default HomePresenter;
