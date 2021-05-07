@@ -3,6 +3,7 @@ import { HomeView } from "../views";
 import { promiseNoData } from "../components";
 import { CooperHewittSource } from "../model";
 import { useModelProperty, usePromise } from "./customHooks";
+import { HorizontalGridPresenter } from "../presenters";
 import "../types";
 
 /**
@@ -66,11 +67,35 @@ function HomePresenter(props) {
 
     const homeView = (
         <HomeView
-            collections={collectionsData}
+            collectionsData={collectionsData?.slice(0, 4)}
+            collections={collectionsData?.slice(4, 10).map((collection) => (
+                <HorizontalGridPresenter
+                    key={collection.title}
+                    type="collection"
+                    title={collection.title}
+                    images={collection.images}
+                    model={model}
+                />
+            ))}
             quote={quoteData}
-            recentlyViewedImages={recentlyViewedImages.slice(0, 12)} // Only render latest 12 images
-            recommendations={exampleRecommendations}
-            model={model}
+            recentlyViewedImages={
+                recentlyViewedImages.length > 0 && (
+                    <HorizontalGridPresenter
+                        title="Recently viewed"
+                        images={recentlyViewedImages.slice(0, 12)} // Only render latest 12 images
+                        model={model}
+                    />
+                )
+            }
+            recommendations={exampleRecommendations.map((recommendation) => (
+                <HorizontalGridPresenter
+                    key={recommendation.title}
+                    title={recommendation.title}
+                    description="Recommended for you."
+                    images={recommendation.images}
+                    model={model}
+                />
+            ))}
         />
     );
 
@@ -85,7 +110,7 @@ function HomePresenter(props) {
  * Properties check for collections prop
  * @param {Collection[]} collections - Array of collection objects
  */
- function checkCollectionsForRequiredFormat(collections) {
+function checkCollectionsForRequiredFormat(collections) {
     collections.map((collection) => {
         if (!collection.hasOwnProperty("title"))
             throw Error("Each collection needs a title.");
