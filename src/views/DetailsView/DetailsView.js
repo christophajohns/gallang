@@ -25,8 +25,8 @@ import { Link as ScrollLink } from "react-scroll";
 /**
  * Details view to render the full page version of an image and its info
  * @param {Object} props - Properties passed to the view
- * @param {string} props.title - Name or title of the image (object)
- * @param {string} props.date - Creation date for the image
+ * @param {string} [props.title] - Name or title of the image (object)
+ * @param {string} [props.date] - Creation date for the image
  * @param {string} props.objectType - Type of object that is represented in the image (e.g. Poster or Album Cover)
  * @param {string} props.url - URL of the image source
  * @param {string} props.description - Long-form description of the image
@@ -38,8 +38,8 @@ import { Link as ScrollLink } from "react-scroll";
  */
 function DetailsView(props) {
     const {
-        title,
-        date,
+        title: titleProp,
+        date: dateProp,
         objectType,
         url,
         description,
@@ -48,6 +48,9 @@ function DetailsView(props) {
         onClickLikeButton,
         onClickBackButton,
     } = props;
+
+    const title = titleProp ? titleProp : "Untitled";
+    const date = dateProp ? dateProp : "Unknown date";
 
     return (
         <DetailsViewDiv className="DetailsView">

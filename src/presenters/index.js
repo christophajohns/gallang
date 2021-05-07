@@ -13,6 +13,7 @@ import SignupPresenter from "./SignupPresenter";
 import ForgotPasswordPresenter from "./ForgotPasswordPresenter";
 import ProfilePresenter from "./ProfilePresenter";
 import SidebarPresenter from "./SidebarPresenter";
+import RecommendationPresenter from "./RecommendationPresenter";
 import AccountSettingPresenter from "./AccountSettingPresenter";
 
 export {
@@ -31,5 +32,6 @@ export {
     ForgotPasswordPresenter,
     ProfilePresenter,
     SidebarPresenter,
+    RecommendationPresenter,
     AccountSettingPresenter,
 };

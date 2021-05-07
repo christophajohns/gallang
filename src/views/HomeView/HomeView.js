@@ -52,8 +52,15 @@ HomeView.propTypes = {
     recentlyViewedImages: PropTypes.node,
     /** String representing a quote */
     quote: PropTypes.string,
+
+    /** The model holding the application state */
+    model: PropTypes.shape({
+        likedImageIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
+        likeImage: PropTypes.func.isRequired,
+        unlikeImage: PropTypes.func.isRequired,
+    }),
     /** Component(s) to display recommended categories */
-    recommendations: PropTypes.node.isRequired,
+    recommendations: PropTypes.node,
 };
 
 export default HomeView;
