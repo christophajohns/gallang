@@ -5,6 +5,7 @@ import FirebaseApp, {
     StorageModel,
     DatabaseModel,
 } from "./firebase";
+import persistModel from "./persistModel";
 
 export {
     CooperHewittSource,
@@ -13,4 +14,5 @@ export {
     AuthenticationModel,
     StorageModel,
     DatabaseModel,
+    persistModel
 };

@@ -1,5 +1,6 @@
 import "../types";
 import CooperHewittSource from "./CooperHewittSource";
+import { v4 as uuidV4 } from "uuid";
 
 /** Class for keeping application state */
 class GallangModel {
@@ -36,6 +37,55 @@ class GallangModel {
         // this.galleries = galleries;
         this.isCurrentlyDragging = false;
     }
+
+    /**
+     * Setter function to all the user's liked images IDs
+     * @param {string[]} likedImageIDs - an array to save all the user's recently viewed images in the gallang model
+     */
+    setLikedImageIDs(likedImageIDs) {
+        this.likedImageIDs = [...likedImageIDs];
+        this.notifyObservers();
+    }
+
+    /**
+     * Setter function for all the user's recently viewed images in the Gallang model
+     * @param {Array<{ id: string, lastViewedAt: Number}>} viewedImages - an array to save all the user's viewed imagesIDs
+     */
+    setRecentlyViewedImages(viewedImages) {
+        this.recentlyViewedImages = [...viewedImages];
+        this.notifyObservers();
+    }
+
+    /**
+     * Setter function for galleries in the Gallang model
+     * @param {Gallery[]} galleries - an array to save all the user's galleries read from the firebase 
+     */
+    setGalleries(galleries) {
+        if (galleries!=null) {
+            const formattedGalleries = galleries.map(currentGallery => ({
+                imageIDs: [],
+                ...currentGallery,
+            }))
+            this.galleries = [...formattedGalleries];
+        } else {
+            this.galleries = [];
+        }
+    }
+
+    /**
+     * Create a new gallery with a specific title
+     * @param {string} newTitle - title name for the gallery
+     */
+    addGallery(newTitle) {
+        const id = uuidV4();
+        this.galleries = [{
+            title: newTitle, 
+            id:id, 
+            imageIDs:[]
+        }, ...this.galleries];
+        this.notifyObservers();
+    }
+
 
     /**
      * Setter function to always notify observers when the liked images are updated
