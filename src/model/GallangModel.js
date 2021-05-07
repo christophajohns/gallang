@@ -11,31 +11,20 @@ class GallangModel {
      * @param {Gallery[]} galleries - Array of galleries the user has created
      */
 
-    constructor(likedImageIDs = [], recentlyViewedImages = [], galleries = []) {
+    constructor(
+        currentUserID = null,
+        currentUserName = null,
+        likedImageIDs = [],
+        recentlyViewedImages = [],
+        galleries = []
+    ) {
         this.observers = [];
         this.likedImageIDs = likedImageIDs;
         this.recentlyViewedImages = recentlyViewedImages;
-        // Placeholder galleries for now
-        const exampleGalleries = [
-            {
-                title: "Dark and Moody",
-                id: "12345",
-                imageIDs: [],
-            },
-            {
-                title: "Happy and Cheerful",
-                id: "12346",
-                imageIDs: [],
-            },
-            {
-                title: "Almost Disgusting (but in a fun way)",
-                id: "12347",
-                imageIDs: [],
-            },
-        ];
-        this.galleries = exampleGalleries;
-        // this.galleries = galleries;
+        this.galleries = galleries;
         this.isCurrentlyDragging = false;
+        this.currentUserID = currentUserID;
+        this.currentUserName = currentUserName;
     }
 
     /**
@@ -53,6 +42,34 @@ class GallangModel {
             ...this.galleries,
         ];
         this.notifyObservers();
+    }
+
+    /**
+     * Setter function to always notify observers when the current user ID is updated
+     * @param {string} newValue - Updated value for the currentUserID property
+     */
+    set currentUserID(newValue) {
+        this._currentUserID = newValue;
+        this.notifyObservers();
+    }
+
+    /** Getter function for the currentUserID property (required for setter function) */
+    get currentUserID() {
+        return this._currentUserID;
+    }
+
+    /**
+     * Setter function to always notify observers when the current user name is updated
+     * @param {string} newValue - Updated value for the currentUserName property
+     */
+    set currentUserName(newValue) {
+        this._currentUserName = newValue;
+        this.notifyObservers();
+    }
+
+    /** Getter function for the currentUserName property (required for setter function) */
+    get currentUserName() {
+        return this._currentUserName;
     }
 
     /**
@@ -74,17 +91,7 @@ class GallangModel {
      * @param {Gallery[]} newValue - Updated value for the galleries property
      */
     set galleries(newValue) {
-        // If we get galleries from firebase, set galleries to newValue
-        if (newValue) {
-            const formattedGalleries = newValue.map((currentGallery) => ({
-                imageIDs: [], // gallery might not have imageIDs, property would be missing
-                ...currentGallery,
-            }));
-            this._galleries = [...formattedGalleries];
-        } else {
-            // If no galleries in firebase, newValue will be null
-            this._galleries = [];
-        }
+        this._galleries = newValue;
         this.notifyObservers();
     }
 
