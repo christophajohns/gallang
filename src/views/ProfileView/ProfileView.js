@@ -2,10 +2,7 @@ import PropTypes from "prop-types";
 import User from "./User";
 import Galleries from "./Galleries";
 import AccountSettings from "./AccountSettings";
-import {
-    ProfileViewMain,
-    StyledTabs,
-} from "./style";
+import { ProfileViewMain, StyledTabs } from "./style";
 import { Tab } from "react-bootstrap";
 
 /**
@@ -14,7 +11,7 @@ import { Tab } from "react-bootstrap";
  * @param {Object} props.user - Information about the currently logged in user
  * @param {string} props.user.displayName - Username of the currently logged in user
  * @param {string} props.user.creationTime - Creation date for the image
- * @param {Gallery[]} props.galleries - Components to display the galleries
+ * @param {Function | Object} props.galleries - Components to display the galleries
  * @param {Function} props.onClickDeleteAccount - Function to be called when a user clicks on the button to delete his account
  * @param {Function | Object} props.usernameSetting - Slot for components and elements to display and update the current user's display name
  * @param {Function | Object} props.emailSetting - Slot for components and elements to display and update the current user's email
@@ -68,12 +65,5 @@ ProfileView.propTypes = {
     passwordSetting: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
         .isRequired,
 };
-
-/**
- * @typedef Gallery
- * @property {string} title - Name or title for the recommendation basis (e.g. medium, period, designer)
- * @property {Image[]} images - Array of objects or images that are being recommended
- * @property {string} id - Identifier of the gallery
- */
 
 export default ProfileView;
