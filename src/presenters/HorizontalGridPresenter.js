@@ -66,6 +66,8 @@ function HorizontalGridPresenter(props) {
     function addImageToLikedOrGallery(event) {
         event.preventDefault();
         const imageID = event.dataTransfer.getData("text/plain");
+        model.isCurrentlyDragging = false;
+
         if (!id) return;
         if (id === "likedContent") return model.likeImage(imageID);
         if (id === "newGallery")
@@ -73,7 +75,6 @@ function HorizontalGridPresenter(props) {
                 `Create new gallery with image ${imageID} requested`
             );
         model.addImageToGallery(imageID, id);
-        model.isCurrentlyDragging = false;
     }
 
     const imagePresenters = images.map((image) => (

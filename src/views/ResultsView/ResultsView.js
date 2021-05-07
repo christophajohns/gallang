@@ -1,19 +1,18 @@
 import PropTypes from "prop-types";
-import { Download, Trash } from "react-bootstrap-icons";
+import { Trash } from "react-bootstrap-icons";
 import { VerticalGrid } from "../../components";
 import {
     TitleAndDescriptionDiv,
     TitleH3,
     ContentTypeDiv,
-    StyledButton,
     TopDiv,
-    StyledIconButton,
     BottomRightFixed,
     DeleteButton,
     ButtonsDiv,
 } from "./style";
-import { CaretUpFill } from "react-bootstrap-icons";
-import { Link as ScrollLink } from "react-scroll";
+import DownloadAllButton from "./DownloadAllButton";
+import LoadMoreButton from "./LoadMoreButton";
+import ScrollToTopButton from "./ScrollToTopButton";
 
 /**
  * View component for the Results (e.g. search results, collection, liked content, gallery) page content.
@@ -84,57 +83,6 @@ function ResultsView(props) {
                 <ScrollToTopButton />
             </BottomRightFixed>
         </main>
-    );
-}
-
-/** Button to scroll up to the top of the page */
-function ScrollToTopButton() {
-    return (
-        <StyledIconButton variant="link">
-            <ScrollLink
-                activeClass="active"
-                to="info"
-                spy={true}
-                smooth={true}
-                offset={0}
-                duration={700}
-            >
-                <CaretUpFill />
-            </ScrollLink>
-        </StyledIconButton>
-    );
-}
-
-/**
- * Button saying "Load more"
- * @param {Object} props - Properties to be passed to the component
- * @param {Function} props.onClickLoadMore - Function to be called when the button is clicked
- * @returns Load more button
- */
-function LoadMoreButton(props) {
-    const { onClickLoadMore } = props;
-
-    return (
-        <StyledButton variant="outline-dark" onClick={onClickLoadMore}>
-            Load more
-        </StyledButton>
-    );
-}
-
-/**
- * Button saying "Download all"
- * @param {Object} props - Properties to be passed to the component
- * @param {Function} props.onClickDownloadAll - Function to be called when the button is clicked
- * @returns Download all button
- */
-function DownloadAllButton(props) {
-    const { onClickDownloadAll } = props;
-
-    return (
-        <StyledButton variant="outline-dark" onClick={onClickDownloadAll}>
-            <Download />
-            Download all
-        </StyledButton>
     );
 }
 

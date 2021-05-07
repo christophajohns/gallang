@@ -1,13 +1,12 @@
 import PropTypes from "prop-types";
-import CollectionCarousel from "./CollectionCarousel";
 import Quote from "./Quote";
 import "../../types";
-import { imageType } from "../../types";
 
 /**
  * View component for the Home/Browse page content.
  * @param {Object} props - Properties to be passed to the view
- * @param {Function} props.collections - Component(s) to display featured collections
+ * @param {Function} props.collections - Component or components that render an image grid for collections
+ * @param {Function} props.carousel - Carousel component to highlight featured collections
  * @param {Collection[]} props.collectionsData - Array holding all information about collections to be rendered in a carousel
  * @param {Function} [props.recentlyViewedImages] - Component(s) to display recently viewed images
  * @param {string} props.quote - String representing a quote
@@ -15,17 +14,16 @@ import { imageType } from "../../types";
  */
 function HomeView(props) {
     const {
-        collections, // Component(s) to display featured collections
-        collectionsData, // Array holding all information about collections to be rendered in a carousel
-        recentlyViewedImages, // Component(s) to display recently viewed images
         quote, // String representing a quote
+        collections, // Component or components that render an image grid for collections
+        carousel, // Carousel component to highlight featured collections
+        recentlyViewedImages, // Component(s) to display recently viewed images
         recommendations, // Component(s) to display recommended categories
     } = props;
 
     return (
         <div className="HomeView">
-            <CollectionCarousel collections={collectionsData.slice(0, 4)} />
-
+            {carousel}
             <main>
                 {recentlyViewedImages}
                 {collections}
@@ -37,23 +35,21 @@ function HomeView(props) {
 }
 
 HomeView.propTypes = {
-    /** Array holding all information about collections to be rendered in a carousel */
-    collectionsData: PropTypes.arrayOf(
-        PropTypes.shape({
-            /** Name or title of the collection */
-            title: PropTypes.string.isRequired,
-            /** Array of objects or images within the collection */
-            images: PropTypes.arrayOf(imageType).isRequired,
-        })
-    ),
+    // ------- current
+    /** Carousel component to highlight featured collections */
+    carousel: PropTypes.node.isRequired,
+    // ------- development
     /** Component(s) to display featured collections */
     collections: PropTypes.node,
     /** Component(s) to display recently viewed images */
     recentlyViewedImages: PropTypes.node,
+    // ------ end
     /** String representing a quote */
     quote: PropTypes.string,
+
+
     /** Component(s) to display recommended categories */
-    recommendations: PropTypes.node.isRequired,
+    recommendations: PropTypes.node,
 };
 
 export default HomeView;
