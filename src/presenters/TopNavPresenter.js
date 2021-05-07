@@ -3,7 +3,7 @@ import _ from "underscore";
 import { useHistory } from "react-router-dom";
 import { TopNav } from "../components";
 import { useCurrentUser } from "./customHooks";
-import { AuthenticationModel, persistModel } from "../model";
+import { AuthenticationModel } from "../model";
 
 /**
  * Presenter for the TopNav component
@@ -15,8 +15,7 @@ function TopNavPresenter(props) {
 
     const browserHistory = useHistory(); // used to manually navigate/redirect to the details of a specific image
     const currentUser = useCurrentUser();
-    persistModel(props.model);
-    
+
     /** Redirect user to search results page using the query specified in the search input field */
     const redirectToSearchResults = React.useCallback(() => {
         // useCallback memoizes the function making it available to pass to useEffect
