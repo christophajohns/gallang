@@ -1,3 +1,4 @@
+import _ from "underscore";
 import "../types";
 import CooperHewittSource from "./CooperHewittSource";
 
@@ -34,6 +35,7 @@ class GallangModel {
         ];
         this.galleries = exampleGalleries;
         // this.galleries = galleries;
+        this.currentRecommendations = [];
         this.isCurrentlyDragging = false;
     }
 
@@ -90,6 +92,11 @@ class GallangModel {
         return this._recentlyViewedImages.sort(
             (imageA, imageB) => imageB.lastViewedAt - imageA.lastViewedAt
         );
+    }
+
+    /** Sets the currentRecommendations property back to an empty array */
+    resetCurrentRecommendations() {
+        this.currentRecommendations = [];
     }
 
     /**
@@ -192,6 +199,49 @@ class GallangModel {
         }
     }
 
+    /*
+     * Uses the getRecommendation method to compute a recommendation based on the users liked images and a random recommendation basis
+     * @returns {Recommendation | null} - Collection of recommended images including title/recommendation basis (e.g. medium, period, person)
+     */
+    async getRandomRecommendation() {
+        const recommendationBases = ["type", "medium", "person"];
+
+        // Pick a random recommendation basis at first
+        const randomIndex = Math.floor(
+            Math.random() * recommendationBases.length
+        );
+        let currentRecommendationBasisIndex = randomIndex;
+
+        // Loop through recommendation bases until a new recommendation was found
+        let hasFoundNewRecommendation = false;
+        let recommendation = null;
+        while (
+            !hasFoundNewRecommendation &&
+            currentRecommendationBasisIndex <
+                randomIndex + recommendationBases.length // Start at random index and go around in circle
+        ) {
+            const currentRecommendationBasis =
+                recommendationBases[
+                    currentRecommendationBasisIndex % recommendationBases.length
+                ];
+            let currentRecommendation = null;
+            try {
+                currentRecommendation = await this.getRecommendation(
+                    currentRecommendationBasis
+                );
+            } catch (error) {
+                // console.error(error);
+            }
+            if (currentRecommendation) {
+                recommendation = currentRecommendation;
+                hasFoundNewRecommendation = true;
+            }
+            currentRecommendationBasisIndex++;
+        }
+
+        return recommendation; // null if no new recommendation could be computed
+    }
+
     /**
      * Evaluates a user's liked content to return recommended images including title/recommendation basis (e.g. medium, period, person)
      * @param {"type" | "medium" | "person"} [recommendationBasis = "type"] - Basis/type of the recommendation
@@ -213,13 +263,18 @@ class GallangModel {
         }
 
         // Loop through liked images until a recommendation was computed
-        let hasFoundRecommendation = false;
-        let imageIDIndex = 0;
+        let hasFoundNewRecommendation = false;
+        const randomImageIDIndex = Math.floor(
+            Math.random() * this.likedImageIDs.length
+        ); // pick a random image ID at first
+        let imageIDIndex = randomImageIDIndex;
         while (
-            !hasFoundRecommendation &&
-            imageIDIndex < this.likedImageIDs.length
+            !hasFoundNewRecommendation &&
+            imageIDIndex < randomImageIDIndex + this.likedImageIDs.length // Start at random index and go around in circle
         ) {
-            const currentImageID = this.likedImageIDs[imageIDIndex];
+            const currentImageID = this.likedImageIDs[
+                imageIDIndex % this.likedImageIDs.length
+            ]; // Go around in circle
             let currentRecommendation;
             try {
                 currentRecommendation = await this.getRecommendationByImageID(
@@ -229,21 +284,38 @@ class GallangModel {
             } catch (error) {
                 // console.error(error);
             }
-            hasFoundRecommendation =
+            const hasFoundRecommendation =
                 currentRecommendation.title &&
                 currentRecommendation.basisImageID &&
                 currentRecommendation.images &&
                 currentRecommendation.images.length > 0;
-            if (hasFoundRecommendation) recommendation = currentRecommendation;
+            const isNewRecommendation = !this.currentRecommendations.find(
+                (currentRecommendationInArray) => {
+                    const hasSameTitle =
+                        currentRecommendationInArray.title ===
+                        currentRecommendation.title;
+                    return hasSameTitle;
+                }
+            );
+            if (hasFoundRecommendation && isNewRecommendation) {
+                recommendation = currentRecommendation;
+                hasFoundNewRecommendation = true;
+            }
             imageIDIndex++; // Increase index to inspect next image ID on next iteration
         }
 
         // Check recommendation object for valid data
-        if (!recommendation.title) Error("Recommendation has invalid title.");
+        if (!recommendation.title)
+            throw Error("Recommendation has invalid title.");
         if (!recommendation.images || recommendation.images.length === 0)
-            Error("Recommendation has no images.");
+            throw Error("Recommendation has no images.");
         if (!recommendation.basisImageID)
-            Error("Recommendation has no basis image ID.");
+            throw Error("Recommendation has no basis image ID.");
+
+        this.currentRecommendations = [
+            ...this.currentRecommendations,
+            recommendation,
+        ];
 
         return recommendation;
     }
@@ -278,13 +350,26 @@ class GallangModel {
         if (recommendationBasis === "person") {
             if (imageInfo.participants.length === 0)
                 Error("Object has no participants to base recommendation off.");
-            const person = imageInfo.participants[0];
-            searchParams.person_id = person.person_id;
-            recommendation.title = person.person_name;
+            const randomPerson = _.sample(imageInfo.participants); // Select a random participant
+            searchParams.person_id = randomPerson.person_id;
+            recommendation.title = randomPerson.person_name;
         }
 
         // Check recommendation object for valid data
         if (!recommendation.title) Error("Recommendation has invalid title.");
+
+        // Check in current recommendations whether the images were fetched earlier
+        const earlierRecommendation = this.currentRecommendations.find(
+            (currentRecommendationInArray) => {
+                const hasSameTitle =
+                    currentRecommendationInArray.title === recommendation.title;
+                return hasSameTitle;
+            }
+        );
+        const isNewRecommendation = !earlierRecommendation;
+
+        // If images were fetched before return recommendation from earlier
+        if (!isNewRecommendation) return earlierRecommendation;
 
         // Get recommended images
         const recommendedObjects = await CooperHewittSource.searchObjects(
@@ -292,7 +377,7 @@ class GallangModel {
         ); // Search Cooper Hewitt collection for objects with that search parameters
         const recommendedImages = recommendedObjects.map((object) => ({
             id: object.id,
-            url: object.images[0].b.url, // Big version of first image for object
+            url: object.images[0].b.url,
         })); // Transform objects into expected image array
 
         // Set recommendation images
