@@ -10,12 +10,12 @@ class GallangModel {
      * @param {Array<{ id: string, lastViewedAt: Number}>} recentlyViewedImages - Array of images the user has viewed ordered by the timestamp of the viewing (latest first)
      * @param {Gallery[]} galleries - Array of galleries the user has created
      */
-     
+
     constructor(likedImageIDs = [], recentlyViewedImages = [], galleries = []) {
         this.observers = [];
         this.likedImageIDs = likedImageIDs;
         this.recentlyViewedImages = recentlyViewedImages;
-         // Placeholder galleries for now
+        // Placeholder galleries for now
         const exampleGalleries = [
             {
                 title: "Dark and Moody",
@@ -39,57 +39,25 @@ class GallangModel {
     }
 
     /**
-     * Setter function to all the user's liked images IDs
-     * @param {string[]} likedImageIDs - an array to save all the user's recently viewed images in the gallang model
-     */
-    setLikedImageIDs(likedImageIDs) {
-        this.likedImageIDs = [...likedImageIDs];
-        this.notifyObservers();
-    }
-
-    /**
-     * Setter function for all the user's recently viewed images in the Gallang model
-     * @param {Array<{ id: string, lastViewedAt: Number}>} viewedImages - an array to save all the user's viewed imagesIDs
-     */
-    setRecentlyViewedImages(viewedImages) {
-        this.recentlyViewedImages = [...viewedImages];
-        this.notifyObservers();
-    }
-
-    /**
-     * Setter function for galleries in the Gallang model
-     * @param {Gallery[]} galleries - an array to save all the user's galleries read from the firebase 
-     */
-    setGalleries(galleries) {
-        if (galleries!=null) {
-            const formattedGalleries = galleries.map(currentGallery => ({
-                imageIDs: [],
-                ...currentGallery,
-            }))
-            this.galleries = [...formattedGalleries];
-        } else {
-            this.galleries = [];
-        }
-    }
-
-    /**
      * Create a new gallery with a specific title
      * @param {string} newTitle - title name for the gallery
      */
     addGallery(newTitle) {
         const id = uuidV4();
-        this.galleries = [{
-            title: newTitle, 
-            id:id, 
-            imageIDs:[]
-        }, ...this.galleries];
+        this.galleries = [
+            {
+                title: newTitle,
+                id: id,
+                imageIDs: [],
+            },
+            ...this.galleries,
+        ];
         this.notifyObservers();
     }
 
-
     /**
      * Setter function to always notify observers when the liked images are updated
-     * @param {boolean} newValue - Updated value for the likedImageIDs property
+     * @param {string[]} newValue - Updated value for the likedImageIDs property
      */
     set likedImageIDs(newValue) {
         this._likedImageIDs = newValue;
@@ -103,10 +71,20 @@ class GallangModel {
 
     /**
      * Setter function to always notify observers when the user's galleries are updated
-     * @param {boolean} newValue - Updated value for the galleries property
+     * @param {Gallery[]} newValue - Updated value for the galleries property
      */
     set galleries(newValue) {
-        this._galleries = newValue;
+        // If we get galleries from firebase, set galleries to newValue
+        if (newValue) {
+            const formattedGalleries = newValue.map((currentGallery) => ({
+                imageIDs: [], // gallery might not have imageIDs, property would be missing
+                ...currentGallery,
+            }));
+            this._galleries = [...formattedGalleries];
+        } else {
+            // If no galleries in firebase, newValue will be null
+            this._galleries = [];
+        }
         this.notifyObservers();
     }
 
@@ -129,9 +107,10 @@ class GallangModel {
         return this._isCurrentlyDragging;
     }
 
-    
-
-    /** Setter function for the recentlyViewedImages property (required for getter function) */
+    /**
+     * Setter function for the recentlyViewedImages property (required for getter function)
+     * @param {Array<{ id: string, lastViewedAt: Number}>} imageArray - an array to save all the user's viewed imagesIDs
+     */
     set recentlyViewedImages(imageArray) {
         this._recentlyViewedImages = imageArray; // Underscore before property name to avoid infinite loops with setter function
     }
