@@ -31,7 +31,7 @@ function App(props) {
         <Router>
             <div className="App">
                 <div className="topnav">
-                    <TopNavPresenter model={model} />
+                    <TopNavPresenter />
                 </div>
 
                 <Switch>

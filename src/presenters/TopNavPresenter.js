@@ -9,7 +9,7 @@ import { AuthenticationModel } from "../model";
  * Presenter for the TopNav component
  * @returns TopNav component
  */
-function TopNavPresenter(props) {
+function TopNavPresenter() {
     const accountOptionsRef = React.useRef(null); // used to enable the mouse enter/leave behaviour
     const [query, setQuery] = React.useState("");
 
