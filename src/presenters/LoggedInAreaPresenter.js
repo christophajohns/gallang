@@ -16,7 +16,7 @@ function LoggedInAreaPresenter(props) {
     const currentUser = useCurrentUser();
 
     React.useEffect(() => {
-        if (currentUser.auth) {
+        if (currentUser.auth && currentUser.auth.uid !== model.currentUserID) {
             model.currentUserID = currentUser.auth.uid;
             model.currentUserName = currentUser.auth.displayName;
             persistModel(model);

@@ -32,7 +32,12 @@ function persistModel(model) {
         loadingFromFirebase = true;
 
         const galleriesFromFirebase = snapshot.val();
-        if (galleriesFromFirebase) {
+
+        const galleriesWereUpdated =
+            JSON.stringify(model.galleries) !==
+            JSON.stringify(galleriesFromFirebase);
+
+        if (galleriesFromFirebase && galleriesWereUpdated) {
             const formattedGalleries = galleriesFromFirebase.map(
                 (currentGallery) => ({
                     imageIDs: [], // gallery might not have imageIDs, property would be missing
@@ -50,7 +55,12 @@ function persistModel(model) {
         loadingFromFirebase = true;
 
         const likedImageIDsFromFirebase = snapshot.val();
-        if (likedImageIDsFromFirebase) {
+
+        const likedImageIDsWereUpdated =
+            JSON.stringify(model.likedImageIDs) !==
+            JSON.stringify(likedImageIDsFromFirebase);
+
+        if (likedImageIDsFromFirebase && likedImageIDsWereUpdated) {
             model.likedImageIDs = likedImageIDsFromFirebase;
         }
 
@@ -62,7 +72,15 @@ function persistModel(model) {
         loadingFromFirebase = true;
 
         const recentlyViewedImagesFromFirebase = snapshot.val();
-        if (recentlyViewedImagesFromFirebase) {
+
+        const recentlyViewedImagesWereUpdated =
+            JSON.stringify(model.recentlyViewedImages) !==
+            JSON.stringify(recentlyViewedImagesFromFirebase);
+
+        if (
+            recentlyViewedImagesFromFirebase &&
+            recentlyViewedImagesWereUpdated
+        ) {
             model.recentlyViewedImages = recentlyViewedImagesFromFirebase;
         }
 
