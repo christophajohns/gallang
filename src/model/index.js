@@ -3,7 +3,7 @@ import GallangModel from "./GallangModel";
 import FirebaseApp, {
     AuthenticationService,
     StorageModel,
-    DatabaseModel,
+    DatabaseService,
 } from "./firebase";
 import persistModel from "./persistModel";
 
@@ -13,6 +13,6 @@ export {
     FirebaseApp,
     AuthenticationService,
     StorageModel,
-    DatabaseModel,
+    DatabaseService,
     persistModel,
 };

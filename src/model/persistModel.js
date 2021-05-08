@@ -1,4 +1,4 @@
-import { DatabaseModel } from "./firebase";
+import { DatabaseService } from "./firebase";
 
 /**
  * Connects firebase and the GallangModel properties galleries, likedImageIDs and recentlyViewedImages
@@ -9,7 +9,7 @@ function persistModel(model) {
 
     // References via path to the firebase Realtime Database records
     const userPath = `gallang/${model.currentUserID}`;
-    const userRef = DatabaseModel.ref(userPath);
+    const userRef = DatabaseService.ref(userPath);
     const galleriesRef = userRef.child("galleries");
     const likedImagesRef = userRef.child("likedImageIDs");
     const recentlyViewedImagesRef = userRef.child("recentlyViewedImages");
