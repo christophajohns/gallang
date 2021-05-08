@@ -42,14 +42,14 @@ function ProfilePresenter(props) {
                 updateAccount("username", newUsername)
             }
             label="username"
-            initialValue={currentUser.auth.displayName}
+            initialValue={currentUser.displayName}
         />
     );
     const emailSetting = (
         <AccountSettingPresenter
             updateSetting={(newEmail) => updateAccount("email", newEmail)}
             label="email"
-            initialValue={currentUser.auth.email}
+            initialValue={currentUser.email}
         />
     );
     const passwordSetting = (

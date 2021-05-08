@@ -73,8 +73,8 @@ function TopNavPresenter(props) {
 
     return (
         <TopNav
-            isLoggedIn={!!currentUser.auth}
-            username={currentUser.auth ? currentUser.auth.displayName : null}
+            isLoggedIn={!!currentUser}
+            username={currentUser ? currentUser.displayName : null}
             onAccountWrapperMouseEnter={showAccountOptions}
             onAccountOptionsMouseLeave={hideAccountOptions}
             accountOptionsRef={accountOptionsRef}
