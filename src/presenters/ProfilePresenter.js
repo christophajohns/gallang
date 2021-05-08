@@ -4,6 +4,7 @@ import {
     HorizontalGridPresenter,
 } from "../presenters";
 import { useModelProperty } from "./customHooks";
+import { useHistory } from "react-router-dom";
 
 /**
  * Presenter for the profile page.
@@ -14,6 +15,7 @@ function ProfilePresenter(props) {
 
     const galleries = useModelProperty(model, "galleries");
     const currentUser = useModelProperty(model, "currentUser");
+    const browserHistory = useHistory();
 
     /**
      * Wrapper function around the authentication model's methods to update an account
@@ -34,6 +36,12 @@ function ProfilePresenter(props) {
     function formatDate(string) {
         var options = { year: "numeric", month: "long", day: "numeric" };
         return new Date(string).toLocaleDateString([], options);
+    }
+
+    /** Function to delete the current user and redirect to login */
+    async function deleteUserAndRedirectToLogin() {
+        browserHistory.push("/login");
+        await currentUser.delete();
     }
 
     const usernameSetting = (
@@ -82,7 +90,7 @@ function ProfilePresenter(props) {
             usernameSetting={usernameSetting}
             emailSetting={emailSetting}
             passwordSetting={passwordSetting}
-            onClickDeleteAccount={(e) => currentUser.delete()}
+            onClickDeleteAccount={(e) => deleteUserAndRedirectToLogin()}
         />
     );
 }
