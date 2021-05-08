@@ -14,6 +14,7 @@ function LoggedInAreaPresenter(props) {
 
     const currentUser = useModelProperty(model, "currentUser");
 
+    // persist model on every update of current user in model
     React.useEffect(() => {
         if (currentUser) {
             persistModel(model);
