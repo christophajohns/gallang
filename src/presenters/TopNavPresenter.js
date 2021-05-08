@@ -64,8 +64,8 @@ function TopNavPresenter(props) {
      */
     async function logoutUser(event) {
         try {
-            browserHistory.push("/login");
             await model.signOut();
+            browserHistory.push("/login");
         } catch (error) {
             console.log(error);
         }
