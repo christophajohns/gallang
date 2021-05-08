@@ -28,6 +28,10 @@ class GallangModel {
         this._galleries = galleries;
         this._isCurrentlyDragging = false;
         this._currentUser = currentUser;
+        // Subscribe to changes in the authentication status of the firebase auth service
+        AuthenticationService.onAuthStateChanged((user) => {
+            this.currentUser = user;
+        });
     }
 
     /**
