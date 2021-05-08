@@ -31,20 +31,20 @@ function App(props) {
         <Router>
             <div className="App">
                 <div className="topnav">
-                    <TopNavPresenter />
+                    <TopNavPresenter model={model} />
                 </div>
 
                 <Switch>
                     <Route path="/login" exact={true}>
-                        <LoginPresenter />
+                        <LoginPresenter model={model} />
                     </Route>
 
                     <Route path="/signup" exact={true}>
-                        <SignupPresenter />
+                        <SignupPresenter model={model} />
                     </Route>
 
                     <Route path="/forgot-password" exact={true}>
-                        <ForgotPasswordPresenter />
+                        <ForgotPasswordPresenter model={model} />
                     </Route>
 
                     <LoggedInAreaPresenter model={model}>
