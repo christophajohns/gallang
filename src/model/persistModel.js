@@ -8,7 +8,7 @@ function persistModel(model) {
     let loadingFromFirebase = false; // Flag to show whether we are currently fetching data
 
     // References via path to the firebase Realtime Database records
-    const userPath = `gallang/${model.currentUserID}`;
+    const userPath = `gallang/${model.currentUser.uid}`;
     const userRef = DatabaseService.ref(userPath);
     const galleriesRef = userRef.child("galleries");
     const likedImagesRef = userRef.child("likedImageIDs");
@@ -20,7 +20,7 @@ function persistModel(model) {
 
         // Update values on firebase
         userRef.set({
-            currentUser: model.currentUserName,
+            currentUser: model.currentUser.displayName,
             galleries: model.galleries,
             likedImageIDs: model.likedImageIDs,
             recentlyViewedImages: model.recentlyViewedImages,
