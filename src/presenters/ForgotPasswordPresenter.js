@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router";
 import { ForgotPasswordView } from "../views";
 import { useCurrentUser } from "./customHooks";
-import { AuthenticationModel } from "../model";
+import { AuthenticationService } from "../model";
 
 /**
  * Presenter for the forgot password view
@@ -42,7 +42,7 @@ function ForgotPasswordPresenter() {
 
         try {
             setIsLoading(true);
-            await AuthenticationModel.sendPasswordResetEmail(email);
+            await AuthenticationService.sendPasswordResetEmail(email);
             setPasswordResetSuccessful(true);
         } catch (error) {
             setPasswordResetError(error);

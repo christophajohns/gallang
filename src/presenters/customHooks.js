@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { AuthenticationModel } from "../model";
+import { AuthenticationService } from "../model";
 
 /**
  * Custom hook to provide a presenter with access to a model property (including the observer patterns)
@@ -62,13 +62,13 @@ function useURLSearchParams() {
  */
 function useCurrentUser() {
     const [currentUser, setCurrentUser] = React.useState({
-        auth: AuthenticationModel.currentUser, // firebase User object
+        auth: AuthenticationService.currentUser, // firebase User object
         stateLastUpdated: Date.now(), // timestamp when the state and thereby the user object was last updated
     });
 
     // Subscribe to changes in the authentication model on creation
     React.useEffect(() => {
-        const unsubscribeFromAuthState = AuthenticationModel.onIdTokenChanged(
+        const unsubscribeFromAuthState = AuthenticationService.onIdTokenChanged(
             (user) => {
                 setCurrentUser({
                     auth: user,

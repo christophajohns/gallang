@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { AuthenticationModel } from "../model";
+import { AuthenticationService } from "../model";
 
 /**
  * Component to only route to specified component if the user is currently logged in
@@ -16,7 +16,7 @@ function PrivateRoute(props) {
 
     return (
         <Route {...rest}>
-            {AuthenticationModel.currentUser ? (
+            {AuthenticationService.currentUser ? (
                 children
             ) : (
                 <Redirect to="/login" />

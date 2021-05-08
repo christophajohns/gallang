@@ -1,7 +1,7 @@
 import CooperHewittSource from "./CooperHewittSource";
 import GallangModel from "./GallangModel";
 import FirebaseApp, {
-    AuthenticationModel,
+    AuthenticationService,
     StorageModel,
     DatabaseModel,
 } from "./firebase";
@@ -11,8 +11,8 @@ export {
     CooperHewittSource,
     GallangModel,
     FirebaseApp,
-    AuthenticationModel,
+    AuthenticationService,
     StorageModel,
     DatabaseModel,
-    persistModel
+    persistModel,
 };

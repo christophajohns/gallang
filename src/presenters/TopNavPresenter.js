@@ -3,7 +3,7 @@ import _ from "underscore";
 import { useHistory } from "react-router-dom";
 import { TopNav } from "../components";
 import { useCurrentUser } from "./customHooks";
-import { AuthenticationModel } from "../model";
+import { AuthenticationService } from "../model";
 
 /**
  * Presenter for the TopNav component
@@ -61,7 +61,7 @@ function TopNavPresenter() {
     async function logoutUser(event) {
         try {
             browserHistory.push("/login");
-            await AuthenticationModel.signOut();
+            await AuthenticationService.signOut();
         } catch (error) {
             console.log(error);
         }

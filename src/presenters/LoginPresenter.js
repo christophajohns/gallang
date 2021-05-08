@@ -1,7 +1,7 @@
 import React from "react";
 import { LoginView } from "../views";
 import { useCurrentUser } from "./customHooks";
-import { AuthenticationModel } from "../model";
+import { AuthenticationService } from "../model";
 import { useHistory } from "react-router";
 
 /**
@@ -41,7 +41,7 @@ function LoginPresenter() {
 
         try {
             setIsLoading(true);
-            await AuthenticationModel.signInWithEmailAndPassword(
+            await AuthenticationService.signInWithEmailAndPassword(
                 email,
                 password
             );

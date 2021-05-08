@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { SignupView } from "../views";
-import { AuthenticationModel } from "../model";
+import { AuthenticationService } from "../model";
 import { useCurrentUser } from "./customHooks";
 
 /**
@@ -47,11 +47,11 @@ function SignupPresenter() {
 
         try {
             setIsLoading(true);
-            await AuthenticationModel.createUserWithEmailAndPassword(
+            await AuthenticationService.createUserWithEmailAndPassword(
                 email,
                 password
             );
-            await AuthenticationModel.currentUser.updateProfile({
+            await AuthenticationService.currentUser.updateProfile({
                 displayName: username,
             });
             browserHistory.push("/");
