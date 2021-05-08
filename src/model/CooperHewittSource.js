@@ -7,7 +7,7 @@ const CooperHewittSource = {
      * Try to get data from the cache, but fall back to fetching it live.
      * @param {string} url - Requested url
      */
-    async getData(url) {
+    async fetchWithCache(url) {
         const cacheVersion = 1;
         const cacheName = `gallang-${cacheVersion}`;
         let cachedData = await this.getCachedData(cacheName, url);
@@ -72,7 +72,7 @@ const CooperHewittSource = {
         });
         const url = `${process.env.REACT_APP_COOPER_HEWITT_BASE_URL}?${urlSearchParams}`;
         try {
-            const responseJSON = await this.getData(url);
+            const responseJSON = await this.fetchWithCache(url);
             return responseJSON;
         } catch (error) {
             console.log("Error:", error);
