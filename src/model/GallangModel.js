@@ -3,6 +3,8 @@ import "../types";
 import CooperHewittSource from "./CooperHewittSource";
 import { v4 as uuidV4 } from "uuid";
 import { AuthenticationService } from ".";
+// eslint-disable-next-line no-unused-vars
+import firebase from "firebase"; // only imported for JSDoc type
 
 /** Class for keeping application state */
 class GallangModel {
@@ -239,6 +241,24 @@ class GallangModel {
     async updateUserName(newUserName) {
         await this.currentUser.updateProfile({ displayName: newUserName });
         this.currentUser = { ...this.currentUser, displayName: newUserName };
+    }
+
+    /**
+     * Wrapper function for the firebase authentication updateEmail method
+     * @param {string} newEmail - Email address to pass to updateEmail
+     */
+    async updateEmail(newEmail) {
+        await this.currentUser.updateEmail(newEmail);
+        this.currentUser = { ...this.currentUser, email: newEmail };
+    }
+
+    /**
+     * Wrapper function for the firebase authentication updatePassword method
+     * @param {string} newPassword - Password to pass to updateEmail
+     */
+    async updatePassword(newPassword) {
+        await this.currentUser.updatePassword(newPassword);
+        this.currentUser = { ...this.currentUser, password: newPassword };
     }
 
     /** Wrapper function for the firebase authentication signOut method */

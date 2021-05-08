@@ -1,27 +1,31 @@
 import React from "react";
 import { LoginView } from "../views";
-import { useCurrentUser } from "./customHooks";
-import { AuthenticationService } from "../model";
+import { useModelProperty } from "./customHooks";
+// eslint-disable-next-line no-unused-vars
+import { GallangModel } from "../model"; // only imported for JSDoc type
 import { useHistory } from "react-router";
 
 /**
  * Presenter for the login view
+ * @param {Object} props - Properties passed to the presenter
+ * @param {GallangModel} props.model - Model keeping the application state
  * @returns Login view
  */
-function LoginPresenter() {
+function LoginPresenter(props) {
+    const { model } = props;
     const emailRef = React.useRef(null);
     const passwordRef = React.useRef(null);
 
     const [isLoading, setIsLoading] = React.useState(false);
     const [loginError, setLoginError] = React.useState(null);
 
-    const currentUser = useCurrentUser();
+    const currentUser = useModelProperty(model, "currentUser");
 
     const browserHistory = useHistory();
 
     // Redirect to home page when the authentication signals that the user is already logged in
     React.useEffect(() => {
-        if (currentUser.auth) browserHistory.push("/");
+        if (currentUser) browserHistory.push("/");
         // Cleanup on teardown to avoid memory leak
         return () => {
             setIsLoading(false);
@@ -41,10 +45,7 @@ function LoginPresenter() {
 
         try {
             setIsLoading(true);
-            await AuthenticationService.signInWithEmailAndPassword(
-                email,
-                password
-            );
+            await model.signInWithEmailAndPassword(email, password);
             browserHistory.push("/");
         } catch (error) {
             setLoginError(error);

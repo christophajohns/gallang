@@ -1,14 +1,18 @@
 import React from "react";
 import { useHistory } from "react-router";
 import { ForgotPasswordView } from "../views";
-import { useCurrentUser } from "./customHooks";
-import { AuthenticationService } from "../model";
+import { useModelProperty } from "./customHooks";
+// eslint-disable-next-line no-unused-vars
+import { GallangModel } from "../model"; // only imported for JSDoc type
 
 /**
  * Presenter for the forgot password view
+ * @param {Object} props - Properties passed to the presenter
+ * @param {GallangModel} props.model - Model keeping the application state
  * @returns Forgot password view
  */
-function ForgotPasswordPresenter() {
+function ForgotPasswordPresenter(props) {
+    const { model } = props;
     const emailRef = React.useRef(null);
 
     const [isLoading, setIsLoading] = React.useState(false);
@@ -18,12 +22,12 @@ function ForgotPasswordPresenter() {
         setPasswordResetSuccessful,
     ] = React.useState(null);
 
-    const currentUser = useCurrentUser();
+    const currentUser = useModelProperty(model, "currentUser");
     const browserHistory = useHistory();
 
     // Redirect to home page when the authentication signals that the user is already logged in
     React.useEffect(() => {
-        if (currentUser.auth) browserHistory.push("/");
+        if (currentUser) browserHistory.push("/");
     }, [currentUser, browserHistory]);
 
     // Set successful state variable to false if error occurs
@@ -42,7 +46,7 @@ function ForgotPasswordPresenter() {
 
         try {
             setIsLoading(true);
-            await AuthenticationService.sendPasswordResetEmail(email);
+            await model.sendPasswordResetEmail(email);
             setPasswordResetSuccessful(true);
         } catch (error) {
             setPasswordResetError(error);

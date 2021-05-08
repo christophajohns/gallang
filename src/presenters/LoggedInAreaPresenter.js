@@ -1,24 +1,21 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { persistModel } from "../model";
-import { useCurrentUser } from "./customHooks";
-import { modelType as imagePresenterModelType } from "./ImagePresenter";
+import { useModelProperty } from "./customHooks";
+import { GallangModel } from "../model"; // only imported for JSDoc type
 
 /**
  * Presenter for the all app content a user has to be logged in to access
- * @param {Object} props.model - Model keeping the application state
- * @param {Function} props.model.likeImage - Function to like an image by its ID
- * @param {Function} props.model.unlikeImage - Function to unlike an image by its ID
- * @param {string[]} props.model.likedImageIDs - Array of image IDs the user has liked already
+ * @param {Object} props - Properties passed to the presenter
+ * @param {GallangModel} props.model - Model keeping the application state
  */
 function LoggedInAreaPresenter(props) {
     const { model, children } = props;
 
-    const currentUser = useCurrentUser();
+    const currentUser = useModelProperty(model, "currentUser");
 
     React.useEffect(() => {
-        if (currentUser.auth && currentUser.auth.uid !== model.currentUserID) {
-            model.currentUserID = currentUser.auth.uid;
-            model.currentUserName = currentUser.auth.displayName;
+        if (currentUser) {
             persistModel(model);
         }
     }, [currentUser, model]);
@@ -27,7 +24,7 @@ function LoggedInAreaPresenter(props) {
 }
 
 LoggedInAreaPresenter.propTypes = {
-    model: imagePresenterModelType.isRequired,
+    model: PropTypes.instanceOf(GallangModel).isRequired,
 };
 
 export default LoggedInAreaPresenter;
