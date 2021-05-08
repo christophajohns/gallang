@@ -18,6 +18,7 @@ import AccountSettingPresenter from "./AccountSettingPresenter";
 import LoggedInAreaPresenter from "./LoggedInAreaPresenter";
 import PeriodPresenter from "./PeriodPresenter";
 import CollectionCarouselPresenter from "./CollectionCarouselPresenter";
+import PrivateRoute from "./PrivateRoute";
 
 export {
     HomePresenter,
@@ -40,4 +41,5 @@ export {
     LoggedInAreaPresenter,
     PeriodPresenter,
     CollectionCarouselPresenter,
+    PrivateRoute,
 };
