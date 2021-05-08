@@ -35,23 +35,6 @@ class GallangModel {
     }
 
     /**
-     * Create a new gallery with a specific title
-     * @param {string} newTitle - title name for the gallery
-     */
-    addGallery(newTitle) {
-        const id = uuidV4();
-        this.galleries = [
-            {
-                title: newTitle,
-                id: id,
-                imageIDs: [],
-            },
-            ...this.galleries,
-        ];
-        this.notifyObservers();
-    }
-
-    /**
      * Setter function to always notify observers when the current user is updated
      * @param {User} newValue - Updated value for the currentUser property
      */
@@ -180,6 +163,23 @@ class GallangModel {
                 (currentImageID) => currentImageID !== imageID
             );
         }
+    }
+
+    /**
+     * Create a new gallery with a specific title
+     * @param {string} newTitle - title name for the gallery
+     */
+    addGallery(newTitle) {
+        const id = uuidV4();
+        this.galleries = [
+            {
+                title: newTitle,
+                id: id,
+                imageIDs: [],
+            },
+            ...this.galleries,
+        ];
+        this.notifyObservers();
     }
 
     /**
