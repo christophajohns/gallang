@@ -4,7 +4,7 @@ import CooperHewittSource from "./CooperHewittSource";
 import { v4 as uuidV4 } from "uuid";
 import { AuthenticationService } from ".";
 // eslint-disable-next-line no-unused-vars
-import firebase from "firebase"; // only imported for JSDoc type
+import firebase from "firebase/app"; // only imported for JSDoc type
 
 /** Class for keeping application state */
 class GallangModel {
