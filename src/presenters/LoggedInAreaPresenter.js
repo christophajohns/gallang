@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { persistModel } from "../model";
+import { persistModel, GallangModel } from "../model";
 import { useModelProperty } from "./customHooks";
-import { GallangModel } from "../model"; // only imported for JSDoc type
 
 /**
  * Presenter for the all app content a user has to be logged in to access
@@ -14,11 +13,8 @@ function LoggedInAreaPresenter(props) {
 
     const currentUser = useModelProperty(model, "currentUser");
 
-    // persist model on every update of current user in model
     React.useEffect(() => {
-        if (currentUser) {
-            persistModel(model);
-        }
+        if (currentUser) persistModel(model);
     }, [currentUser, model]);
 
     return <>{children}</>;

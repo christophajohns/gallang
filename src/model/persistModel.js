@@ -8,25 +8,18 @@ function persistModel(model) {
     let loadingFromFirebase = false; // Flag to show whether we are currently fetching data
 
     // References via path to the firebase Realtime Database records
-    let lastUserID = model.currentUser.uid;
-    let userPath = `gallang/${model.currentUser.uid}`;
-    let userRef = DatabaseService.ref(userPath);
-    let galleriesRef = userRef.child("galleries");
-    let likedImagesRef = userRef.child("likedImageIDs");
-    let recentlyViewedImagesRef = userRef.child("recentlyViewedImages");
+    const lastUserID = model.currentUser.uid;
+    const userPath = `gallang/${model.currentUser.uid}`;
+    const userRef = DatabaseService.ref(userPath);
+    const galleriesRef = userRef.child("galleries");
+    const likedImagesRef = userRef.child("likedImageIDs");
+    const recentlyViewedImagesRef = userRef.child("recentlyViewedImages");
 
     // Update firebase whenever changes in the local model occur
     model.addObserver(() => {
         if (loadingFromFirebase === true) return;
-
-        if (lastUserID !== model.currentUser.uid) {
-            lastUserID = model.currentUser.uid;
-            userPath = `gallang/${model.currentUser.uid}`;
-            userRef = DatabaseService.ref(userPath);
-            galleriesRef = userRef.child("galleries");
-            likedImagesRef = userRef.child("likedImageIDs");
-            recentlyViewedImagesRef = userRef.child("recentlyViewedImages");
-        }
+        if (!model.currentUser) return;
+        if (lastUserID !== model.currentUser.uid) return;
 
         // Update values on firebase
         userRef.set({
