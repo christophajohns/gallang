@@ -4,6 +4,61 @@ import "../types";
 /** Object to interact with the Cooper Hewitt API */
 const CooperHewittSource = {
     /**
+     * Try to get data from the cache, but fall back to fetching it live.
+     * @param {string} url - Requested url
+     */
+    async getData(url) {
+        const cacheVersion = 1;
+        const cacheName = `gallang-${cacheVersion}`;
+        let cachedData = await this.getCachedData(cacheName, url);
+
+        if (cachedData) {
+            // console.log("Retrieved cached data");
+            return cachedData;
+        }
+
+        // console.log("Fetching fresh data");
+
+        const cacheStorage = await caches.open(cacheName);
+        await cacheStorage.add(url);
+        cachedData = await this.getCachedData(cacheName, url);
+        await this.deleteOldCaches(cacheName);
+
+        return cachedData;
+    },
+    /**
+     * Get data from the cache.
+     * @param {string} cacheName - Name of the cache to get data from
+     * @param {string} url - Requested url
+     */
+    async getCachedData(cacheName, url) {
+        const cacheStorage = await caches.open(cacheName);
+        const cachedResponse = await cacheStorage.match(url);
+
+        if (!cachedResponse || !cachedResponse.ok) {
+            return false;
+        }
+
+        return await cachedResponse.json();
+    },
+    /**
+     * Delete any old caches to respect user's disk space.
+     * @param {string} currentCache - Name of the current cache
+´     */
+    async deleteOldCaches(currentCache) {
+        const keys = await caches.keys();
+
+        for (const key of keys) {
+            const isOurCache = "gallang-" === key.substr(0, 6);
+
+            if (currentCache === key || !isOurCache) {
+                continue;
+            }
+
+            caches.delete(key);
+        }
+    },
+    /**
      * Make a call to the Cooper Hewitt API
      * @param {Object} params - String representing the API method's parameters
      * @param {string} params.method - API method to call
@@ -17,13 +72,8 @@ const CooperHewittSource = {
         });
         const url = `${process.env.REACT_APP_COOPER_HEWITT_BASE_URL}?${urlSearchParams}`;
         try {
-            const response = await fetch(url, {
-                method: "GET",
-            });
-            if (response.status !== 200) {
-                throw response.statusText;
-            }
-            return response.json();
+            const responseJSON = await this.getData(url);
+            return responseJSON;
         } catch (error) {
             console.log("Error:", error);
         }
