@@ -263,7 +263,7 @@ class GallangModel {
 
     /** Wrapper function for the firebase authentication signOut method */
     async signOut() {
-        await this.AuthenticationService.signOut();
+        await AuthenticationService.signOut();
         this.currentUser = null;
     }
 
