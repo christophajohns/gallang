@@ -2,30 +2,30 @@ import _ from "underscore";
 import "../types";
 import CooperHewittSource from "./CooperHewittSource";
 import { v4 as uuidV4 } from "uuid";
+import { AuthenticationService } from ".";
 
 /** Class for keeping application state */
 class GallangModel {
     /**
      * @constructor
+     * @param {firebase.User} currentUser - Object holding info about currently logged in user
      * @param {string[]} likedImageIDs - Array of image IDs the user has liked
      * @param {Array<{ id: string, lastViewedAt: Number}>} recentlyViewedImages - Array of images the user has viewed ordered by the timestamp of the viewing (latest first)
      * @param {Gallery[]} galleries - Array of galleries the user has created
      */
 
     constructor(
-        currentUserID = null,
-        currentUserName = null,
+        currentUser = null,
         likedImageIDs = [],
         recentlyViewedImages = [],
         galleries = []
     ) {
         this.observers = [];
-        this.likedImageIDs = likedImageIDs;
-        this.recentlyViewedImages = recentlyViewedImages;
-        this.galleries = galleries;
-        this.isCurrentlyDragging = false;
-        this.currentUserID = currentUserID;
-        this.currentUserName = currentUserName;
+        this._likedImageIDs = likedImageIDs;
+        this._recentlyViewedImages = recentlyViewedImages;
+        this._galleries = galleries;
+        this._isCurrentlyDragging = false;
+        this._currentUser = currentUser;
     }
 
     /**
@@ -46,31 +46,17 @@ class GallangModel {
     }
 
     /**
-     * Setter function to always notify observers when the current user ID is updated
-     * @param {string} newValue - Updated value for the currentUserID property
+     * Setter function to always notify observers when the current user is updated
+     * @param {User} newValue - Updated value for the currentUser property
      */
-    set currentUserID(newValue) {
-        this._currentUserID = newValue;
+    set currentUser(newValue) {
+        this._currentUser = newValue;
         this.notifyObservers();
     }
 
-    /** Getter function for the currentUserID property (required for setter function) */
-    get currentUserID() {
-        return this._currentUserID;
-    }
-
-    /**
-     * Setter function to always notify observers when the current user name is updated
-     * @param {string} newValue - Updated value for the currentUserName property
-     */
-    set currentUserName(newValue) {
-        this._currentUserName = newValue;
-        this.notifyObservers();
-    }
-
-    /** Getter function for the currentUserName property (required for setter function) */
-    get currentUserName() {
-        return this._currentUserName;
+    /** Getter function for the currentUser property (required for setter function) */
+    get currentUser() {
+        return this._currentUser;
     }
 
     /**
@@ -210,6 +196,55 @@ class GallangModel {
                 return currentGallery;
             });
         }
+    }
+
+    /**
+     * Wrapper function for the firebase authentication sendPasswordResetEmail method
+     * @param {string} email - Email address to pass to sendPasswordResetEmail
+     */
+    async sendPasswordResetEmail(email) {
+        return await AuthenticationService.sendPasswordResetEmail(email);
+    }
+
+    /**
+     * Wrapper function for the firebase authentication signInWithEmailAndPassword method
+     * @param {string} email - Email address to pass to signInWithEmailAndPassword
+     * @param {string} password - Password to pass to signInWithEmailAndPassword
+     */
+    async signInWithEmailAndPassword(email, password) {
+        const userCredential = await AuthenticationService.signInWithEmailAndPassword(
+            email,
+            password
+        );
+        this.currentUser = userCredential.user;
+    }
+
+    /**
+     * Wrapper function for the firebase authentication createUserWithEmailAndPassword method
+     * @param {string} email - Email address to pass to createUserWithEmailAndPassword
+     * @param {string} password - Password to pass to createUserWithEmailAndPassword
+     */
+    async createUserWithEmailAndPassword(email, password) {
+        const userCredential = await AuthenticationService.createUserWithEmailAndPassword(
+            email,
+            password
+        );
+        this.currentUser = userCredential.user;
+    }
+
+    /**
+     * Wrapper function for the firebase authentication updateProfile method to update displayName
+     * @param {string} newUserName - User name to pass to updateProfile
+     */
+    async updateUserName(newUserName) {
+        await this.currentUser.updateProfile({ displayName: newUserName });
+        this.currentUser = { ...this.currentUser, displayName: newUserName };
+    }
+
+    /** Wrapper function for the firebase authentication signOut method */
+    async signOut() {
+        await this.AuthenticationService.signOut();
+        this.currentUser = null;
     }
 
     /**
