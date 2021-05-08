@@ -34,6 +34,14 @@ class GallangModel {
         });
     }
 
+    /** Helper function to reset all instance internal properties without notifying the observers */
+    resetModel() {
+        this._currentUser = null;
+        this._likedImageIDs = [];
+        this._galleries = [];
+        this._recentlyViewedImages = [];
+    }
+
     /**
      * Setter function to always notify observers when the current user is updated
      * @param {User} newValue - Updated value for the currentUser property
@@ -268,7 +276,7 @@ class GallangModel {
     /** Wrapper function for the firebase authentication signOut method */
     async signOut() {
         await AuthenticationService.signOut();
-        this.currentUser = null;
+        this.resetModel();
     }
 
     /**
