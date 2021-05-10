@@ -18,6 +18,7 @@ function SidebarPresenter(props) {
 
     const [expanded, setExpanded] = React.useState(false);
     const [showModal, setShowModal] = React.useState(false);
+    const [droppedImageID, setDroppedImageID] = React.useState(null);
 
     const galleryNameRef = React.useRef();
 
@@ -30,9 +31,10 @@ function SidebarPresenter(props) {
     /**
      * Create a new gallery with the title specified in the text input field
      */
-    function addGallery() {
+    function createGalleryWithImage() {
         const title = galleryNameRef.current.value;
-        const newGalleryID = model.addGallery(title);
+        const imageIDs = droppedImageID ? [droppedImageID] : [];
+        const newGalleryID = model.addGallery(title, imageIDs);
         browserHistory.push(`/gallery/${newGalleryID}`);
     }
 
@@ -47,7 +49,7 @@ function SidebarPresenter(props) {
             galleryNameRef={galleryNameRef}
             onClickAddGalleryButton={(e) => setShowModal(true)}
             onRequestCloseModal={(e) => setShowModal(false)}
-            onRequestCreateGallery={(e) => addGallery()}
+            onRequestCreateGallery={(e) => createGalleryWithImage()}
             expanded={expanded || isCurrentlyDragging}
             showModal={showModal}
             isDropTarget={isCurrentlyDragging}
@@ -64,6 +66,9 @@ function SidebarPresenter(props) {
                     small={true}
                     emptyStateText={"Drag here to add to gallery"}
                     isDropTarget={isCurrentlyDragging}
+                    onDrop={(imageID) =>
+                        model.addImageToGallery(gallery.id, imageID)
+                    }
                     model={model}
                 />
             ))}
@@ -79,6 +84,7 @@ function SidebarPresenter(props) {
                     small={true}
                     emptyStateText={"Click on the heart icon to like an image"}
                     isDropTarget={isCurrentlyDragging}
+                    onDrop={(imageID) => model.likeImage(imageID)}
                 />
             }
             newGallery={
@@ -90,6 +96,10 @@ function SidebarPresenter(props) {
                     small={true}
                     emptyStateText={"Drag here to create a new gallery"}
                     isDropTarget={isCurrentlyDragging}
+                    onDrop={(imageID) => {
+                        setShowModal(true);
+                        setDroppedImageID(imageID);
+                    }}
                     model={model}
                 />
             }
