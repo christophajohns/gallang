@@ -123,9 +123,9 @@ Image.propTypes = {
     /** Function to be called when a user stops dragging an image */
     onDragEndImage: PropTypes.func.isRequired,
     /** Flag whether to render a remove button in the top right corner */
-    isRemovable: PropTypes.bool.isRequired,
+    isRemovable: PropTypes.bool,
     /** Function to be called when a user clicks the button to remove an image */
-    onClickRemoveButton: PropTypes.func.isRequired,
+    onClickRemoveButton: PropTypes.func,
 };
 
 export default Image;
