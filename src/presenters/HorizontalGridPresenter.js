@@ -62,14 +62,13 @@ function HorizontalGridPresenter(props) {
     }
 
     /**
-     * Adds the dragged image ID to liked content or the specified gallery
+     * Gets the image ID from the drag event and calls the onDrop function with it
      * @param {Event} event
      */
-    function addImageToLikedOrGallery(event) {
+    function getImageIDAndCallOnDrop(event) {
         event.preventDefault();
         const imageID = event.dataTransfer.getData("text/plain");
         model.isCurrentlyDragging = false;
-
         if (!id) return;
         onDrop(imageID);
     }
@@ -97,7 +96,7 @@ function HorizontalGridPresenter(props) {
             type={type}
             emptyStateText={emptyStateText}
             onDragOverImagePlaceholder={(e) => showDropEffectCopy(e)}
-            onDropImagePlaceholder={(e) => addImageToLikedOrGallery(e)}
+            onDropImagePlaceholder={(e) => getImageIDAndCallOnDrop(e)}
             isDropTarget={!images.length || isDropTarget}
         />
     );

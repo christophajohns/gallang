@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { ChevronLeft, ChevronRight } from "react-bootstrap-icons";
 import { galleryType, refType } from "../../types";
 import AddGalleryButton from "./AddGalleryButton";
+import AddGalleryModal from "./AddGalleryModal";
 import GalleryButton from "./GalleryButton";
 import LikedContentButton from "./LikedContentButton";
 import { SidebarAside, ExpandedSidebarDiv, StyledIconButton } from "./style";
@@ -56,15 +57,15 @@ function Sidebar(props) {
                     {galleriesData.map((gallery) => (
                         <GalleryButton key={gallery.id} gallery={gallery} />
                     ))}
-                    <AddGalleryButton
-                        onClick={onClickAddGalleryButton}
-                        showModal={showModal}
-                        onRequestCloseModal={onRequestCloseModal}
-                        onRequestCreateGallery={onRequestCreateGallery}
-                        galleryNameRef={galleryNameRef}
-                    />
+                    <AddGalleryButton onClick={onClickAddGalleryButton} />
                 </>
             )}
+            <AddGalleryModal
+                showModal={showModal}
+                onRequestCloseModal={onRequestCloseModal}
+                onRequestCreateGallery={onRequestCreateGallery}
+                galleryNameRef={galleryNameRef}
+            />
         </SidebarAside>
     );
 }

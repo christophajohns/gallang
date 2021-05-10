@@ -75,7 +75,7 @@ function SidebarPresenter(props) {
                     emptyStateText={"Drag here to add to gallery"}
                     isDropTarget={isCurrentlyDragging}
                     onDrop={(imageID) =>
-                        model.addImageToGallery(gallery.id, imageID)
+                        model.addImageToGallery(imageID, gallery.id)
                     }
                     model={model}
                 />

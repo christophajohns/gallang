@@ -12,7 +12,6 @@ import {
     ProfilePresenter,
     GalleryPresenter,
     SidebarPresenter,
-    CreateGalleryPresenter,
 } from "./presenters";
 import { PrivateRoute } from "./components";
 
@@ -67,13 +66,6 @@ function App(props) {
                         </MainContent>
                         {sidebar}
                     </PrivateRoute>
-
-                    <PrivateRoute path="/new-gallery" exact={true}>
-                        <MainContent>
-                            <CreateGalleryPresenter model={model}/>
-                        </ MainContent>
-                        {sidebar}
-                    </ PrivateRoute>
 
                     <PrivateRoute path="/gallery/:galleryID" exact={true}>
                         <MainContent>

@@ -15,7 +15,6 @@ import ProfilePresenter from "./ProfilePresenter";
 import SidebarPresenter from "./SidebarPresenter";
 import RecommendationPresenter from "./RecommendationPresenter";
 import AccountSettingPresenter from "./AccountSettingPresenter";
-import CreateGalleryPresenter from "./CreateGalleryPresenter";
 import PeriodPresenter from "./PeriodPresenter";
 import CollectionCarouselPresenter from "./CollectionCarouselPresenter";
 
@@ -37,7 +36,6 @@ export {
     SidebarPresenter,
     RecommendationPresenter,
     AccountSettingPresenter,
-    CreateGalleryPresenter,
     PeriodPresenter,
     CollectionCarouselPresenter,
 };
