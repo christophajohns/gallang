@@ -1,7 +1,14 @@
 import PropTypes from "prop-types";
-import { X } from "react-bootstrap-icons";
-import { Modal, Form, Button } from "react-bootstrap";
+import { X, FolderPlus } from "react-bootstrap-icons";
+import { Modal, Form, Button, InputGroup } from "react-bootstrap";
 import { refType } from "../../types";
+import {
+    FormControl,
+    InputGroupText,
+    ModalTitle,
+    ModalHeader,
+    ModalFooter,
+} from "./style";
 
 /**
  * Modal to add a gallery
@@ -23,22 +30,29 @@ function AddGalleryModal(props) {
 
     return (
         <Modal show={showModal} onHide={onRequestCloseModal}>
-            <Modal.Header className="d-block">
+            <ModalHeader className="d-block">
+                <ModalTitle className="float-left">
+                    Create a new gallery
+                </ModalTitle>
                 <X className="float-right" onClick={onRequestCloseModal} />
-            </Modal.Header>
+            </ModalHeader>
             <Form onSubmit={onRequestCreateGallery}>
                 <Modal.Body>
-                    <Form.Group>
-                        <Form.Label>Gallery title</Form.Label>
-                        <Form.Control
+                    <InputGroup>
+                        <InputGroup.Prepend>
+                            <InputGroupText>
+                                <FolderPlus />
+                            </InputGroupText>
+                        </InputGroup.Prepend>
+                        <FormControl
                             type="text"
                             required
-                            placeholder="e.g. Dark and Moody"
+                            placeholder="Gallery title"
                             ref={galleryNameRef}
                         />
-                    </Form.Group>
+                    </InputGroup>
                 </Modal.Body>
-                <Modal.Footer>
+                <ModalFooter>
                     <Button
                         variant="outline-secondary"
                         onClick={onRequestCloseModal}
@@ -48,7 +62,7 @@ function AddGalleryModal(props) {
                     <Button variant="dark" type="submit">
                         Add gallery
                     </Button>
-                </Modal.Footer>
+                </ModalFooter>
             </Form>
         </Modal>
     );
