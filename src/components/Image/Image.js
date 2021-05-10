@@ -3,6 +3,7 @@ import {
     GripVertical,
     Heart,
     HeartFill,
+    X,
 } from "react-bootstrap-icons";
 import PropTypes from "prop-types";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
@@ -11,6 +12,7 @@ import {
     StyledImage,
     StyledIconButton,
     StyledImageButtons,
+    StyledTopRightButton,
 } from "./style";
 
 /**
@@ -24,6 +26,8 @@ import {
  * @param {Function} props.onClickImage - Function to be called when a user clicks on the image
  * @param {Function} props.onDragStartImage - Function to be called when a user starts dragging an image
  * @param {Function} props.onDragStopImage - Function to be called when a user stops dragging an image
+ * @param {boolean} props.isRemovable - Flag whether to render a remove button in the top right corner
+ * @param {Function} props.onClickRemoveButton - Function to be called when a user clicks the button to remove an image
  */
 function Image(props) {
     const {
@@ -36,6 +40,8 @@ function Image(props) {
         onDragStartImage, // Function to be called when a user starts dragging an image
         onDragEndImage, // Function to be called when a user stops dragging an image
         small = false, // Flag whether to render smaller versions of the images
+        isRemovable, // Flag whether to render a remove button in the top right corner
+        onClickRemoveButton, // Function to be called when a user clicks the button to remove an image
     } = props;
 
     return (
@@ -45,14 +51,24 @@ function Image(props) {
             onDragStart={onDragStartImage}
         >
             <img id={id} src={src} alt={id} onClick={onClickImage} />
-            <StyledGripButton
-                variant="link"
-                draggable="true"
-                onDragStart={onDragStartImage}
-                onDragEnd={onDragEndImage}
-            >
-                <GripVertical />
-            </StyledGripButton>
+            {isRemovable ? (
+                <StyledTopRightButton
+                    variant="link"
+                    draggable="true"
+                    onClick={onClickRemoveButton}
+                >
+                    <X />
+                </StyledTopRightButton>
+            ) : (
+                <StyledGripButton
+                    variant="link"
+                    draggable="true"
+                    onDragStart={onDragStartImage}
+                    onDragEnd={onDragEndImage}
+                >
+                    <GripVertical />
+                </StyledGripButton>
+            )}
             <StyledImageButtons>
                 <OverlayTrigger
                     placement="bottom"
@@ -106,6 +122,10 @@ Image.propTypes = {
     onDragStartImage: PropTypes.func.isRequired,
     /** Function to be called when a user stops dragging an image */
     onDragEndImage: PropTypes.func.isRequired,
+    /** Flag whether to render a remove button in the top right corner */
+    isRemovable: PropTypes.bool,
+    /** Function to be called when a user clicks the button to remove an image */
+    onClickRemoveButton: PropTypes.func,
 };
 
 export default Image;
