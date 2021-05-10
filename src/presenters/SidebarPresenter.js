@@ -41,8 +41,10 @@ function SidebarPresenter(props) {
         event.preventDefault();
         const title = galleryNameRef.current.value;
         const imageIDs = droppedImageID ? [droppedImageID] : [];
+        console.log({ title, imageIDs });
         const newGalleryID = model.addGallery(title, imageIDs);
         setShowModal(false);
+        setDroppedImageID(null);
         browserHistory.push(`/gallery/${newGalleryID}`);
     }
 
