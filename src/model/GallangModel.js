@@ -1,3 +1,4 @@
+import { v4 as uuidV4 } from "uuid";
 import "../types";
 import CooperHewittSource from "./CooperHewittSource";
 
@@ -9,12 +10,12 @@ class GallangModel {
      * @param {Array<{ id: string, lastViewedAt: Number}>} recentlyViewedImages - Array of images the user has viewed ordered by the timestamp of the viewing (latest first)
      * @param {Gallery[]} galleries - Array of galleries the user has created
      */
-     
+
     constructor(likedImageIDs = [], recentlyViewedImages = [], galleries = []) {
         this.observers = [];
         this.likedImageIDs = likedImageIDs;
         this.recentlyViewedImages = recentlyViewedImages;
-         // Placeholder galleries for now
+        // Placeholder galleries for now
         const exampleGalleries = [
             {
                 title: "Dark and Moody",
@@ -78,8 +79,6 @@ class GallangModel {
     get isCurrentlyDragging() {
         return this._isCurrentlyDragging;
     }
-
-    
 
     /** Setter function for the recentlyViewedImages property (required for getter function) */
     set recentlyViewedImages(imageArray) {
@@ -173,28 +172,18 @@ class GallangModel {
     /**
      * Adds a new gallery to the users galleries.
      * @param {string} galleryName - Name of the gallery to add
-     * @param {string} imageID - ID of the image
-     * @returns {newGalleryID} - The ID of the newly created gallery
+     * @param {string[]} imageIDs - IDs of images to add to the newly created gallery
+     * @returns {string} - The ID of the newly created gallery
      */
-    addGallery(galleryName, imageID){
+    addGallery(galleryName, imageIDs = []) {
         let newGallery = {};
-        const addImageID = imageID;
-        const newGalleryID = String(Math.floor(Math.random() * (40000 - 12348) + 12348)); // replace with the unique gallery ID from firebase
-        if(!addImageID){
-                newGallery = {
-                    title: galleryName,
-                    id: newGalleryID,
-                    imageIDs: [],
-            }
-        }else {
-            newGallery = {
-                title: galleryName,
-                id: newGalleryID,
-                imageIDs: [imageID],
-            }
-        }
-        this.galleries = [...this.galleries, newGallery]; //add the new gallery object to the galleries array.
-        console.log(this.galleries);
+        const newGalleryID = uuidV4();
+        newGallery = {
+            title: galleryName,
+            id: newGalleryID,
+            imageIDs,
+        };
+        this.galleries = [...this.galleries, newGallery]; // add the new gallery object to the galleries array.
         return newGalleryID;
     }
 
