@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import { Plus } from "react-bootstrap-icons";
+import { Plus, X } from "react-bootstrap-icons";
+import { Modal, Form, Button } from "react-bootstrap";
 import SidebarButton from "./SidebarButton";
 import { refType } from "../../types";
 
@@ -23,9 +24,40 @@ function AddGalleryButton(props) {
     } = props;
 
     return (
-        <SidebarButton onClick={onClick} name="Add gallery">
-            <Plus />
-        </SidebarButton>
+        <>
+            <SidebarButton onClick={onClick} name="Add gallery">
+                <Plus />
+            </SidebarButton>
+            <Modal show={showModal} onHide={onRequestCloseModal}>
+                <Modal.Header className="d-block">
+                    <X className="float-right" onClick={onRequestCloseModal} />
+                </Modal.Header>
+                <Form onSubmit={onRequestCreateGallery}>
+                    <Modal.Body>
+                        <Form.Group>
+                            <Form.Label>Gallery title</Form.Label>
+                            <Form.Control
+                                type="text"
+                                required
+                                placeholder="e.g. Dark and Moody"
+                                ref={galleryNameRef}
+                            />
+                        </Form.Group>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button
+                            variant="outline-secondary"
+                            onClick={onRequestCloseModal}
+                        >
+                            Cancel
+                        </Button>
+                        <Button variant="dark" type="submit">
+                            Add gallery
+                        </Button>
+                    </Modal.Footer>
+                </Form>
+            </Modal>
+        </>
     );
 }
 

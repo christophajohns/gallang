@@ -28,13 +28,21 @@ function SidebarPresenter(props) {
 
     const browserHistory = useHistory();
 
+    // focus gallery name input field when modal is displayed
+    React.useEffect(() => {
+        if (showModal) galleryNameRef.current.focus();
+    }, [showModal]);
+
     /**
      * Create a new gallery with the title specified in the text input field
+     * @param {Event} event
      */
-    function createGalleryWithImage() {
+    function createGalleryWithImage(event) {
+        event.preventDefault();
         const title = galleryNameRef.current.value;
         const imageIDs = droppedImageID ? [droppedImageID] : [];
         const newGalleryID = model.addGallery(title, imageIDs);
+        setShowModal(false);
         browserHistory.push(`/gallery/${newGalleryID}`);
     }
 
@@ -49,7 +57,7 @@ function SidebarPresenter(props) {
             galleryNameRef={galleryNameRef}
             onClickAddGalleryButton={(e) => setShowModal(true)}
             onRequestCloseModal={(e) => setShowModal(false)}
-            onRequestCreateGallery={(e) => createGalleryWithImage()}
+            onRequestCreateGallery={(e) => createGalleryWithImage(e)}
             expanded={expanded || isCurrentlyDragging}
             showModal={showModal}
             isDropTarget={isCurrentlyDragging}
