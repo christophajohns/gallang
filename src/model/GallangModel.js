@@ -12,30 +12,21 @@ class GallangModel {
      * @param {Gallery[]} galleries - Array of galleries the user has created
      */
 
-    constructor(likedImageIDs = [], recentlyViewedImages = [], galleries = []) {
+    constructor(
+        likedImageIDs = ["18647917"],
+        recentlyViewedImages = [],
+        galleries = [
+            {
+                title: "Example gallery",
+                id: uuidV4(),
+                imageIDs: ["18758421", "18644683", "1108968897"],
+            },
+        ]
+    ) {
         this.observers = [];
         this.likedImageIDs = likedImageIDs;
         this.recentlyViewedImages = recentlyViewedImages;
-        // Placeholder galleries for now
-        const exampleGalleries = [
-            {
-                title: "Dark and Moody",
-                id: "12345",
-                imageIDs: [],
-            },
-            {
-                title: "Happy and Cheerful",
-                id: "12346",
-                imageIDs: [],
-            },
-            {
-                title: "Almost Disgusting (but in a fun way)",
-                id: "12347",
-                imageIDs: [],
-            },
-        ];
-        this.galleries = exampleGalleries;
-        // this.galleries = galleries;
+        this.galleries = galleries;
         this.currentRecommendations = [];
         this.isCurrentlyDragging = false;
     }
