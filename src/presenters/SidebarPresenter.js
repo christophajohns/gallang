@@ -5,6 +5,7 @@ import { modelType } from "./ImagePresenter";
 // eslint-disable-next-line no-unused-vars
 import { GallangModel } from "../model"; // only imported for JSDoc type
 import { useHistory } from "react-router";
+import { HorizontalGridPresenter } from "../presenters";
 
 /**
  * Presenter for the Sidebar component
@@ -37,9 +38,11 @@ function SidebarPresenter(props) {
 
     return (
         <Sidebar
-            galleries={galleries.map((gallery) => ({
+            galleriesData={galleries.map((gallery) => ({
                 ...gallery,
-                images: gallery.imageIDs.map((imageID) => ({ id: imageID })),
+                images: gallery.imageIDs.map((imageID) => ({
+                    id: imageID,
+                })),
             }))}
             galleryNameRef={galleryNameRef}
             onClickAddGalleryButton={(e) => setShowModal(true)}
@@ -48,16 +51,54 @@ function SidebarPresenter(props) {
             expanded={expanded || isCurrentlyDragging}
             showModal={showModal}
             isDropTarget={isCurrentlyDragging}
+            galleries={galleries.map((gallery) => (
+                <HorizontalGridPresenter
+                    key={gallery.id}
+                    id={gallery.id}
+                    type="gallery"
+                    href={`/gallery/${gallery.id}`}
+                    title={gallery.title}
+                    images={gallery.imageIDs.map((imageID) => ({
+                        id: imageID,
+                    }))}
+                    small={true}
+                    emptyStateText={"Drag here to add to gallery"}
+                    isDropTarget={isCurrentlyDragging}
+                    model={model}
+                />
+            ))}
+            likedContent={
+                <HorizontalGridPresenter
+                    id="likedContent"
+                    title="Liked content"
+                    href="/liked"
+                    images={likedImageIDs.map((imageID) => ({
+                        id: imageID,
+                    }))}
+                    model={model}
+                    small={true}
+                    emptyStateText={"Click on the heart icon to like an image"}
+                    isDropTarget={isCurrentlyDragging}
+                />
+            }
+            newGallery={
+                <HorizontalGridPresenter
+                    id="newGallery"
+                    type="gallery"
+                    title="New Gallery"
+                    images={[]}
+                    small={true}
+                    emptyStateText={"Drag here to create a new gallery"}
+                    isDropTarget={isCurrentlyDragging}
+                    model={model}
+                />
+            }
             onClickExpandCollapseButton={(e) => setExpanded(!expanded)}
-            likedImages={likedImageIDs.map((imageID) => ({
-                id: imageID,
-            }))}
-            model={model}
         />
     );
 }
 
-Sidebar.propTypes = {
+SidebarPresenter.propTypes = {
     model: modelType,
 };
 
