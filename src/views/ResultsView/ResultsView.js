@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { Trash } from "react-bootstrap-icons";
 import { VerticalGrid } from "../../components";
 import {
     TitleAndDescriptionDiv,
@@ -6,6 +7,8 @@ import {
     ContentTypeDiv,
     TopDiv,
     BottomRightFixed,
+    DeleteButton,
+    ButtonsDiv,
 } from "./style";
 import DownloadAllButton from "./DownloadAllButton";
 import LoadMoreButton from "./LoadMoreButton";
@@ -22,6 +25,8 @@ import ScrollToTopButton from "./ScrollToTopButton";
  * @param {Function} [props.onClickDownloadAll] - Function to be called when the button is clicked (default: empty function)
  * @param {Function} props.onClickLoadMore - Function to be called when a user clicks on the load more button
  * @param {number} props.numberOfVisibleObjects - Number of objects (images) to display
+ * @param {boolean} props.allowDelete - Flag whether to show a delete button next to the grid title
+ * @param {boolean} [props.allowDelete] - Function to be called when a user clicks the delete button
  */
 function ResultsView(props) {
     const {
@@ -33,6 +38,8 @@ function ResultsView(props) {
         onClickDownloadAll,
         onClickLoadMore,
         numberOfVisibleObjects,
+        allowDelete,
+        onClickDeleteButton,
     } = props;
     return (
         <main className="ResultsView">
@@ -45,16 +52,26 @@ function ResultsView(props) {
                     ) : (
                         ""
                     )}
-                    <TitleH3>{title}</TitleH3>
+                    <div>
+                        <TitleH3>{title}</TitleH3>
+                    </div>
                     <div>{numberOfObjects} Objects</div>
                 </TitleAndDescriptionDiv>
-                {allowDownloadAll ? (
-                    <DownloadAllButton
-                        onClickDownloadAll={onClickDownloadAll}
-                    />
-                ) : (
-                    ""
-                )}
+                <ButtonsDiv>
+                    {allowDelete && (
+                        <DeleteButton
+                            onClick={onClickDeleteButton}
+                            variant="outline-danger"
+                        >
+                            <Trash /> Delete
+                        </DeleteButton>
+                    )}
+                    {allowDownloadAll && (
+                        <DownloadAllButton
+                            onClickDownloadAll={onClickDownloadAll}
+                        />
+                    )}
+                </ButtonsDiv>
             </TopDiv>
             <VerticalGrid images={images} />
             {numberOfVisibleObjects < numberOfObjects ? (
@@ -78,6 +95,8 @@ ResultsView.propTypes = {
     onClickDownloadAll: PropTypes.func,
     onClickLoadMore: PropTypes.func.isRequired,
     numberOfVisibleObjects: PropTypes.number.isRequired,
+    allowDelete: PropTypes.bool.isRequired,
+    onClickDeleteButton: PropTypes.func,
 };
 
 export default ResultsView;
