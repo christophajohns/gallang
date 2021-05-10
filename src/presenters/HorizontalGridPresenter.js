@@ -23,6 +23,7 @@ import { useHistory } from "react-router";
  * @param {ImagePresenterModelType} props.model - The model holding the application state
  * @param {Function} props.model.addImageToGallery - Function to add the specified image to the specified gallery
  * @param {boolean} [props.isDropTarget] - Flag whether the horizontal grid should display the image placeholder as a drop target
+ * @param {Function} [props.onDrop] - Function to be called when an image gets dropped onto the image placeholder
  * @returns HorizontalGrid component
  */
 function HorizontalGridPresenter(props) {
@@ -36,6 +37,7 @@ function HorizontalGridPresenter(props) {
         type, // Type of content that is displayed in the grid (e.g. Gallery)
         emptyStateText, // Text to display if no images are supplied
         isDropTarget, // Flag whether the horizontal grid should display the image placeholder as a drop target
+        onDrop, // Function to be called when an image gets dropped onto the image placeholder
         model, // The model holding the application state
     } = props;
 
@@ -70,9 +72,9 @@ function HorizontalGridPresenter(props) {
         event.preventDefault();
         const imageID = event.dataTransfer.getData("text/plain");
         if (!id) return;
+        onDrop();
         if (id === "likedContent") return model.likeImage(imageID);
-        if (id === "newGallery")
-           return browserHistory.push("/new-gallery");
+        if (id === "newGallery") return browserHistory.push("/new-gallery");
         model.addImageToGallery(imageID, id);
         model.isCurrentlyDragging = false;
     }
@@ -111,6 +113,7 @@ HorizontalGridPresenter.propTypes = {
     small: PropTypes.bool,
     emptyStateText: PropTypes.string,
     isDropTarget: PropTypes.bool,
+    onDrop: PropTypes.func,
     model: modelType.isRequired,
 };
 
