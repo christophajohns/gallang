@@ -11,7 +11,7 @@ import { SidebarAside, ExpandedSidebarDiv, StyledIconButton } from "./style";
  * @param {Object} props - Properties passed to component
  * @param {Gallery[]} props.galleriesData - Array with gallery information for the user
  * @param {Object | Function} props.galleries - Slot to render galleries and their images
- * @param {Function} props.onClickAddGallery - Function to be called when a user clicks the button to add a new gallery
+ * @param {Function} props.onClickAddGalleryButton - Function to be called when a user clicks the button to add a new gallery
  * @param {boolean} [props.expanded = false] - Flag whether the sidebar should be expanded or not
  * @param {Function} props.onClickExpandCollapseButton - Function to be called when a user clicks on the button to expand/collapse the sidebar
  * @param {Image[]} props.likedImages - Array of images that the user has liked
@@ -21,7 +21,7 @@ function Sidebar(props) {
     const {
         galleries,
         galleriesData,
-        onClickAddGallery,
+        onClickAddGalleryButton,
         expanded = false,
         onClickExpandCollapseButton,
         likedContent,
@@ -48,7 +48,7 @@ function Sidebar(props) {
                     {galleriesData.map((gallery) => (
                         <GalleryButton key={gallery.id} gallery={gallery} />
                     ))}
-                    <AddGalleryButton />
+                    <AddGalleryButton onClick={onClickAddGalleryButton} />
                 </>
             )}
         </SidebarAside>
@@ -60,7 +60,7 @@ Sidebar.propTypes = {
     galleries: PropTypes.node,
     newGallery: PropTypes.node,
     likedContent: PropTypes.node,
-    onClickAddGallery: PropTypes.func.isRequired,
+    onClickAddGalleryButton: PropTypes.func.isRequired,
     expanded: PropTypes.bool,
 };
 
