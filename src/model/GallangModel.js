@@ -251,7 +251,7 @@ class GallangModel {
      * @param {string} newUserName - User name to pass to updateProfile
      */
     async updateUserName(newUserName) {
-        await this.currentUser.updateProfile({ displayName: newUserName });
+        await AuthenticationService.currentUser.updateProfile({ displayName: newUserName });
         this.currentUser = { ...this.currentUser, displayName: newUserName };
     }
 
@@ -260,7 +260,7 @@ class GallangModel {
      * @param {string} newEmail - Email address to pass to updateEmail
      */
     async updateEmail(newEmail) {
-        await this.currentUser.updateEmail(newEmail);
+        await AuthenticationService.currentUser.updateEmail(newEmail);
         this.currentUser = { ...this.currentUser, email: newEmail };
     }
 
@@ -269,7 +269,7 @@ class GallangModel {
      * @param {string} newPassword - Password to pass to updateEmail
      */
     async updatePassword(newPassword) {
-        await this.currentUser.updatePassword(newPassword);
+        await AuthenticationService.currentUser.updatePassword(newPassword);
         this.currentUser = { ...this.currentUser, password: newPassword };
     }
 
