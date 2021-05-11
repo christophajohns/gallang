@@ -2,19 +2,23 @@ import React from "react";
 import _ from "underscore";
 import { useHistory } from "react-router-dom";
 import { TopNav } from "../components";
-import { useCurrentUser } from "./customHooks";
-import { AuthenticationModel } from "../model";
+// eslint-disable-next-line no-unused-vars
+import { GallangModel } from "../model"; // only imported for JSDoc type
+import { useModelProperty } from "./customHooks";
 
 /**
  * Presenter for the TopNav component
+ * @param {Object} props - Properties passed to the presenter
+ * @param {GallangModel} props.model - Model keeping the application state
  * @returns TopNav component
  */
-function TopNavPresenter() {
+function TopNavPresenter(props) {
+    const { model } = props;
     const accountOptionsRef = React.useRef(null); // used to enable the mouse enter/leave behaviour
     const [query, setQuery] = React.useState("");
 
     const browserHistory = useHistory(); // used to manually navigate/redirect to the details of a specific image
-    const currentUser = useCurrentUser();
+    const currentUser = useModelProperty(model, "currentUser");
 
     /** Redirect user to search results page using the query specified in the search input field */
     const redirectToSearchResults = React.useCallback(() => {
@@ -60,8 +64,8 @@ function TopNavPresenter() {
      */
     async function logoutUser(event) {
         try {
+            await model.signOut();
             browserHistory.push("/login");
-            await AuthenticationModel.signOut();
         } catch (error) {
             console.log(error);
         }
@@ -69,8 +73,8 @@ function TopNavPresenter() {
 
     return (
         <TopNav
-            isLoggedIn={!!currentUser.auth}
-            username={currentUser.auth ? currentUser.auth.displayName : null}
+            isLoggedIn={!!currentUser}
+            username={currentUser ? currentUser.displayName : null}
             onAccountWrapperMouseEnter={showAccountOptions}
             onAccountOptionsMouseLeave={hideAccountOptions}
             accountOptionsRef={accountOptionsRef}

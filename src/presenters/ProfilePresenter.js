@@ -3,7 +3,9 @@ import {
     AccountSettingPresenter,
     HorizontalGridPresenter,
 } from "../presenters";
-import { useCurrentUser, useModelProperty } from "./customHooks";
+import { useModelProperty } from "./customHooks";
+import { useHistory } from "react-router-dom";
+import { DatabaseService } from "../model";
 
 /**
  * Presenter for the profile page.
@@ -13,7 +15,8 @@ function ProfilePresenter(props) {
     const { model } = props;
 
     const galleries = useModelProperty(model, "galleries");
-    const currentUser = useCurrentUser();
+    const currentUser = useModelProperty(model, "currentUser");
+    const browserHistory = useHistory();
 
     /**
      * Wrapper function around the authentication model's methods to update an account
@@ -22,20 +25,12 @@ function ProfilePresenter(props) {
      */
     async function updateAccount(property, newValue) {
         if (property === "username") {
-            await currentUser.auth.updateProfile({
-                displayName: newValue,
-            });
+            await model.updateUserName(newValue);
         } else if (property === "email") {
-            await currentUser.auth.updateEmail(newValue);
+            await model.updateEmail(newValue);
         } else if (property === "password") {
-            await currentUser.auth.updatePassword(newValue);
+            await model.updatePassword(newValue);
         }
-        await refreshCurrentUserJSON(); // force refresh of currentUserJSON
-    }
-
-    /** Helper function to refresh user ID token to trigger state change for currentUserJSON and thereby re-render */
-    async function refreshCurrentUserJSON() {
-        await currentUser.auth.getIdToken(true); // force refresh of ID token to trigger state change in currentUserJSON
     }
 
     /** Function to reformat a stringified date */
@@ -44,20 +39,31 @@ function ProfilePresenter(props) {
         return new Date(string).toLocaleDateString([], options);
     }
 
+    /** Function to delete the current user and redirect to login */
+    async function deleteUserAndRedirectToLogin() {
+        await model.deleteUser();
+        browserHistory.push("/login");
+        const userPath = `gallang/${currentUser.uid}`;
+        const userRef = DatabaseService.ref(userPath);
+        if (userRef) {
+            userRef.remove();
+        }
+    }
+
     const usernameSetting = (
         <AccountSettingPresenter
             updateSetting={(newUsername) =>
                 updateAccount("username", newUsername)
             }
             label="username"
-            initialValue={currentUser.auth.displayName}
+            initialValue={currentUser.displayName}
         />
     );
     const emailSetting = (
         <AccountSettingPresenter
             updateSetting={(newEmail) => updateAccount("email", newEmail)}
             label="email"
-            initialValue={currentUser.auth.email}
+            initialValue={currentUser.email}
         />
     );
     const passwordSetting = (
@@ -73,10 +79,8 @@ function ProfilePresenter(props) {
     return (
         <ProfileView
             user={{
-                ...currentUser.auth,
-                creationTime: formatDate(
-                    currentUser.auth.metadata.creationTime
-                ),
+                ...currentUser,
+                creationTime: formatDate(currentUser.metadata.creationTime),
             }}
             galleries={galleries.map((gallery) => (
                 <HorizontalGridPresenter
@@ -94,7 +98,7 @@ function ProfilePresenter(props) {
             usernameSetting={usernameSetting}
             emailSetting={emailSetting}
             passwordSetting={passwordSetting}
-            onClickDeleteAccount={(e) => currentUser.delete()}
+            onClickDeleteAccount={(e) => deleteUserAndRedirectToLogin()}
         />
     );
 }
