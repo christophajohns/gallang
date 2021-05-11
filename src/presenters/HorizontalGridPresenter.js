@@ -17,6 +17,7 @@ import ImagePresenter, {
  * @param {string} props.description - (optional) Further description for the grid
  * @param {Image[]} props.images - Array of images to render in the grid
  * @param {boolean} [props.small = false] - Flag whether to render smaller versions of the images
+ * @param {boolean} props.imagesAreRemovable - Flag whether the images presented in the grid can be removed on request
  * @param {"collection" | "gallery"} [props.type] - Type of content that is displayed in the grid (e.g. Gallery)
  * @param {string} [props.emptyStateText] - Text to display if no images are supplied
  * @param {ImagePresenterModelType} props.model - The model holding the application state
@@ -35,6 +36,7 @@ function HorizontalGridPresenter(props) {
         type, // Type of content that is displayed in the grid (e.g. Gallery)
         emptyStateText, // Text to display if no images are supplied
         isDropTarget, // Flag whether the horizontal grid should display the image placeholder as a drop target
+        imagesAreRemovable, // Flag whether the images presented in the grid can be removed on request
         model, // The model holding the application state
     } = props;
 
@@ -77,12 +79,24 @@ function HorizontalGridPresenter(props) {
         model.addImageToGallery(imageID, id);
     }
 
+    /**
+     * Removes the specified image ID from liked content or the specified gallery
+     * @param {string} imageID - Unique identifier of the image to remove
+     */
+    function removeImageFromLikedOrGallery(imageID) {
+        if (!id) return;
+        if (id === "likedContent") return model.unlikeImage(imageID);
+        model.removeImageFromGallery(imageID, id);
+    }
+
     const imagePresenters = images.map((image) => (
         <ImagePresenter
             key={image.id}
             id={image.id}
             src={image.url}
             small={small}
+            isRemovable={imagesAreRemovable}
+            removeImage={(e) => removeImageFromLikedOrGallery(image.id)}
             model={model}
         />
     ));
@@ -118,6 +132,7 @@ HorizontalGridPresenter.propTypes = {
     description: PropTypes.string,
     images: PropTypes.arrayOf(imageType),
     small: PropTypes.bool,
+    imagesAreRemovable: PropTypes.bool,
     emptyStateText: PropTypes.string,
     isDropTarget: PropTypes.bool,
     model: modelType.isRequired,

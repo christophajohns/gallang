@@ -85,11 +85,13 @@ function ProfilePresenter(props) {
             galleries={galleries.map((gallery) => (
                 <HorizontalGridPresenter
                     key={gallery.id}
+                    id={gallery.id}
                     title={gallery.title}
                     href={`/gallery/${gallery.id}`}
                     images={gallery.imageIDs.map((imageID) => ({
                         id: imageID,
                     }))}
+                    imagesAreRemovable={true}
                     model={model}
                 />
             ))}

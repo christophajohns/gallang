@@ -43,10 +43,13 @@ export const StyledIconButton = styled(Button)`
     }
 `;
 
-export const StyledGripButton = styled(StyledIconButton)`
+export const StyledTopRightButton = styled(StyledIconButton)`
     z-index: 1;
     position: absolute;
     top: 0px;
     right: 0px;
+`;
+
+export const StyledGripButton = styled(StyledTopRightButton)`
     cursor: grab !important;
 `;

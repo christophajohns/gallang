@@ -42,3 +42,12 @@ export const StyledIconButton = styled(Button)`
         color: black;
     }
 `;
+
+export const DeleteButton = styled(StyledButton)`
+    margin-right: 16px;
+`;
+
+export const ButtonsDiv = styled.div`
+    display: flex;
+    align-content: center;
+`;

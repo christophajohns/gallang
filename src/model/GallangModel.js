@@ -285,6 +285,43 @@ class GallangModel {
     }
 
     /**
+     * Removes an image ID from the specified gallery
+     * @param {string} imageID - Identifier of the image to remove
+     * @param {string} galleryID - Identifier of the gallery to remove the image to
+     */
+    removeImageFromGallery(imageID, galleryID) {
+        const gallery = this.galleries.find(
+            (gallery) => gallery.id === galleryID
+        );
+        if (!gallery) throw Error("Gallery with specified ID not found");
+        const imageInGallery = gallery.imageIDs.includes(imageID);
+        if (imageInGallery) {
+            const updatedGallery = { ...gallery }; // Make a copy of the current state of the gallery
+            updatedGallery.imageIDs = gallery.imageIDs.filter(
+                (currentImageID) => currentImageID !== imageID
+            ); // Keeps all but the specified image ID
+            this.galleries = this.galleries.map((currentGallery) => {
+                if (currentGallery.id === updatedGallery.id)
+                    return updatedGallery; // Replace old with updated gallery
+                return currentGallery;
+            });
+        }
+    }
+    /**    
+     * Remove/delete a gallery from the model
+     * @param {string} galleryID - Identifier of the gallery to remove
+     */
+    removeGallery(galleryID) {
+        const gallery = this.galleries.find(
+            (gallery) => gallery.id === galleryID
+        );
+        if (!gallery) throw Error("Gallery with specified ID not found");
+        this.galleries = this.galleries.filter(
+            (currentGallery) => currentGallery.id !== galleryID
+        );
+    }
+
+    /*
      * Uses the getRecommendation method to compute a recommendation based on the users liked images and a random recommendation basis
      * @returns {Recommendation | null} - Collection of recommended images including title/recommendation basis (e.g. medium, period, person)
      */

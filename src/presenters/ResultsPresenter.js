@@ -14,6 +14,9 @@ import ImagePresenter, {
  * @param {number} props.numberOfObjects - Total number of objects to be displayed
  * @param {Image[]} props.images - Array of images to render in the grid
  * @param {boolean} [props.allowDownloadAll=true] - Flag whether to have a "Download all" button on the page (default: true)
+ * @param {boolean} [props.imagesAreRemovable=false] - Flag whether the images presented in the results view should be removable on request
+ * @param {boolean} [props.allowDelete=false] - Flag whether to have a "Delete" button on the page (default: false)
+ * @param {Function} [props.handleDelete] - Function to be called when a user requests deletion
  * @param {Object} props.model - Model keeping the application state
  * @param {Function} props.model.likeImage - Function to like an image by its ID
  * @param {Function} props.model.unlikeImage - Function to unlike an image by its ID
@@ -27,6 +30,9 @@ function ResultsPresenter(props) {
         numberOfObjects,
         images,
         allowDownloadAll = true,
+        imagesAreRemovable = false,
+        allowDelete = false,
+        handleDelete,
         model,
     } = props;
 
@@ -50,11 +56,15 @@ function ResultsPresenter(props) {
                     key={image.id}
                     id={image.id}
                     src={image.url}
+                    isRemovable={imagesAreRemovable}
+                    removeImage={image.removeImage}
                     model={model}
                 />
             ))}
             allowDownloadAll={allowDownloadAll}
             onClickDownloadAll={(e) => downloadAllImagesAsZipFile()}
+            allowDelete={allowDelete}
+            onClickDeleteButton={handleDelete}
             onClickLoadMore={(e) =>
                 setNumberOfVisibleObjects(numberOfVisibleObjects + 12)
             }
@@ -69,6 +79,9 @@ ResultsPresenter.propTypes = {
     numberOfObjects: PropTypes.number.isRequired,
     images: PropTypes.arrayOf(imageType).isRequired,
     allowDownloadAll: PropTypes.bool,
+    imagesAreRemovable: PropTypes.bool,
+    allowDelete: PropTypes.bool,
+    handleDelete: PropTypes.func,
     model: imagePresenterModelType.isRequired,
 };
 
