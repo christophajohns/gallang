@@ -5,6 +5,7 @@ import {
 } from "../presenters";
 import { useModelProperty } from "./customHooks";
 import { useHistory } from "react-router-dom";
+import { DatabaseService } from "../model";
 
 /**
  * Presenter for the profile page.
@@ -40,8 +41,13 @@ function ProfilePresenter(props) {
 
     /** Function to delete the current user and redirect to login */
     async function deleteUserAndRedirectToLogin() {
+        await model.deleteUser();
         browserHistory.push("/login");
-        await currentUser.delete();
+        const userPath = `gallang/${currentUser.uid}`;
+        const userRef = DatabaseService.ref(userPath);
+        if (userRef) {
+            userRef.remove();
+        }
     }
 
     const usernameSetting = (

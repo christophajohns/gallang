@@ -273,6 +273,11 @@ class GallangModel {
         this.currentUser = { ...this.currentUser, password: newPassword };
     }
 
+    async deleteUser() {
+        await AuthenticationService.currentUser.delete();
+        this.resetModel();
+    }
+
     /** Wrapper function for the firebase authentication signOut method */
     async signOut() {
         await AuthenticationService.signOut();
