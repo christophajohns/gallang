@@ -194,6 +194,7 @@ const CooperHewittSource = {
 
         return periods;
     },
+
     /**
      * Get the images of the objects from a certain period
      * @param {string} periodID - Unique identifier of the period
@@ -209,6 +210,30 @@ const CooperHewittSource = {
         }));
         return periodImages;
     },
+
+    /**
+     * Get a period and its images from the API.
+     * @param {string} periodID - ID of the period to be fetched
+     * @returns {Promise<Period[]>} - Promise object holding an array the period's content (incl. its images)
+     */
+       async getPeriod(periodID) {
+        const params = {
+            method: "cooperhewitt.periods.getInfo",
+            id: periodID,
+        };
+        const data = await CooperHewittSource.apiCall(params);
+
+        const periodInfo = data.period;
+               
+        const periodImages = await CooperHewittSource.getPeriodImages(
+            periodID
+        );
+        
+        const period = {...periodInfo, images: periodImages};
+
+        return period;
+    },
+
     /**
      * Get a random Micah Walter quote from the API.
      * @param {boolean} useMockData - (optional) Flag whether to use the API or local mock data instead (default: false)

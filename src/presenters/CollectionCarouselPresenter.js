@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { CollectionCarousel, promiseNoData } from "../components";
 import { CooperHewittSource } from "../model";
 import { usePromise } from "./customHooks";
@@ -12,6 +13,8 @@ function CollectionCarouselPresenter() {
     const [periodsPromise, setPeriodsPromise] = React.useState(null);
     const [periodsData, , periodsError] = usePromise(periodsPromise);
 
+    const browserHistory = useHistory(); // used to manually navigate/redirect to the details of a specific image
+
     React.useEffect(() => {
         // only at creation
         setPeriodsPromise(CooperHewittSource.getPeriods(4));
@@ -21,9 +24,17 @@ function CollectionCarouselPresenter() {
         };
     }, []);
 
+    function redirectToPeriod(index){
+        const periodID = periodsData[index].id; 
+        browserHistory.push(`/collection/${periodID}`);
+    }
+
     return (
         promiseNoData(periodsPromise, periodsData, periodsError) || (
-            <CollectionCarousel collections={periodsData} />
+            <CollectionCarousel 
+                collections={periodsData}
+                onClickCarouselItem={redirectToPeriod}
+            />
         )
     );
 }
