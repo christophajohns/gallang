@@ -17,6 +17,10 @@ function GalleryPresenter(props) {
         (currentGallery) => currentGallery.id === galleryID
     );
 
+    // Creating a new gallery seems to cause issues when updating the component
+    // To address this, we do an early return if the component gets updated before the gallery was added
+    if (!gallery) return false;
+    
     function removeGalleryAndRedirectToHome() {
         model.removeGallery(galleryID);
         browserHistory.push("/");

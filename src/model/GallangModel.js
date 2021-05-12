@@ -213,6 +213,24 @@ class GallangModel {
     }
 
     /**
+     * Adds a new gallery to the users galleries.
+     * @param {string} galleryName - Name of the gallery to add
+     * @param {string[]} imageIDs - IDs of images to add to the newly created gallery
+     * @returns {string} - The ID of the newly created gallery
+     */
+    addGallery(galleryName, imageIDs = []) {
+        let newGallery = {};
+        const newGalleryID = uuidV4();
+        newGallery = {
+            title: galleryName,
+            id: newGalleryID,
+            imageIDs,
+        };
+        this.galleries = [...this.galleries, newGallery]; // add the new gallery object to the galleries array.
+        return newGalleryID;
+    }
+
+    /**
      * Wrapper function for the firebase authentication sendPasswordResetEmail method
      * @param {string} email - Email address to pass to sendPasswordResetEmail
      */
