@@ -1,7 +1,7 @@
-import { v4 as uuidV4 } from "uuid";
 import _ from "underscore";
 import "../types";
 import CooperHewittSource from "./CooperHewittSource";
+import { v4 as uuidV4 } from "uuid";
 import { AuthenticationService } from ".";
 // eslint-disable-next-line no-unused-vars
 import firebase from "firebase/app"; // only imported for JSDoc type
@@ -27,7 +27,6 @@ class GallangModel {
         this._recentlyViewedImages = recentlyViewedImages;
         this._galleries = galleries;
         this._isCurrentlyDragging = false;
-        this.currentRecommendations = [];
         this._currentUser = currentUser;
         // Subscribe to changes in the authentication status of the firebase auth service
         AuthenticationService.onAuthStateChanged((user) => {
