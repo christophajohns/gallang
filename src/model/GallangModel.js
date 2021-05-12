@@ -2,38 +2,64 @@ import { v4 as uuidV4 } from "uuid";
 import _ from "underscore";
 import "../types";
 import CooperHewittSource from "./CooperHewittSource";
+import { AuthenticationService } from ".";
+// eslint-disable-next-line no-unused-vars
+import firebase from "firebase/app"; // only imported for JSDoc type
 
 /** Class for keeping application state */
 class GallangModel {
     /**
      * @constructor
+     * @param {firebase.User} currentUser - Object holding info about currently logged in user
      * @param {string[]} likedImageIDs - Array of image IDs the user has liked
      * @param {Array<{ id: string, lastViewedAt: Number}>} recentlyViewedImages - Array of images the user has viewed ordered by the timestamp of the viewing (latest first)
      * @param {Gallery[]} galleries - Array of galleries the user has created
      */
 
     constructor(
-        likedImageIDs = ["18647917"],
+        currentUser = null,
+        likedImageIDs = [],
         recentlyViewedImages = [],
-        galleries = [
-            {
-                title: "Example gallery",
-                id: uuidV4(),
-                imageIDs: ["18758421", "18644683", "1108968897"],
-            },
-        ]
+        galleries = []
     ) {
         this.observers = [];
-        this.likedImageIDs = likedImageIDs;
-        this.recentlyViewedImages = recentlyViewedImages;
-        this.galleries = galleries;
+        this._likedImageIDs = likedImageIDs;
+        this._recentlyViewedImages = recentlyViewedImages;
+        this._galleries = galleries;
+        this._isCurrentlyDragging = false;
         this.currentRecommendations = [];
-        this.isCurrentlyDragging = false;
+        this._currentUser = currentUser;
+        // Subscribe to changes in the authentication status of the firebase auth service
+        AuthenticationService.onAuthStateChanged((user) => {
+            this.currentUser = user;
+        });
+    }
+
+    /** Helper function to reset all instance internal properties without notifying the observers */
+    resetModel() {
+        this._currentUser = null;
+        this._likedImageIDs = [];
+        this._galleries = [];
+        this._recentlyViewedImages = [];
+    }
+
+    /**
+     * Setter function to always notify observers when the current user is updated
+     * @param {User} newValue - Updated value for the currentUser property
+     */
+    set currentUser(newValue) {
+        this._currentUser = newValue;
+        this.notifyObservers();
+    }
+
+    /** Getter function for the currentUser property (required for setter function) */
+    get currentUser() {
+        return this._currentUser;
     }
 
     /**
      * Setter function to always notify observers when the liked images are updated
-     * @param {boolean} newValue - Updated value for the likedImageIDs property
+     * @param {string[]} newValue - Updated value for the likedImageIDs property
      */
     set likedImageIDs(newValue) {
         this._likedImageIDs = newValue;
@@ -47,7 +73,7 @@ class GallangModel {
 
     /**
      * Setter function to always notify observers when the user's galleries are updated
-     * @param {boolean} newValue - Updated value for the galleries property
+     * @param {Gallery[]} newValue - Updated value for the galleries property
      */
     set galleries(newValue) {
         this._galleries = newValue;
@@ -73,7 +99,10 @@ class GallangModel {
         return this._isCurrentlyDragging;
     }
 
-    /** Setter function for the recentlyViewedImages property (required for getter function) */
+    /**
+     * Setter function for the recentlyViewedImages property (required for getter function)
+     * @param {Array<{ id: string, lastViewedAt: Number}>} imageArray - an array to save all the user's viewed imagesIDs
+     */
     set recentlyViewedImages(imageArray) {
         this._recentlyViewedImages = imageArray; // Underscore before property name to avoid infinite loops with setter function
     }
@@ -146,6 +175,23 @@ class GallangModel {
     }
 
     /**
+     * Create a new gallery with a specific title
+     * @param {string} newTitle - title name for the gallery
+     */
+    addGallery(newTitle) {
+        const id = uuidV4();
+        this.galleries = [
+            {
+                title: newTitle,
+                id: id,
+                imageIDs: [],
+            },
+            ...this.galleries,
+        ];
+        this.notifyObservers();
+    }
+
+    /**
      * Adds an image ID to the specified gallery
      * @param {string} imageID - Identifier of the image to add
      * @param {string} galleryID - Identifier of the gallery to add the image to
@@ -186,6 +232,101 @@ class GallangModel {
     }
 
     /**
+     * Wrapper function for the firebase authentication sendPasswordResetEmail method
+     * @param {string} email - Email address to pass to sendPasswordResetEmail
+     */
+    async sendPasswordResetEmail(email) {
+        return await AuthenticationService.sendPasswordResetEmail(email);
+    }
+
+    /**
+     * Wrapper function for the firebase authentication signInWithEmailAndPassword method
+     * @param {string} email - Email address to pass to signInWithEmailAndPassword
+     * @param {string} password - Password to pass to signInWithEmailAndPassword
+     */
+    async signInWithEmailAndPassword(email, password) {
+        const userCredential = await AuthenticationService.signInWithEmailAndPassword(
+            email,
+            password
+        );
+        this.currentUser = userCredential.user;
+    }
+
+    /**
+     * Wrapper function for the firebase authentication createUserWithEmailAndPassword method
+     * @param {string} email - Email address to pass to createUserWithEmailAndPassword
+     * @param {string} password - Password to pass to createUserWithEmailAndPassword
+     */
+    async createUserWithEmailAndPassword(email, password) {
+        const userCredential = await AuthenticationService.createUserWithEmailAndPassword(
+            email,
+            password
+        );
+        this.currentUser = userCredential.user;
+    }
+
+    /**
+     * Wrapper function for the firebase authentication updateProfile method to update displayName
+     * @param {string} newUserName - User name to pass to updateProfile
+     */
+    async updateUserName(newUserName) {
+        await AuthenticationService.currentUser.updateProfile({ displayName: newUserName });
+        this.currentUser = { ...this.currentUser, displayName: newUserName };
+    }
+
+    /**
+     * Wrapper function for the firebase authentication updateEmail method
+     * @param {string} newEmail - Email address to pass to updateEmail
+     */
+    async updateEmail(newEmail) {
+        await AuthenticationService.currentUser.updateEmail(newEmail);
+        this.currentUser = { ...this.currentUser, email: newEmail };
+    }
+
+    /**
+     * Wrapper function for the firebase authentication updatePassword method
+     * @param {string} newPassword - Password to pass to updateEmail
+     */
+    async updatePassword(newPassword) {
+        await AuthenticationService.currentUser.updatePassword(newPassword);
+        this.currentUser = { ...this.currentUser, password: newPassword };
+    }
+
+    async deleteUser() {
+        await AuthenticationService.currentUser.delete();
+        this.resetModel();
+    }
+
+    /** Wrapper function for the firebase authentication signOut method */
+    async signOut() {
+        await AuthenticationService.signOut();
+        this.resetModel();
+    }
+
+    /**
+     * Removes an image ID from the specified gallery
+     * @param {string} imageID - Identifier of the image to remove
+     * @param {string} galleryID - Identifier of the gallery to remove the image to
+     */
+    removeImageFromGallery(imageID, galleryID) {
+        const gallery = this.galleries.find(
+            (gallery) => gallery.id === galleryID
+        );
+        if (!gallery) throw Error("Gallery with specified ID not found");
+        const imageInGallery = gallery.imageIDs.includes(imageID);
+        if (imageInGallery) {
+            const updatedGallery = { ...gallery }; // Make a copy of the current state of the gallery
+            updatedGallery.imageIDs = gallery.imageIDs.filter(
+                (currentImageID) => currentImageID !== imageID
+            ); // Keeps all but the specified image ID
+            this.galleries = this.galleries.map((currentGallery) => {
+                if (currentGallery.id === updatedGallery.id)
+                    return updatedGallery; // Replace old with updated gallery
+                return currentGallery;
+            });
+        }
+    }
+    /**    
      * Remove/delete a gallery from the model
      * @param {string} galleryID - Identifier of the gallery to remove
      */

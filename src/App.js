@@ -12,8 +12,9 @@ import {
     ProfilePresenter,
     GalleryPresenter,
     SidebarPresenter,
+    LoggedInAreaPresenter,
+    PrivateRoute,
 } from "./presenters";
-import { PrivateRoute } from "./components";
 
 function App(props) {
     const {
@@ -35,55 +36,69 @@ function App(props) {
 
                 <Switch>
                     <Route path="/login" exact={true}>
-                        <LoginPresenter />
+                        <LoginPresenter model={model} />
                     </Route>
 
                     <Route path="/signup" exact={true}>
-                        <SignupPresenter />
+                        <SignupPresenter model={model} />
                     </Route>
 
                     <Route path="/forgot-password" exact={true}>
-                        <ForgotPasswordPresenter />
+                        <ForgotPasswordPresenter model={model} />
                     </Route>
 
-                    <PrivateRoute path="/profile" exact={true}>
-                        <MainContent>
-                            <ProfilePresenter model={model} />
-                        </MainContent>
-                        {sidebar}
-                    </PrivateRoute>
+                    <LoggedInAreaPresenter model={model}>
+                        <PrivateRoute
+                            path="/profile"
+                            exact={true}
+                            model={model}
+                        >
+                            <MainContent>
+                                <ProfilePresenter model={model} />
+                            </MainContent>
+                            {sidebar}
+                        </PrivateRoute>
 
-                    <PrivateRoute path="/search" exact={true}>
-                        <MainContent>
-                            <SearchResultsPresenter model={model} />
-                        </MainContent>
-                        {sidebar}
-                    </PrivateRoute>
+                        <PrivateRoute path="/search" exact={true} model={model}>
+                            <MainContent>
+                                <SearchResultsPresenter model={model} />
+                            </MainContent>
+                            {sidebar}
+                        </PrivateRoute>
 
-                    <PrivateRoute path="/liked" exact={true}>
-                        <MainContent>
-                            <LikedContentPresenter model={model} />
-                        </MainContent>
-                        {sidebar}
-                    </PrivateRoute>
+                        <PrivateRoute path="/liked" exact={true} model={model}>
+                            <MainContent>
+                                <LikedContentPresenter model={model} />
+                            </MainContent>
+                            {sidebar}
+                        </PrivateRoute>
 
-                    <PrivateRoute path="/gallery/:galleryID" exact={true}>
-                        <MainContent>
-                            <GalleryPresenter model={model} />
-                        </MainContent>
-                        {sidebar}
-                    </PrivateRoute>
+                        <PrivateRoute
+                            path="/gallery/:galleryID"
+                            exact={true}
+                            model={model}
+                        >
+                            <MainContent>
+                                <GalleryPresenter model={model} />
+                            </MainContent>
+                            {sidebar}
+                        </PrivateRoute>
 
-                    <PrivateRoute path="/details/:imageID" exact={true}>
-                        <DetailsPresenter model={model} />
-                    </PrivateRoute>
+                        <PrivateRoute
+                            path="/details/:imageID"
+                            exact={true}
+                            model={model}
+                        >
+                            <DetailsPresenter model={model} />
+                        </PrivateRoute>
 
-                    <PrivateRoute path="/" exact={true}>
-                        <MainContent>
-                            <HomePresenter model={model} />
-                        </MainContent>
-                        {sidebar}
-                    </PrivateRoute>
+                        <PrivateRoute path="/" exact={true} model={model}>
+                            <MainContent>
+                                <HomePresenter model={model} />
+                            </MainContent>
+                            {sidebar}
+                        </PrivateRoute>
+                    </LoggedInAreaPresenter>
                 </Switch>
             </div>
         </Router>

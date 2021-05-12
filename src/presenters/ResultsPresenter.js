@@ -14,6 +14,7 @@ import ImagePresenter, {
  * @param {number} props.numberOfObjects - Total number of objects to be displayed
  * @param {Image[]} props.images - Array of images to render in the grid
  * @param {boolean} [props.allowDownloadAll=true] - Flag whether to have a "Download all" button on the page (default: true)
+ * @param {boolean} [props.imagesAreRemovable=false] - Flag whether the images presented in the results view should be removable on request
  * @param {boolean} [props.allowDelete=false] - Flag whether to have a "Delete" button on the page (default: false)
  * @param {Function} [props.handleDelete] - Function to be called when a user requests deletion
  * @param {Object} props.model - Model keeping the application state
@@ -29,6 +30,7 @@ function ResultsPresenter(props) {
         numberOfObjects,
         images,
         allowDownloadAll = true,
+        imagesAreRemovable = false,
         allowDelete = false,
         handleDelete,
         model,
@@ -54,6 +56,8 @@ function ResultsPresenter(props) {
                     key={image.id}
                     id={image.id}
                     src={image.url}
+                    isRemovable={imagesAreRemovable}
+                    removeImage={image.removeImage}
                     model={model}
                 />
             ))}
@@ -75,6 +79,7 @@ ResultsPresenter.propTypes = {
     numberOfObjects: PropTypes.number.isRequired,
     images: PropTypes.arrayOf(imageType).isRequired,
     allowDownloadAll: PropTypes.bool,
+    imagesAreRemovable: PropTypes.bool,
     allowDelete: PropTypes.bool,
     handleDelete: PropTypes.func,
     model: imagePresenterModelType.isRequired,

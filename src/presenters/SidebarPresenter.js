@@ -79,6 +79,7 @@ function SidebarPresenter(props) {
                     onDrop={(imageID) =>
                         model.addImageToGallery(imageID, gallery.id)
                     }
+                    imagesAreRemovable={true}
                     model={model}
                 />
             ))}
@@ -95,6 +96,7 @@ function SidebarPresenter(props) {
                     emptyStateText={"Click on the heart icon to like an image"}
                     isDropTarget={isCurrentlyDragging}
                     onDrop={(imageID) => model.likeImage(imageID)}
+                    imagesAreRemovable={true}
                 />
             }
             newGallery={

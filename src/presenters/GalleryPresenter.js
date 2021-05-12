@@ -31,7 +31,12 @@ function GalleryPresenter(props) {
             contentType="gallery"
             title={gallery.title}
             numberOfObjects={gallery.imageIDs.length}
-            images={gallery.imageIDs.map((imageID) => ({ id: imageID }))}
+            images={gallery.imageIDs.map((imageID) => ({
+                id: imageID,
+                removeImage: (e) =>
+                    model.removeImageFromGallery(imageID, galleryID),
+            }))}
+            imagesAreRemovable={true}
             allowDelete={true}
             handleDelete={(e) => removeGalleryAndRedirectToHome()}
             model={model}

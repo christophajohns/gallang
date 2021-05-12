@@ -1,14 +1,19 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { SignupView } from "../views";
-import { AuthenticationModel } from "../model";
-import { useCurrentUser } from "./customHooks";
+// eslint-disable-next-line no-unused-vars
+import { GallangModel } from "../model"; // only imported for JSDoc type
+import { useModelProperty } from "./customHooks";
 
 /**
  * Presenter for the signup view
+ * @param {Object} props - Properties passed to the presenter
+ * @param {GallangModel} props.model - Model keeping the application state
  * @returns Signup view
  */
-function SignupPresenter() {
+function SignupPresenter(props) {
+    const { model } = props;
+
     const usernameRef = React.useRef(null);
     const emailRef = React.useRef(null);
     const passwordRef = React.useRef(null);
@@ -18,11 +23,11 @@ function SignupPresenter() {
     const [signupError, setSignupError] = React.useState(null);
 
     const browserHistory = useHistory();
-    const currentUser = useCurrentUser();
+    const currentUser = useModelProperty(model, "currentUser");
 
     // Redirect to home page when the authentication signals that the user is already logged in
     React.useEffect(() => {
-        if (currentUser.auth) browserHistory.push("/");
+        if (currentUser) browserHistory.push("/");
     }, [currentUser, browserHistory]);
 
     /**
@@ -47,13 +52,8 @@ function SignupPresenter() {
 
         try {
             setIsLoading(true);
-            await AuthenticationModel.createUserWithEmailAndPassword(
-                email,
-                password
-            );
-            await AuthenticationModel.currentUser.updateProfile({
-                displayName: username,
-            });
+            await model.createUserWithEmailAndPassword(email, password);
+            await model.updateUserName(username);
             browserHistory.push("/");
         } catch (error) {
             setSignupError(error);
