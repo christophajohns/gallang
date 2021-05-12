@@ -19,12 +19,12 @@ import { useParams } from "react-router-dom";
 function CollectionPresenter(props) {
     const { model } = props;
 
-    const params = useParams();
-    const periodID = params.collectionID;
-    console.log(periodID);
-
     const [periodPromise, setPeriodPromise] = React.useState(null);
     const [periodData, , periodError] = usePromise(periodPromise);
+
+    //gets the collectionID from the URL params
+    const params = useParams();
+    const periodID = params.collectionID; 
 
     React.useEffect(() => {
         // only at creation
@@ -33,8 +33,7 @@ function CollectionPresenter(props) {
             // cleanup on teardown
             setPeriodPromise(null);
         };
-    }, []);
-    console.log(periodData);
+    }, [periodID]);
 
     return (
         promiseNoData(periodPromise, periodData, periodError) || (

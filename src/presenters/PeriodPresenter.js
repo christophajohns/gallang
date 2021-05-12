@@ -40,6 +40,7 @@ function PeriodPresenter(props) {
                 title={title}
                 images={periodImagesData.slice(0, 12)} // only display first 12 images
                 model={model}
+                href={`/collection/${id}`}
             />
         )
     );
