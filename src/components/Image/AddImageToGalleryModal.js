@@ -20,7 +20,7 @@ function AddImageToGalleryModal(props) {
         <Modal show={showModal} onHide={onRequestCloseModal}>
             <ModalHeader className="d-block">
                 <ModalTitle className="float-left">
-                    Add image to gallery
+                    Would you also like to add the image to a gallery?
                 </ModalTitle>
                 <X className="float-right" onClick={onRequestCloseModal} />
             </ModalHeader>
@@ -48,10 +48,10 @@ function AddImageToGalleryModal(props) {
                         variant="outline-secondary"
                         onClick={onRequestCloseModal}
                     >
-                        Cancel
+                        No, keep it as liked
                     </Button>
                     <Button variant="dark" type="submit">
-                        Add image to gallery
+                        Yes, Add image to gallery
                     </Button>
                 </ModalFooter>
             </Form>
