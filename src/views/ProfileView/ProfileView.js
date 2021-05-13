@@ -49,7 +49,7 @@ function ProfileView(props) {
                         variant="outline-dark"
                         onClick={onClickAddGalleryButton}
                     >
-                        Add gallery
+                        + Add gallery
                     </StyledButton>
                     <Galleries galleries={galleries} />
                 </Tab>
