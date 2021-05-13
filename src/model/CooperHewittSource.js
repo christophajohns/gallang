@@ -214,9 +214,9 @@ const CooperHewittSource = {
     /**
      * Get a period and its images from the API.
      * @param {string} periodID - ID of the period to be fetched
-     * @returns {Promise<Period[]>} - Promise object holding an array the period's content (incl. its images)
+     * @returns {Promise<Period>} - Promise object holding an information about the period's content (incl. its images)
      */
-       async getPeriod(periodID) {
+    async getPeriod(periodID) {
         const params = {
             method: "cooperhewitt.periods.getInfo",
             id: periodID,
@@ -224,12 +224,10 @@ const CooperHewittSource = {
         const data = await CooperHewittSource.apiCall(params);
 
         const periodInfo = data.period;
-               
-        const periodImages = await CooperHewittSource.getPeriodImages(
-            periodID
-        );
-        
-        const period = {...periodInfo, images: periodImages};
+
+        const periodImages = await CooperHewittSource.getPeriodImages(periodID);
+
+        const period = { ...periodInfo, images: periodImages };
 
         return period;
     },

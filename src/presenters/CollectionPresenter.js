@@ -1,10 +1,10 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import { ResultsPresenter } from "../presenters";
 import { promiseNoData } from "../components";
 import { CooperHewittSource } from "../model";
 import { modelType as imagePresenterModelType } from "./ImagePresenter";
 import { usePromise } from "./customHooks";
-import { useParams } from "react-router-dom";
 
 /**
  * Presenter for the collection page content.
@@ -24,7 +24,7 @@ function CollectionPresenter(props) {
 
     //gets the collectionID from the URL params
     const params = useParams();
-    const periodID = params.collectionID; 
+    const periodID = params.collectionID;
 
     React.useEffect(() => {
         // only at creation
@@ -38,13 +38,13 @@ function CollectionPresenter(props) {
     return (
         promiseNoData(periodPromise, periodData, periodError) || (
             <ResultsPresenter
-            contentType="collection"
-            title={periodData.name}
-            numberOfObjects={periodData.images.length}
-            images={periodData.images}
-            allowDownloadAll={false}
-            model={model}
-        />
+                contentType="collection"
+                title={periodData.name}
+                numberOfObjects={periodData.images.length}
+                images={periodData.images}
+                allowDownloadAll={false}
+                model={model}
+            />
         )
     );
 }

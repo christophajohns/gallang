@@ -24,14 +24,18 @@ function CollectionCarouselPresenter() {
         };
     }, []);
 
-    function redirectToPeriod(index){
-        const periodID = periodsData[index].id; 
+    /**
+     * Redirects to the period at the position in the periodsData array specified by the index parameter
+     * @param {number} index - Index of the period to redirect to in the periodsData array
+     */
+    function redirectToPeriod(index) {
+        const periodID = periodsData[index].id;
         browserHistory.push(`/collection/${periodID}`);
     }
 
     return (
         promiseNoData(periodsPromise, periodsData, periodsError) || (
-            <CollectionCarousel 
+            <CollectionCarousel
                 collections={periodsData}
                 onClickCarouselItem={redirectToPeriod}
             />
