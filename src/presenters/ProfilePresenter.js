@@ -116,6 +116,7 @@ function ProfilePresenter(props) {
                     }))}
                     imagesAreRemovable={true}
                     model={model}
+                    isDropTarget={false}
                 />
             ))}
             likedContent={
@@ -129,6 +130,7 @@ function ProfilePresenter(props) {
                     model={model}
                     emptyStateText={"Click on the heart icon to like an image"}
                     imagesAreRemovable={true}
+                    isDropTarget={false}
                 />
             }
             usernameSetting={usernameSetting}
