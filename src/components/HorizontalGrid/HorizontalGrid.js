@@ -47,8 +47,9 @@ function HorizontalGrid(props) {
         onDragOverImagePlaceholder, // Function to be called when a user drags an image over the image placeholder
         onDropImagePlaceholder, // Function to be called when a user drops a dragged image onto the image placeholder
         isDropTarget = false, // Flag whether the horizontal grid should display the image placeholder as a drop target
-        isEmpty,
     } = props;
+
+    const isEmpty = !images.length;
 
     return (
         <StyledHorizontalGrid label={title} small={small}>
@@ -73,7 +74,7 @@ function HorizontalGrid(props) {
             </StyledGridTop>
             <StyledGridSection ref={gridRef}>
                 <StyledImages>
-                    {isDropTarget && (
+                    {(isDropTarget || isEmpty) && (
                         <ImagePlaceholderDiv
                             small={small}
                             onDrop={onDropImagePlaceholder}
@@ -81,20 +82,9 @@ function HorizontalGrid(props) {
                             isDropTarget={isDropTarget}
                             isEmpty={isEmpty}
                         >
-                        {emptyStateText}
+                            {emptyStateText}
                         </ImagePlaceholderDiv>
-                    ) }
-                    {isEmpty && (
-                        <ImagePlaceholderDiv
-                            small={small}
-                            onDrop={onDropImagePlaceholder}
-                            onDragOver={onDragOverImagePlaceholder}
-                            isDropTarget={isDropTarget}
-                            isEmpty={isEmpty}
-                        >
-                        {emptyStateText}
-                        </ImagePlaceholderDiv>
-                    ) }
+                    )}
                     {images}
                 </StyledImages>
             </StyledGridSection>
