@@ -15,6 +15,7 @@ const backgroundColors = [
 
 export const StyledCarouselItem = styled(Carousel.Item)`
     // Choose background color from array
+    cursor: pointer; 
     background: ${(props) =>
         props.hasOwnProperty("position")
             ? backgroundColors[props.position]

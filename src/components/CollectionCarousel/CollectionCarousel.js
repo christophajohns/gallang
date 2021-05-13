@@ -18,7 +18,10 @@ import {
  * @param {Collection[]} props.collections - Array of collection objects to be displayed in the carousel
  */
 function CollectionCarousel(props) {
-    const { collections } = props;
+    const {
+        collections, //collections to render in the carousel
+        onClickCarouselItem, //function that fires when user clicks on a slide in the carousel
+    } = props;
 
     return (
         <StyledCollectionCarousel
@@ -26,7 +29,11 @@ function CollectionCarousel(props) {
             prevIcon={<ChevronLeft className="previous-button" />}
         >
             {collections.map((collection, index) => (
-                <StyledCarouselItem key={collection.title} position={index}>
+                <StyledCarouselItem
+                    key={collection.title}
+                    position={index}
+                    onClick={() => onClickCarouselItem(index)}
+                >
                     <StyledCarouselItemContent>
                         <StyledCarouselItemImages>
                             {collection.images.slice(0, 4).map((image) => (

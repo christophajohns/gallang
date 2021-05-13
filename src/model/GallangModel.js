@@ -1,5 +1,6 @@
 import _ from "underscore";
 import "../types";
+import { toTitleCase } from "../utils";
 import CooperHewittSource from "./CooperHewittSource";
 import { v4 as uuidV4 } from "uuid";
 import { AuthenticationService } from ".";
@@ -174,23 +175,6 @@ class GallangModel {
     }
 
     /**
-     * Create a new gallery with a specific title
-     * @param {string} newTitle - title name for the gallery
-     */
-    addGallery(newTitle) {
-        const id = uuidV4();
-        this.galleries = [
-            {
-                title: newTitle,
-                id: id,
-                imageIDs: [],
-            },
-            ...this.galleries,
-        ];
-        this.notifyObservers();
-    }
-
-    /**
      * Adds an image ID to the specified gallery
      * @param {string} imageID - Identifier of the image to add
      * @param {string} galleryID - Identifier of the gallery to add the image to
@@ -219,9 +203,8 @@ class GallangModel {
      * @returns {string} - The ID of the newly created gallery
      */
     addGallery(galleryName, imageIDs = []) {
-        let newGallery = {};
         const newGalleryID = uuidV4();
-        newGallery = {
+        const newGallery = {
             title: galleryName,
             id: newGalleryID,
             imageIDs,
@@ -244,10 +227,11 @@ class GallangModel {
      * @param {string} password - Password to pass to signInWithEmailAndPassword
      */
     async signInWithEmailAndPassword(email, password) {
-        const userCredential = await AuthenticationService.signInWithEmailAndPassword(
-            email,
-            password
-        );
+        const userCredential =
+            await AuthenticationService.signInWithEmailAndPassword(
+                email,
+                password
+            );
         this.currentUser = userCredential.user;
     }
 
@@ -257,10 +241,11 @@ class GallangModel {
      * @param {string} password - Password to pass to createUserWithEmailAndPassword
      */
     async createUserWithEmailAndPassword(email, password) {
-        const userCredential = await AuthenticationService.createUserWithEmailAndPassword(
-            email,
-            password
-        );
+        const userCredential =
+            await AuthenticationService.createUserWithEmailAndPassword(
+                email,
+                password
+            );
         this.currentUser = userCredential.user;
     }
 
@@ -269,7 +254,9 @@ class GallangModel {
      * @param {string} newUserName - User name to pass to updateProfile
      */
     async updateUserName(newUserName) {
-        await AuthenticationService.currentUser.updateProfile({ displayName: newUserName });
+        await AuthenticationService.currentUser.updateProfile({
+            displayName: newUserName,
+        });
         this.currentUser = { ...this.currentUser, displayName: newUserName };
     }
 
@@ -325,7 +312,7 @@ class GallangModel {
             });
         }
     }
-    /**    
+    /**
      * Remove/delete a gallery from the model
      * @param {string} galleryID - Identifier of the gallery to remove
      */
@@ -412,9 +399,8 @@ class GallangModel {
             !hasFoundNewRecommendation &&
             imageIDIndex < randomImageIDIndex + this.likedImageIDs.length // Start at random index and go around in circle
         ) {
-            const currentImageID = this.likedImageIDs[
-                imageIDIndex % this.likedImageIDs.length
-            ]; // Go around in circle
+            const currentImageID =
+                this.likedImageIDs[imageIDIndex % this.likedImageIDs.length]; // Go around in circle
             let currentRecommendation;
             try {
                 currentRecommendation = await this.getRecommendationByImageID(
@@ -560,18 +546,6 @@ class GallangModel {
             }, 0);
         });
     }
-}
-
-// -- UTILITY FUNCTIONS --
-/**
- * Utility function to transform any string to its title case version (see https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript)
- * @param {string} str - String to transform
- * @returns Title case version of the input string
- */
-function toTitleCase(str) {
-    return str.replace(/\w\S*/g, function (txt) {
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
 }
 
 export default GallangModel;
