@@ -98,7 +98,10 @@ function App(props) {
                             exact={true}
                             model={model}
                         >
-                            <CollectionPresenter model={model} />
+                            <MainContent>
+                                <CollectionPresenter model={model} />
+                            </MainContent>
+                            {sidebar}
                         </PrivateRoute>
 
                         <PrivateRoute path="/" exact={true} model={model}>
