@@ -44,10 +44,17 @@ function ProfileView(props) {
                 id="profileTabs"
                 variant="pills"
             >
-                <Tab eventKey="profileGalleries" title="My Galleries">
-                    <StyledButton variant="outline-dark" onClick={onClickAddGalleryButton}>Add gallery</StyledButton>
-                    <LikedContent likedContent={likedContent} />
+                <Tab eventKey="profileGalleries" title="Galleries">
+                    <StyledButton
+                        variant="outline-dark"
+                        onClick={onClickAddGalleryButton}
+                    >
+                        Add gallery
+                    </StyledButton>
                     <Galleries galleries={galleries} />
+                </Tab>
+                <Tab eventKey="profileLikedContent" title="Liked Content">
+                    <LikedContent likedContent={likedContent} />
                 </Tab>
                 <Tab eventKey="profileSettings" title="Account Settings">
                     <AccountSettings
