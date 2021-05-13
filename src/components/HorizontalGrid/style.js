@@ -59,9 +59,10 @@ export const ImagePlaceholderDiv = styled.div`
     align-items: center;
     text-align: center;
     padding: 8px;
-    border: "1px dashed black";
-    border: ${(props) => (props.isEmpty && !props.isDropTarget ? "none" : "1px dashed black" )};
-    background: ${(props) => (props.isEmpty && !props.isDropTarget ? "whitesmoke" : "none" )};
+    border: ${(props) =>
+        props.isEmpty && !props.isDropTarget ? "none" : "1px dashed black"};
+    background: ${(props) =>
+        props.isEmpty && !props.isDropTarget ? "whitesmoke" : "none"};
     margin-right: 32px;
 
     @media (max-width: 820px) {
