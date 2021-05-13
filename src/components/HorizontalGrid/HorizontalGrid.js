@@ -13,6 +13,7 @@ import {
     ImagePlaceholderDiv,
 } from "./style";
 import { refType } from "../../types";
+import { toTitleCase } from "../../utils";
 import { IconButton } from "../../components";
 
 /**
@@ -54,7 +55,9 @@ function HorizontalGrid(props) {
             <StyledGridTop>
                 <StyledTitleAndDescription>
                     {type && <StyledLabel>{type.toUpperCase()}</StyledLabel>}
-                    <StyledTitle to={href || "#"}>{title}</StyledTitle>
+                    <StyledTitle to={href || "#"}>
+                        {toTitleCase(title)}
+                    </StyledTitle>
                     {description ? (
                         <StyledDescription>{description}</StyledDescription>
                     ) : (

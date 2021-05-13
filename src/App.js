@@ -14,6 +14,7 @@ import {
     SidebarPresenter,
     LoggedInAreaPresenter,
     PrivateRoute,
+    CollectionPresenter,
 } from "./presenters";
 
 function App(props) {
@@ -90,6 +91,17 @@ function App(props) {
                             model={model}
                         >
                             <DetailsPresenter model={model} />
+                        </PrivateRoute>
+
+                        <PrivateRoute
+                            path="/collection/:collectionID"
+                            exact={true}
+                            model={model}
+                        >
+                            <MainContent>
+                                <CollectionPresenter model={model} />
+                            </MainContent>
+                            {sidebar}
                         </PrivateRoute>
 
                         <PrivateRoute path="/" exact={true} model={model}>
