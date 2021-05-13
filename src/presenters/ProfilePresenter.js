@@ -1,3 +1,4 @@
+import React from "react";
 import { ProfileView } from "../views";
 import {
     AccountSettingPresenter,
@@ -14,10 +15,19 @@ import { DatabaseService } from "../model";
 function ProfilePresenter(props) {
     const { model } = props;
 
+    const [showModal, setShowModal] = React.useState(false);
+
+    const galleryNameRef = React.useRef();
+
     const galleries = useModelProperty(model, "galleries");
     const currentUser = useModelProperty(model, "currentUser");
     const browserHistory = useHistory();
     const likedImageIDs = useModelProperty(model, "likedImageIDs");
+
+    // focus gallery name input field when modal is displayed
+       React.useEffect(() => {
+        if (showModal) galleryNameRef.current.focus();
+    }, [showModal]);
 
     /**
      * Wrapper function around the authentication model's methods to update an account
@@ -49,6 +59,18 @@ function ProfilePresenter(props) {
         if (userRef) {
             userRef.remove();
         }
+    }
+
+    /**
+     * Create a new gallery with the title specified in the text input field
+     * @param {Event} event
+     */
+    function createGallery(event) {
+        event.preventDefault();
+        const title = galleryNameRef.current.value;
+        const newGalleryID = model.addGallery(title);
+        setShowModal(false);
+        browserHistory.push(`/gallery/${newGalleryID}`);
     }
 
     const usernameSetting = (
@@ -113,6 +135,11 @@ function ProfilePresenter(props) {
             emailSetting={emailSetting}
             passwordSetting={passwordSetting}
             onClickDeleteAccount={(e) => deleteUserAndRedirectToLogin()}
+            onClickAddGalleryButton={(e) => setShowModal(true)}
+            onRequestCloseModal={(e) => setShowModal(false)}
+            onRequestCreateGallery={(e) => createGallery(e)}
+            galleryNameRef={galleryNameRef}
+            showModal={showModal}
         />
     );
 }

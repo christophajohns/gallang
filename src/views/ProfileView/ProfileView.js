@@ -3,7 +3,9 @@ import User from "./User";
 import Galleries from "./Galleries";
 import LikedContent from "./LikedContent";
 import AccountSettings from "./AccountSettings";
-import { ProfileViewMain, StyledTabs } from "./style";
+import AddGalleryModal from "../../components/AddGalleryModal";
+import { refType } from "../../types";
+import { ProfileViewMain, StyledTabs, StyledButton } from "./style";
 import { Tab } from "react-bootstrap";
 
 /**
@@ -27,6 +29,11 @@ function ProfileView(props) {
         emailSetting,
         passwordSetting,
         onClickDeleteAccount,
+        onClickAddGalleryButton,
+        onRequestCloseModal,
+        onRequestCreateGallery,
+        showModal,
+        galleryNameRef,
     } = props;
 
     return (
@@ -38,6 +45,7 @@ function ProfileView(props) {
                 variant="pills"
             >
                 <Tab eventKey="profileGalleries" title="My Galleries">
+                    <StyledButton variant="outline-dark" onClick={onClickAddGalleryButton}>Add gallery</StyledButton>
                     <LikedContent likedContent={likedContent} />
                     <Galleries galleries={galleries} />
                 </Tab>
@@ -50,6 +58,12 @@ function ProfileView(props) {
                     />
                 </Tab>
             </StyledTabs>
+            <AddGalleryModal
+                showModal={showModal}
+                onRequestCloseModal={onRequestCloseModal}
+                onRequestCreateGallery={onRequestCreateGallery}
+                galleryNameRef={galleryNameRef}
+            />
         </ProfileViewMain>
     );
 }
@@ -67,6 +81,11 @@ ProfileView.propTypes = {
         .isRequired,
     passwordSetting: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
         .isRequired,
+    onClickAddGalleryButton: PropTypes.func.isRequired,
+    showModal: PropTypes.bool,
+    onRequestCloseModal: PropTypes.func,
+    onRequestCreateGallery: PropTypes.func,
+    galleryNameRef: refType.isRequired,
 };
 
 export default ProfileView;

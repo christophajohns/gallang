@@ -76,3 +76,10 @@ export const StyledTabs = styled(Tabs)`
         border-bottom: 2px solid black;
     }
 `;
+
+export const StyledButton = styled(Button)`
+    & > svg {
+        margin-right: 8px;
+    }
+    margin-bottom: 30px;
+`;
