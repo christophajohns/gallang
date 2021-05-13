@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import User from "./User";
 import Galleries from "./Galleries";
+import LikedContent from "./LikedContent";
 import AccountSettings from "./AccountSettings";
 import { ProfileViewMain, StyledTabs } from "./style";
 import { Tab } from "react-bootstrap";
@@ -21,6 +22,7 @@ function ProfileView(props) {
     const {
         user,
         galleries,
+        likedContent,
         usernameSetting,
         emailSetting,
         passwordSetting,
@@ -36,6 +38,7 @@ function ProfileView(props) {
                 variant="pills"
             >
                 <Tab eventKey="profileGalleries" title="My Galleries">
+                    <LikedContent likedContent={likedContent} />
                     <Galleries galleries={galleries} />
                 </Tab>
                 <Tab eventKey="profileSettings" title="Account Settings">

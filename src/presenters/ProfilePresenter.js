@@ -17,6 +17,7 @@ function ProfilePresenter(props) {
     const galleries = useModelProperty(model, "galleries");
     const currentUser = useModelProperty(model, "currentUser");
     const browserHistory = useHistory();
+    const likedImageIDs = useModelProperty(model, "likedImageIDs");
 
     /**
      * Wrapper function around the authentication model's methods to update an account
@@ -95,6 +96,19 @@ function ProfilePresenter(props) {
                     model={model}
                 />
             ))}
+            likedContent={
+                <HorizontalGridPresenter
+                    id="likedContent"
+                    title="Liked content"
+                    href="/liked"
+                    images={likedImageIDs.map((imageID) => ({
+                        id: imageID,
+                    }))}
+                    model={model}
+                    emptyStateText={"Click on the heart icon to like an image"}
+                    imagesAreRemovable={true}
+                />
+            }
             usernameSetting={usernameSetting}
             emailSetting={emailSetting}
             passwordSetting={passwordSetting}
