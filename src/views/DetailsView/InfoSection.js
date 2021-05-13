@@ -33,9 +33,9 @@ function InfoSection(props) {
 
 InfoSection.propTypes = {
     title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+    description: PropTypes.string,
     objectType: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
+    date: PropTypes.string,
 };
 
 export default InfoSection;
