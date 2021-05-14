@@ -4,7 +4,7 @@ import { DatabaseService } from "./firebase";
  * Connects firebase and the GallangModel properties galleries, likedImageIDs and recentlyViewedImages
  * @param {GallangModel} model - The model keeping the application state
  */
-function persistModel(model) {
+async function persistModel(model) {
     let loadingFromFirebase = false; // Flag to show whether we are currently fetching data
 
     // References via path to the firebase Realtime Database records
@@ -14,6 +14,11 @@ function persistModel(model) {
     const galleriesRef = userRef.child("galleries");
     const likedImagesRef = userRef.child("likedImageIDs");
     const recentlyViewedImagesRef = userRef.child("recentlyViewedImages");
+
+    // Trigger model update once
+    loadingFromFirebase = true;
+    await userRef.once("value");
+    loadingFromFirebase = false;
 
     // Update firebase whenever changes in the local model occur
     model.addObserver(() => {
@@ -63,11 +68,7 @@ function persistModel(model) {
             JSON.stringify(model.likedImageIDs) !==
             JSON.stringify(likedImageIDsFromFirebase);
 
-        if (
-            likedImageIDsFromFirebase &&
-            likedImageIDsFromFirebase.length &&
-            likedImageIDsWereUpdated
-        ) {
+        if (likedImageIDsFromFirebase && likedImageIDsWereUpdated) {
             model.likedImageIDs = likedImageIDsFromFirebase;
         }
 
@@ -86,7 +87,6 @@ function persistModel(model) {
 
         if (
             recentlyViewedImagesFromFirebase &&
-            recentlyViewedImagesFromFirebase.length &&
             recentlyViewedImagesWereUpdated
         ) {
             model.recentlyViewedImages = recentlyViewedImagesFromFirebase;
