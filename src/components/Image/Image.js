@@ -49,6 +49,7 @@ function Image(props) {
             small={small}
             draggable="true"
             onDragStart={onDragStartImage}
+            onDragEnd={onDragEndImage}
         >
             <img id={id} src={src} alt={id} onClick={onClickImage} />
             {isRemovable ? (

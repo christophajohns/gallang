@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { ChevronLeft, ChevronRight } from "react-bootstrap-icons";
 import { galleryType, refType } from "../../types";
 import AddGalleryButton from "./AddGalleryButton";
-import AddGalleryModal from "./AddGalleryModal";
+import AddGalleryModal from "../AddGalleryModal";
 import GalleryButton from "./GalleryButton";
 import LikedContentButton from "./LikedContentButton";
 import { SidebarAside, ExpandedSidebarDiv, StyledIconButton } from "./style";

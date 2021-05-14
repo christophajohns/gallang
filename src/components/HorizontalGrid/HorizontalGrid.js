@@ -50,6 +50,8 @@ function HorizontalGrid(props) {
         isDropTarget = false, // Flag whether the horizontal grid should display the image placeholder as a drop target
     } = props;
 
+    const isEmpty = !images.length;
+
     return (
         <StyledHorizontalGrid label={title} small={small}>
             <StyledGridTop>
@@ -75,11 +77,13 @@ function HorizontalGrid(props) {
             </StyledGridTop>
             <StyledGridSection ref={gridRef}>
                 <StyledImages>
-                    {isDropTarget && (
+                    {(isDropTarget || isEmpty) && (
                         <ImagePlaceholderDiv
                             small={small}
                             onDrop={onDropImagePlaceholder}
                             onDragOver={onDragOverImagePlaceholder}
+                            isDropTarget={isDropTarget}
+                            isEmpty={isEmpty}
                         >
                             {emptyStateText}
                         </ImagePlaceholderDiv>

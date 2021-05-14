@@ -20,6 +20,9 @@ export const NavBar = styled.nav`
 
 export const Logo = styled(Link)`
     grid-area: center;
+    @media (max-width: 450px) {
+        grid-area: left;
+    }
     justify-self: center;
     font-family: Georgia, "Times New Roman", Times, serif;
     font-weight: bold;

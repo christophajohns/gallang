@@ -1,4 +1,4 @@
-import { Button, Tabs, } from "react-bootstrap";
+import { Button, Tabs } from "react-bootstrap";
 import styled from "styled-components";
 
 export const ProfileViewMain = styled.main`
@@ -62,17 +62,21 @@ export const StyledTabs = styled(Tabs)`
     margin-top: 30px;
     margin-bottom: 30px;
     font-weight: bold;
-    &.nav-pills .nav-link{
-        background-color:white;
+    &.nav-pills .nav-link {
+        background-color: white;
         color: black;
-        border-radius:0px;
+        border-radius: 0px;
         padding: 10px 0px 10px 0px;
-        margin-right:20px;
-        &:hover{
+        margin-right: 20px;
+        &:hover {
             border-bottom: 2px solid lightgray;
         }
     }
-    &.nav-pills .nav-link.active{
+    &.nav-pills .nav-link.active {
         border-bottom: 2px solid black;
     }
+`;
+
+export const StyledButton = styled(Button)`
+    margin-bottom: 32px;
 `;

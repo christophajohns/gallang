@@ -82,7 +82,9 @@ function ImagePresenter(props) {
         liked: likedImageIDs.includes(id),
         small,
         onDragStartImage: setDataTransferToCopyImageID,
-        onDragEndImage: (e) => (model.isCurrentlyDragging = false),
+        onDragEndImage: (e) => {
+            model.isCurrentlyDragging = false;
+        },
         isRemovable: isRemovable,
         onClickRemoveButton: removeImage,
     };
