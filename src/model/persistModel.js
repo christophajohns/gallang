@@ -15,11 +15,6 @@ async function persistModel(model) {
     const likedImagesRef = userRef.child("likedImageIDs");
     const recentlyViewedImagesRef = userRef.child("recentlyViewedImages");
 
-    // Trigger model update once
-    loadingFromFirebase = true;
-    await userRef.once("value");
-    loadingFromFirebase = false;
-
     // Update firebase whenever changes in the local model occur
     model.addObserver(() => {
         if (loadingFromFirebase === true) return;
@@ -94,6 +89,11 @@ async function persistModel(model) {
 
         loadingFromFirebase = false;
     });
+
+    // Trigger model update once
+    loadingFromFirebase = true;
+    await userRef.once("value");
+    loadingFromFirebase = false;
 }
 
 export default persistModel;
