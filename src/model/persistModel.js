@@ -63,7 +63,11 @@ function persistModel(model) {
             JSON.stringify(model.likedImageIDs) !==
             JSON.stringify(likedImageIDsFromFirebase);
 
-        if (likedImageIDsFromFirebase && likedImageIDsWereUpdated) {
+        if (
+            likedImageIDsFromFirebase &&
+            likedImageIDsFromFirebase.length &&
+            likedImageIDsWereUpdated
+        ) {
             model.likedImageIDs = likedImageIDsFromFirebase;
         }
 
@@ -82,6 +86,7 @@ function persistModel(model) {
 
         if (
             recentlyViewedImagesFromFirebase &&
+            recentlyViewedImagesFromFirebase.length &&
             recentlyViewedImagesWereUpdated
         ) {
             model.recentlyViewedImages = recentlyViewedImagesFromFirebase;
