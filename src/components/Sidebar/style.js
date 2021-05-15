@@ -1,4 +1,4 @@
-import { Button, Form, InputGroup, Modal } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import styled from "styled-components";
 import IconButton from "../IconButton";
 
@@ -40,27 +40,4 @@ export const ExpandedSidebarDiv = styled.div`
 
 export const StyledIconButton = styled(IconButton)`
     align-self: ${(props) => (props.expanded ? "flex-start" : "center")};
-`;
-
-export const InputGroupText = styled(InputGroup.Text)`
-    background-color: whitesmoke;
-    color: black;
-    border: none;
-`;
-
-export const FormControl = styled(Form.Control)`
-    background-color: whitesmoke;
-    border: none;
-`;
-
-export const ModalHeader = styled(Modal.Header)`
-    border-bottom: none;
-`;
-
-export const ModalFooter = styled(Modal.Footer)`
-    border-top: none;
-`;
-
-export const ModalTitle = styled(Modal.Title)`
-    font-size: 1rem;
 `;

@@ -109,9 +109,9 @@ function HorizontalGridPresenter(props) {
             small={small}
             type={type}
             emptyStateText={emptyStateText}
-            onDragOverImagePlaceholder={(e) => showDropEffectCopy(e)}
-            onDropImagePlaceholder={(e) => getImageIDAndCallOnDrop(e)}
-            isDropTarget={!images.length || isDropTarget}
+            onDragOverImagePlaceholder={showDropEffectCopy}
+            onDropImagePlaceholder={getImageIDAndCallOnDrop}
+            isDropTarget={isDropTarget}
         />
     );
 }
