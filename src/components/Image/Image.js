@@ -14,6 +14,8 @@ import {
     StyledImageButtons,
     StyledTopRightButton,
 } from "./style";
+import AddImageToGalleryModal from "./AddImageToGalleryModal";
+import { galleryType } from "../../types";
 
 /**
  * Single object (image) showcase including like and download buttons
@@ -28,6 +30,12 @@ import {
  * @param {Function} props.onDragStopImage - Function to be called when a user stops dragging an image
  * @param {boolean} props.isRemovable - Flag whether to render a remove button in the top right corner
  * @param {Function} props.onClickRemoveButton - Function to be called when a user clicks the button to remove an image
+ * @param {boolean} props.showModal - Flag whether the modal to add the image to a gallery should be displayed
+ * @param {Function} props.onRequestCloseModal - Function to be called when a user requests to close the modal
+ * @param {Function} props.onRequestAddToGallery - Function to be called when a user requests to add the image to a specified gallery
+ * @param {Gallery[]} props.galleries - The user's galleries to show as selectables
+ * @param {Function} props.onOptionChange - Function to be called when the user selects an option in the modal
+ * @param {Function} props.modalValid - Boolean specifying if the selected option in the modal is a valid option
  */
 function Image(props) {
     const {
@@ -42,67 +50,88 @@ function Image(props) {
         small = false, // Flag whether to render smaller versions of the images
         isRemovable, // Flag whether to render a remove button in the top right corner
         onClickRemoveButton, // Function to be called when a user clicks the button to remove an image
+        showModal, // Flag whether the modal to add the image to a gallery should be displayed
+        onRequestCloseModal, // Function to be called when a user requests to close the modal
+        onRequestAddToGallery, // Function to be called when a user requests to add the image to a specified gallery
+        galleries, // The user's galleries to show as selectables
+        onModalOptionChange, // Function to be called when the user selects an option in the modal
+        modalValid, // Boolean specifying if the selected option in the modal is a valid option 
     } = props;
 
     return (
-        <StyledImage
-            small={small}
-            draggable="true"
-            onDragStart={onDragStartImage}
-            onDragEnd={onDragEndImage}
-        >
-            <img id={id} src={src} alt={id} onClick={onClickImage} />
-            {isRemovable ? (
-                <StyledTopRightButton
-                    variant="link"
-                    draggable="true"
-                    onClick={onClickRemoveButton}
-                >
-                    <X />
-                </StyledTopRightButton>
-            ) : (
-                <StyledGripButton
-                    variant="link"
-                    draggable="true"
-                    onDragStart={onDragStartImage}
-                    onDragEnd={onDragEndImage}
-                >
-                    <GripVertical />
-                </StyledGripButton>
-            )}
-            <StyledImageButtons>
-                <OverlayTrigger
-                    placement="bottom"
-                    overlay={
-                        <Tooltip id={liked ? "tooltip-like" : "tooltip-unlike"}>
-                            {liked ? "Unlike" : "Like"}
-                        </Tooltip>
-                    }
-                >
-                    <StyledIconButton
+        <>
+            <StyledImage
+                small={small}
+                draggable="true"
+                onDragStart={onDragStartImage}
+                onDragEnd={onDragEndImage}
+            >
+                <img id={id} src={src} alt={id} onClick={onClickImage} />
+                {isRemovable ? (
+                    <StyledTopRightButton
                         variant="link"
-                        onClick={
-                            liked ? onClickUnlikeButton : onClickLikeButton
+                        draggable="true"
+                        onClick={onClickRemoveButton}
+                    >
+                        <X />
+                    </StyledTopRightButton>
+                ) : (
+                    <StyledGripButton
+                        variant="link"
+                        draggable="true"
+                        onDragStart={onDragStartImage}
+                        onDragEnd={onDragEndImage}
+                    >
+                        <GripVertical />
+                    </StyledGripButton>
+                )}
+                <StyledImageButtons>
+                    <OverlayTrigger
+                        placement="bottom"
+                        overlay={
+                            <Tooltip
+                                id={liked ? "tooltip-like" : "tooltip-unlike"}
+                            >
+                                {liked ? "Unlike" : "Like"}
+                            </Tooltip>
                         }
                     >
-                        {liked ? <HeartFill /> : <Heart />}
-                    </StyledIconButton>
-                </OverlayTrigger>
-                <OverlayTrigger
-                    placement="bottom"
-                    overlay={<Tooltip id="tooltip-download">Download</Tooltip>}
-                >
-                    <StyledIconButton
-                        variant="link"
-                        download={true}
-                        href={src}
-                        target="_blank"
+                        <StyledIconButton
+                            variant="link"
+                            onClick={
+                                liked ? onClickUnlikeButton : onClickLikeButton
+                            }
+                        >
+                            {liked ? <HeartFill /> : <Heart />}
+                        </StyledIconButton>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                        placement="bottom"
+                        overlay={
+                            <Tooltip id="tooltip-download">Download</Tooltip>
+                        }
                     >
-                        <Download />
-                    </StyledIconButton>
-                </OverlayTrigger>
-            </StyledImageButtons>
-        </StyledImage>
+                        <StyledIconButton
+                            variant="link"
+                            download={true}
+                            href={src}
+                            target="_blank"
+                        >
+                            <Download />
+                        </StyledIconButton>
+                    </OverlayTrigger>
+                </StyledImageButtons>
+            </StyledImage>
+
+            <AddImageToGalleryModal
+                showModal={showModal}
+                onRequestCloseModal={onRequestCloseModal}
+                onRequestAddToGallery={onRequestAddToGallery}
+                galleries={galleries}
+                onOptionChange={onModalOptionChange}
+                modalValid={modalValid}
+            />
+        </>
     );
 }
 
@@ -127,6 +156,18 @@ Image.propTypes = {
     isRemovable: PropTypes.bool,
     /** Function to be called when a user clicks the button to remove an image */
     onClickRemoveButton: PropTypes.func,
+    /** Flag whether the modal to add the image to a gallery should be displayed */
+    showModal: PropTypes.bool,
+    /** Function to be called when a user requests to close the modal */
+    onRequestCloseModal: PropTypes.func,
+    /** Function to be called when a user requests to add the image to a specified gallery */
+    onRequestAddToGallery: PropTypes.func,
+    /** The user's galleries to show as selectables */
+    galleries: PropTypes.arrayOf(galleryType),
+    /** Function to be called when the user selects an option in the modal */
+    onOptionChange: PropTypes.func,
+    /** Boolean specifying if the selected option in the modal is a valid option  */
+    modalValid: PropTypes.bool,
 };
 
 export default Image;

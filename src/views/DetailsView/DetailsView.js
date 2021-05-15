@@ -71,9 +71,9 @@ function DetailsView(props) {
 
 DetailsView.propTypes = {
     title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+    description: PropTypes.string,
     objectType: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
+    date: PropTypes.string,
     url: PropTypes.string.isRequired,
     liked: PropTypes.bool.isRequired,
     onClickLikeButton: PropTypes.func.isRequired,

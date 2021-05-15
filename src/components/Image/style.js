@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 export const StyledImage = styled.div`
     position: relative;
@@ -52,4 +52,16 @@ export const StyledTopRightButton = styled(StyledIconButton)`
 
 export const StyledGripButton = styled(StyledTopRightButton)`
     cursor: grab !important;
+`;
+
+export const ModalHeader = styled(Modal.Header)`
+    border-bottom: none;
+`;
+
+export const ModalFooter = styled(Modal.Footer)`
+    border-top: none;
+`;
+
+export const ModalTitle = styled(Modal.Title)`
+    font-size: 1rem;
 `;

@@ -28,6 +28,8 @@ function ImagePresenter(props) {
 
     // State
     const [objectInfoPromise, setObjectInfoPromise] = React.useState(null);
+    const [showModal, setShowModal] = React.useState(false);
+    const [modalValid, setModalValid] = React.useState(false);
     const [
         objectInfoData,
         setObjectInfoData,
@@ -53,6 +55,7 @@ function ImagePresenter(props) {
     const browserHistory = useHistory(); // used to manually navigate/redirect to the details of a specific image
 
     const likedImageIDs = useModelProperty(model, "likedImageIDs");
+    const galleries = useModelProperty(model, "galleries");
 
     /**
      * Function to redirect the user to the details view for the clicked image
@@ -76,7 +79,10 @@ function ImagePresenter(props) {
     /** Properties to pass to the Image component that is rendered by the presenter */
     const imageProps = {
         onClickImage: (e) => redirectToDetailsForImage(id),
-        onClickLikeButton: (e) => model.likeImage(id),
+        onClickLikeButton: (e) => {
+            model.likeImage(id);
+            setShowModal(true);
+        },
         onClickUnlikeButton: (e) => model.unlikeImage(id),
         id,
         liked: likedImageIDs.includes(id),
@@ -87,6 +93,21 @@ function ImagePresenter(props) {
         },
         isRemovable: isRemovable,
         onClickRemoveButton: removeImage,
+        showModal,
+        onRequestCloseModal: (e) => setShowModal(false),
+        onRequestAddToGallery: (e) => {
+            e.preventDefault();
+            const galleryID = e.target.elements.gallery.value;
+            if (galleryID !== "none") model.addImageToGallery(id, galleryID);
+            setShowModal(false);
+        },
+        galleries,
+        onModalOptionChange: (e) => {
+            e.preventDefault();
+            const option = e.target.value;
+            if (option !== "none") {setModalValid(true)} else {setModalValid(false)};
+        },
+        modalValid,
     };
 
     if (!src) {
