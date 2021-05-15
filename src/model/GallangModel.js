@@ -105,6 +105,7 @@ class GallangModel {
      */
     set recentlyViewedImages(imageArray) {
         this._recentlyViewedImages = imageArray; // Underscore before property name to avoid infinite loops with setter function
+        this.notifyObservers();
     }
 
     /** Getter function for the recentlyViewedImages property to always return the array sorted by latest access time (desc) */

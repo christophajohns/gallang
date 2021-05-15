@@ -4,7 +4,7 @@ import { DatabaseService } from "./firebase";
  * Connects firebase and the GallangModel properties galleries, likedImageIDs and recentlyViewedImages
  * @param {GallangModel} model - The model keeping the application state
  */
-function persistModel(model) {
+async function persistModel(model) {
     let loadingFromFirebase = false; // Flag to show whether we are currently fetching data
 
     // References via path to the firebase Realtime Database records
@@ -89,6 +89,11 @@ function persistModel(model) {
 
         loadingFromFirebase = false;
     });
+
+    // Trigger model update once
+    loadingFromFirebase = true;
+    await userRef.once("value");
+    loadingFromFirebase = false;
 }
 
 export default persistModel;
