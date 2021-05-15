@@ -34,6 +34,8 @@ import { galleryType } from "../../types";
  * @param {Function} props.onRequestCloseModal - Function to be called when a user requests to close the modal
  * @param {Function} props.onRequestAddToGallery - Function to be called when a user requests to add the image to a specified gallery
  * @param {Gallery[]} props.galleries - The user's galleries to show as selectables
+ * @param {Function} props.onOptionChange - Function to be called when the user selects an option in the modal
+ * @param {Function} props.modalValid - Boolean specifying if the selected option in the modal is a valid option
  */
 function Image(props) {
     const {
@@ -52,6 +54,8 @@ function Image(props) {
         onRequestCloseModal, // Function to be called when a user requests to close the modal
         onRequestAddToGallery, // Function to be called when a user requests to add the image to a specified gallery
         galleries, // The user's galleries to show as selectables
+        onModalOptionChange, // Function to be called when the user selects an option in the modal
+        modalValid, // Boolean specifying if the selected option in the modal is a valid option 
     } = props;
 
     return (
@@ -123,6 +127,8 @@ function Image(props) {
                 onRequestCloseModal={onRequestCloseModal}
                 onRequestAddToGallery={onRequestAddToGallery}
                 galleries={galleries}
+                onOptionChange={onModalOptionChange}
+                modalValid={modalValid}
             />
         </>
     );
@@ -157,6 +163,10 @@ Image.propTypes = {
     onRequestAddToGallery: PropTypes.func,
     /** The user's galleries to show as selectables */
     galleries: PropTypes.arrayOf(galleryType),
+    /** Function to be called when the user selects an option in the modal */
+    onOptionChange: PropTypes.func,
+    /** Boolean specifying if the selected option in the modal is a valid option  */
+    modalValid: PropTypes.bool,
 };
 
 export default Image;

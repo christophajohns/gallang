@@ -29,6 +29,7 @@ function ImagePresenter(props) {
     // State
     const [objectInfoPromise, setObjectInfoPromise] = React.useState(null);
     const [showModal, setShowModal] = React.useState(false);
+    const [modalValid, setModalValid] = React.useState(false);
     const [
         objectInfoData,
         setObjectInfoData,
@@ -94,12 +95,17 @@ function ImagePresenter(props) {
         onRequestCloseModal: (e) => setShowModal(false),
         onRequestAddToGallery: (e) => {
             e.preventDefault();
-            console.log({ e });
             const galleryID = e.target.elements.gallery.value;
             if (galleryID !== "none") model.addImageToGallery(id, galleryID);
             setShowModal(false);
         },
         galleries,
+        onModalOptionChange: (e) => {
+            e.preventDefault();
+            const option = e.target.value;
+            if (option !== "none") {setModalValid(true)} else {setModalValid(false)};
+        },
+        modalValid,
     };
 
     if (!src) {
