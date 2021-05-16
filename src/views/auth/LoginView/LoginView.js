@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Alert } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { Inputs, AuthLinks } from "./style";
-import { CenterContentDiv, StyledForm, AuthButton } from "../style";
+import { CenterContentDiv, StyledForm, AuthButton, StyledTitle } from "../style";
 import { refType } from "../../../types";
 import EmailInput from "../EmailInput";
 import PasswordInput from "../PasswordInput";
@@ -28,6 +28,9 @@ function LoginView(props) {
     return (
         <CenterContentDiv className="LoginView">
             <StyledForm onSubmit={onRequestLogin}>
+                <StyledTitle>
+                    Log in
+                </StyledTitle>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <Inputs>
                     <EmailInput emailRef={emailRef} />
