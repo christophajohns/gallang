@@ -60,12 +60,29 @@ function SignupPresenter(props) {
             setIsLoading(false);
         }
     }
+    function onChangePasswordField(event){
+        event.preventDefault(); // Do not reload page on submit
+        const password = passwordRef.current.value;
+        const regEx = /^.{6,}$/;
+        const passwordValid = regEx.test(password);
+        if (!passwordValid && password) {
+            const error = Error(
+                "Password needs to be at least 6 characters"
+            );
+            setSignupError(error);
+            return;
+        }else{
+            setSignupError(null);
+            return;
+        };
+    }
 
     return (
         <SignupView
             usernameRef={usernameRef}
             emailRef={emailRef}
             passwordRef={passwordRef}
+            onChangePasswordField={(e)=>onChangePasswordField(e)}
             confirmPasswordRef={confirmPasswordRef}
             onRequestSignup={(e) => signupUser(e)}
             isLoading={isLoading}

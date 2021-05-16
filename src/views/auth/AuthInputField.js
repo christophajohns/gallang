@@ -11,9 +11,10 @@ import { refType } from "../../types";
  * @param {string} props.name - Name for the input field
  * @param {string} [props.type = "text"] - Type of the input field (e.g. text or password)
  * @param {React.MutableRefObject} props.ref - Reference for the input field
+ * @param {Function} onChange - Function to be called when the input value changes in the password field
  */
 function AuthInputField(props) {
-    const { icon: Icon, placeholder, name, type = "text", authRef } = props;
+    const { icon: Icon, placeholder, name, type = "text", authRef, onChange } = props;
 
     return (
         <InputGroup>
@@ -28,6 +29,7 @@ function AuthInputField(props) {
                 placeholder={placeholder}
                 name={name}
                 ref={authRef}
+                onChange={onChange}
             />
         </InputGroup>
     );
@@ -39,6 +41,7 @@ AuthInputField.propTypes = {
     name: PropTypes.string.isRequired,
     type: PropTypes.string,
     authRef: refType.isRequired,
+    onChange: PropTypes.func,
 };
 
 export default AuthInputField;
