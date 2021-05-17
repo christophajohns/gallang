@@ -19,7 +19,6 @@ import { refType } from "../../../types";
  * @param {React.MutableRefObject} props.confirmPasswordRef - Reference to the confirm password input field to handle signup request
  * @param {boolean} [props.isLoading = false] - Flag whether the user is currently being logged in
  * @param {Error} props.error - Error from the login request
- * @param {Function} onChangePasswordField - Function to be called when the input value changes in the password field
  */
 function SignupView(props) {
     const {
@@ -30,7 +29,6 @@ function SignupView(props) {
         confirmPasswordRef,
         isLoading = false,
         error,
-        onChangePasswordField,
     } = props;
 
     return (
@@ -43,7 +41,7 @@ function SignupView(props) {
                 <UsernameInput usernameRef={usernameRef} />
                 <EmailInput emailRef={emailRef} />
                 <GroupedInputs>
-                    <PasswordInput passwordRef={passwordRef} onChangePasswordField={onChangePasswordField}/>
+                    <PasswordInput passwordRef={passwordRef}/>
                     <ConfirmPasswordInput
                         confirmPasswordRef={confirmPasswordRef}
                     />
@@ -67,6 +65,6 @@ SignupView.propTypes = {
     confirmPasswordRef: refType.isRequired,
     isLoading: PropTypes.bool,
     error: PropTypes.string,
-    onChangePasswordField: PropTypes.func,
 };
+
 export default SignupView;
