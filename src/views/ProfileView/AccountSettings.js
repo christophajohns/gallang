@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import {
     AccountSettingsSection,
     UserDataDiv,
-    DeleteAccountButton,
 } from "./style";
 
 /**
@@ -28,9 +27,6 @@ function AccountSettings(props) {
                 {emailSetting}
                 {passwordSetting}
             </UserDataDiv>
-            <DeleteAccountButton variant="link" onClick={onClickDeleteAccount}>
-                Delete account
-            </DeleteAccountButton>
         </AccountSettingsSection>
     );
 }

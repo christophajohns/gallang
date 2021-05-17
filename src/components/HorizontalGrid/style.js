@@ -26,6 +26,10 @@ export const StyledTitle = styled(Link)`
     font-weight: bold;
 `;
 
+export const StyledTitleNoRef = styled.div`
+    font-weight: bold;
+`;
+
 export const StyledDescription = styled.p`
     margin-bottom: 0px;
     font-size: 0.9rem;

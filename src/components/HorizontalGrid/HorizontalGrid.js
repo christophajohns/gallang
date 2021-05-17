@@ -11,6 +11,7 @@ import {
     StyledGridTop,
     StyledLabel,
     ImagePlaceholderDiv,
+    StyledTitleNoRef,
 } from "./style";
 import { refType } from "../../types";
 import { toTitleCase } from "../../utils";
@@ -57,9 +58,16 @@ function HorizontalGrid(props) {
             <StyledGridTop>
                 <StyledTitleAndDescription>
                     {type && <StyledLabel>{type.toUpperCase()}</StyledLabel>}
-                    <StyledTitle to={href || "#"}>
-                        {toTitleCase(title)}
-                    </StyledTitle>
+                    {href ? (
+                        <StyledTitle to={href || "#"}>
+                            {toTitleCase(title)}
+                        </StyledTitle>
+                    ) : (
+                        <StyledTitleNoRef>
+                            {toTitleCase(title)}
+                        </StyledTitleNoRef>
+                    )}
+
                     {description ? (
                         <StyledDescription>{description}</StyledDescription>
                     ) : (
