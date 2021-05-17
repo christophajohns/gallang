@@ -12,6 +12,7 @@ const firebaseConfig = {
     appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
+console.log({ firebaseConfig });
 firebase.initializeApp(firebaseConfig);
 
 export const DatabaseService = firebase.database();
