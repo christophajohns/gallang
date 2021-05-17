@@ -4,7 +4,7 @@ import { Route, Redirect } from "react-router-dom";
 import { GallangModel } from "../model"; // only imported for JSDoc type
 
 /**
- * Component to only route to specified component if the user is currently logged in
+ * Presenter to only route to specified component if the user is currently logged in
  * @param {Object} props
  * @param {GallangModel} props.model - Model keeping the application state
  * @param {Function} props.children - Nodes passed as children to the component
