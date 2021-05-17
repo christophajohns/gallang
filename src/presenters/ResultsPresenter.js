@@ -13,7 +13,7 @@ import ImagePresenter, {
  * @param {string} props.title - Title or name for the results
  * @param {number} props.numberOfObjects - Total number of objects to be displayed
  * @param {Image[]} props.images - Array of images to render in the grid
- * @param {boolean} [props.allowDownloadAll=true] - Flag whether to have a "Download all" button on the page (default: true)
+ * @param {boolean} [props.allowDownloadAll=false] - Flag whether to have a "Download all" button on the page (default: false)
  * @param {boolean} [props.imagesAreRemovable=false] - Flag whether the images presented in the results view should be removable on request
  * @param {boolean} [props.allowDelete=false] - Flag whether to have a "Delete" button on the page (default: false)
  * @param {Function} [props.handleDelete] - Function to be called when a user requests deletion
@@ -29,16 +29,15 @@ function ResultsPresenter(props) {
         title,
         numberOfObjects,
         images,
-        allowDownloadAll = true,
+        allowDownloadAll = false,
         imagesAreRemovable = false,
         allowDelete = false,
         handleDelete,
         model,
     } = props;
 
-    const [numberOfVisibleObjects, setNumberOfVisibleObjects] = React.useState(
-        12
-    ); // start with 12 visible images on first load
+    const [numberOfVisibleObjects, setNumberOfVisibleObjects] =
+        React.useState(12); // start with 12 visible images on first load
 
     /** Placeholder for the download all function */
     function downloadAllImagesAsZipFile() {
