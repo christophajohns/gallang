@@ -16,6 +16,7 @@ function PasswordInput(props) {
             name="password"
             placeholder="Password"
             type="password"
+            minLength="6"
             authRef={passwordRef}
         />
     );

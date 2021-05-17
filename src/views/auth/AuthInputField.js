@@ -10,10 +10,18 @@ import { refType } from "../../types";
  * @param {string} props.placeholder - Placeholder for the input field
  * @param {string} props.name - Name for the input field
  * @param {string} [props.type = "text"] - Type of the input field (e.g. text or password)
+ * @param {string} [props.minLength] - Minimum number of characters the user can enter into the entry field
  * @param {React.MutableRefObject} props.ref - Reference for the input field
  */
 function AuthInputField(props) {
-    const { icon: Icon, placeholder, name, type = "text", authRef } = props;
+    const {
+        icon: Icon,
+        placeholder,
+        name,
+        type = "text",
+        minLength,
+        authRef,
+    } = props;
 
     return (
         <InputGroup>
@@ -27,6 +35,7 @@ function AuthInputField(props) {
                 required
                 placeholder={placeholder}
                 name={name}
+                minLength={minLength}
                 ref={authRef}
             />
         </InputGroup>

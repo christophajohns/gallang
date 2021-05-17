@@ -42,9 +42,15 @@ export const AuthButton = styled(Button)`
     color: black;
     border: none;
     width: 100%;
+    font-weight: 600;
 
     &:hover {
         background-color: lightgrey;
         color: black;
     }
+`;
+
+export const StyledTitle = styled.h3`
+    margin-bottom: 20px;
+    font-weight: 600;
 `;

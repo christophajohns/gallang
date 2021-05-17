@@ -6,7 +6,7 @@ import UsernameInput from "../UsernameInput";
 import EmailInput from "../EmailInput";
 import PasswordInput from "../PasswordInput";
 import ConfirmPasswordInput from "./ConfirmPasswordInput";
-import { CenterContentDiv, StyledForm, AuthButton } from "../style";
+import { CenterContentDiv, StyledForm, AuthButton, StyledTitle } from "../style";
 import { refType } from "../../../types";
 
 /**
@@ -34,11 +34,14 @@ function SignupView(props) {
     return (
         <CenterContentDiv className="SignupView">
             <StyledForm onSubmit={onRequestSignup}>
+                <StyledTitle>
+                    Sign up to Gallang
+                </StyledTitle>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <UsernameInput usernameRef={usernameRef} />
                 <EmailInput emailRef={emailRef} />
                 <GroupedInputs>
-                    <PasswordInput passwordRef={passwordRef} />
+                    <PasswordInput passwordRef={passwordRef}/>
                     <ConfirmPasswordInput
                         confirmPasswordRef={confirmPasswordRef}
                     />
