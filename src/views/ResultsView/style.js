@@ -27,3 +27,27 @@ export const TopDiv = styled.div`
     align-items: flex-end;
     margin-bottom: 32px;
 `;
+
+export const BottomRightFixed = styled.div`
+    position: fixed;
+    bottom: 32px;
+    right: 8px;
+`;
+
+export const StyledIconButton = styled(Button)`
+    color: grey;
+
+    &:hover,
+    .active {
+        color: black;
+    }
+`;
+
+export const DeleteButton = styled(StyledButton)`
+    margin-right: 16px;
+`;
+
+export const ButtonsDiv = styled.div`
+    display: flex;
+    align-content: center;
+`;

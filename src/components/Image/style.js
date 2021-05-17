@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 export const StyledImage = styled.div`
     position: relative;
@@ -8,8 +8,8 @@ export const StyledImage = styled.div`
     background-color: black;
 
     img {
-        height: 400px;
-        width: 400px;
+        height: ${(props) => (props.small ? "200px" : "400px")};
+        width: ${(props) => (props.small ? "200px" : "400px")};
         object-fit: cover;
         position: static;
         z-index: 0;
@@ -43,10 +43,25 @@ export const StyledIconButton = styled(Button)`
     }
 `;
 
-export const StyledGripButton = styled(StyledIconButton)`
+export const StyledTopRightButton = styled(StyledIconButton)`
     z-index: 1;
     position: absolute;
     top: 0px;
     right: 0px;
+`;
+
+export const StyledGripButton = styled(StyledTopRightButton)`
     cursor: grab !important;
+`;
+
+export const ModalHeader = styled(Modal.Header)`
+    border-bottom: none;
+`;
+
+export const ModalFooter = styled(Modal.Footer)`
+    border-top: none;
+`;
+
+export const ModalTitle = styled(Modal.Title)`
+    font-size: 1rem;
 `;

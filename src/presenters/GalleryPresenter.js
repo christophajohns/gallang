@@ -1,35 +1,50 @@
-import PropTypes from "prop-types";
 import { ResultsPresenter } from "../presenters";
-import { imageType } from "../types";
+import { useParams, useHistory } from "react-router-dom";
+import { useModelProperty } from "./customHooks";
 import { modelType as imagePresenterModelType } from "./ImagePresenter";
 
 /**
  * Presenter for the gallery page content.
- * @param {string} props.title - Title or name of the gallery
- * @param {number} props.numberOfObjects - Total number of objects in the gallery to be displayed
- * @param {Image[]} props.images - Array of images to render in the grid
- * @param {Object} props.model - Model keeping the application state
- * @param {Function} props.model.likeImage - Function to like an image by its ID
- * @param {Function} props.model.unlikeImage - Function to unlike an image by its ID
- * @param {string[]} props.model.likedImageIDs - Array of image IDs the user has liked already
+ * @param {GallangModel} props.model - Model keeping the application state
  */
 function GalleryPresenter(props) {
-    const { title, numberOfObjects, images, model } = props;
+    const { model } = props;
+
+    const browserHistory = useHistory();
+    const { galleryID } = useParams();
+    const galleries = useModelProperty(model, "galleries");
+    const gallery = galleries.find(
+        (currentGallery) => currentGallery.id === galleryID
+    );
+
+    // Creating a new gallery seems to cause issues when updating the component
+    // To address this, we do an early return if the component gets updated before the gallery was added
+    if (!gallery) return false;
+    
+    function removeGalleryAndRedirectToHome() {
+        model.removeGallery(galleryID);
+        browserHistory.push("/");
+    }
+
     return (
         <ResultsPresenter
             contentType="gallery"
-            title={title}
-            numberOfObjects={numberOfObjects}
-            images={images}
+            title={gallery.title}
+            numberOfObjects={gallery.imageIDs.length}
+            images={gallery.imageIDs.map((imageID) => ({
+                id: imageID,
+                removeImage: (e) =>
+                    model.removeImageFromGallery(imageID, galleryID),
+            }))}
+            imagesAreRemovable={true}
+            allowDelete={true}
+            handleDelete={(e) => removeGalleryAndRedirectToHome()}
             model={model}
         />
     );
 }
 
 GalleryPresenter.propTypes = {
-    title: PropTypes.string.isRequired,
-    numberOfObjects: PropTypes.number.isRequired,
-    images: PropTypes.arrayOf(imageType).isRequired,
     model: imagePresenterModelType.isRequired,
 };
 

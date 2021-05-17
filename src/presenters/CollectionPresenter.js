@@ -1,7 +1,10 @@
-import PropTypes from "prop-types";
+import React from "react";
+import { useParams } from "react-router-dom";
 import { ResultsPresenter } from "../presenters";
-import { imageType } from "../types";
+import { promiseNoData } from "../components";
+import { CooperHewittSource } from "../model";
 import { modelType as imagePresenterModelType } from "./ImagePresenter";
+import { usePromise } from "./customHooks";
 
 /**
  * Presenter for the collection page content.
@@ -14,23 +17,40 @@ import { modelType as imagePresenterModelType } from "./ImagePresenter";
  * @param {string[]} props.model.likedImageIDs - Array of image IDs the user has liked already
  */
 function CollectionPresenter(props) {
-    const { title, numberOfObjects, images, model } = props;
+    const { model } = props;
+
+    const [periodPromise, setPeriodPromise] = React.useState(null);
+    const [periodData, , periodError] = usePromise(periodPromise);
+
+    //gets the collectionID from the URL params
+    const params = useParams();
+    const periodID = params.collectionID;
+
+    React.useEffect(() => {
+        // only at creation
+        setPeriodPromise(CooperHewittSource.getPeriod(periodID));
+        return () => {
+            // cleanup on teardown
+            setPeriodPromise(null);
+        };
+    }, [periodID]);
+
     return (
-        <ResultsPresenter
-            contentType="collection"
-            title={title}
-            numberOfObjects={numberOfObjects}
-            images={images}
-            model={model}
-        />
+        promiseNoData(periodPromise, periodData, periodError) || (
+            <ResultsPresenter
+                contentType="collection"
+                title={periodData.name}
+                numberOfObjects={periodData.images.length}
+                images={periodData.images}
+                allowDownloadAll={false}
+                model={model}
+            />
+        )
     );
 }
 
 CollectionPresenter.propTypes = {
-    title: PropTypes.string.isRequired,
-    numberOfObjects: PropTypes.number.isRequired,
-    images: PropTypes.arrayOf(imageType).isRequired,
-    model: imagePresenterModelType.isRequired,
+    model: imagePresenterModelType,
 };
 
 export default CollectionPresenter;

@@ -9,52 +9,122 @@ import {
     SignupPresenter,
     ForgotPasswordPresenter,
     LikedContentPresenter,
-    CollectionPresenter,
+    ProfilePresenter,
     GalleryPresenter,
+    SidebarPresenter,
+    LoggedInAreaPresenter,
+    PrivateRoute,
+    CollectionPresenter,
 } from "./presenters";
-import { mockCollections } from "./model/MockData";
 
 function App(props) {
     const {
         model, // Model keeping application state
     } = props;
 
+    const sidebar = (
+        <aside>
+            <SidebarPresenter model={model} />
+        </aside>
+    );
+
     return (
         <Router>
             <div className="App">
-                <TopNavPresenter model={model} />
+                <div className="topnav">
+                    <TopNavPresenter model={model} />
+                </div>
+
                 <Switch>
                     <Route path="/login" exact={true}>
-                        <LoginPresenter />
+                        <LoginPresenter model={model} />
                     </Route>
 
                     <Route path="/signup" exact={true}>
-                        <SignupPresenter />
+                        <SignupPresenter model={model} />
                     </Route>
 
                     <Route path="/forgot-password" exact={true}>
-                        <ForgotPasswordPresenter />
+                        <ForgotPasswordPresenter model={model} />
                     </Route>
 
-                    <Route path="/search" exact={true}>
-                        <SearchResultsPresenter model={model} />
-                    </Route>
+                    <LoggedInAreaPresenter model={model}>
+                        <PrivateRoute
+                            path="/profile"
+                            exact={true}
+                            model={model}
+                        >
+                            <MainContent>
+                                <ProfilePresenter model={model} />
+                            </MainContent>
+                            {sidebar}
+                        </PrivateRoute>
 
-                    <Route path="/liked" exact={true}>
-                        <LikedContentPresenter model={model} />
-                    </Route>
+                        <PrivateRoute path="/search" exact={true} model={model}>
+                            <MainContent>
+                                <SearchResultsPresenter model={model} />
+                            </MainContent>
+                            {sidebar}
+                        </PrivateRoute>
 
-                    <Route path="/details/:imageID" exact={true}>
-                        <DetailsPresenter model={model} />
-                    </Route>
+                        <PrivateRoute path="/liked" exact={true} model={model}>
+                            <MainContent>
+                                <LikedContentPresenter model={model} />
+                            </MainContent>
+                            {sidebar}
+                        </PrivateRoute>
 
-                    <Route path="/" exact={true}>
-                        <HomePresenter model={model} />
-                    </Route>
+                        <PrivateRoute
+                            path="/gallery/:galleryID"
+                            exact={true}
+                            model={model}
+                        >
+                            <MainContent>
+                                <GalleryPresenter model={model} />
+                            </MainContent>
+                            {sidebar}
+                        </PrivateRoute>
+
+                        <PrivateRoute
+                            path="/details/:imageID"
+                            exact={true}
+                            model={model}
+                        >
+                            <DetailsPresenter model={model} />
+                        </PrivateRoute>
+
+                        <PrivateRoute
+                            path="/collection/:collectionID"
+                            exact={true}
+                            model={model}
+                        >
+                            <MainContent>
+                                <CollectionPresenter model={model} />
+                            </MainContent>
+                            {sidebar}
+                        </PrivateRoute>
+
+                        <PrivateRoute path="/" exact={true} model={model}>
+                            <MainContent>
+                                <HomePresenter model={model} />
+                            </MainContent>
+                            {sidebar}
+                        </PrivateRoute>
+                    </LoggedInAreaPresenter>
                 </Switch>
             </div>
         </Router>
     );
+}
+
+/**
+ * Wrapper component to display main content correctly in the app layout
+ * @param {Object} props - Properties passed to the object
+ * @returns div element with className "mainContent" containing the children elements
+ */
+function MainContent(props) {
+    const { children } = props;
+    return <div className="mainContent">{children}</div>;
 }
 
 export default App;

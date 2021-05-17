@@ -4,6 +4,61 @@ import "../types";
 /** Object to interact with the Cooper Hewitt API */
 const CooperHewittSource = {
     /**
+     * Try to get data from the cache, but fall back to fetching it live.
+     * @param {string} url - Requested url
+     */
+    async fetchWithCache(url) {
+        const cacheVersion = 1;
+        const cacheName = `gallang-${cacheVersion}`;
+        let cachedData = await this.getCachedData(cacheName, url);
+
+        if (cachedData) {
+            // console.log("Retrieved cached data");
+            return cachedData;
+        }
+
+        // console.log("Fetching fresh data");
+
+        const cacheStorage = await caches.open(cacheName);
+        await cacheStorage.add(url);
+        cachedData = await this.getCachedData(cacheName, url);
+        await this.deleteOldCaches(cacheName);
+
+        return cachedData;
+    },
+    /**
+     * Get data from the cache.
+     * @param {string} cacheName - Name of the cache to get data from
+     * @param {string} url - Requested url
+     */
+    async getCachedData(cacheName, url) {
+        const cacheStorage = await caches.open(cacheName);
+        const cachedResponse = await cacheStorage.match(url);
+
+        if (!cachedResponse || !cachedResponse.ok) {
+            return false;
+        }
+
+        return await cachedResponse.json();
+    },
+    /**
+     * Delete any old caches to respect user's disk space.
+     * @param {string} currentCache - Name of the current cache
+´     */
+    async deleteOldCaches(currentCache) {
+        const keys = await caches.keys();
+
+        for (const key of keys) {
+            const isOurCache = "gallang-" === key.substr(0, 6);
+
+            if (currentCache === key || !isOurCache) {
+                continue;
+            }
+
+            caches.delete(key);
+        }
+    },
+    /**
      * Make a call to the Cooper Hewitt API
      * @param {Object} params - String representing the API method's parameters
      * @param {string} params.method - API method to call
@@ -12,18 +67,13 @@ const CooperHewittSource = {
     async apiCall(params) {
         const filteredParams = filterTruthyKeys(params); // remove unused (falsy) keys from params to avoid errors
         const urlSearchParams = new URLSearchParams({
-            access_token: process.env.REACT_APP_ACCESS_TOKEN,
+            access_token: process.env.REACT_APP_COOPER_HEWITT_ACCESS_TOKEN,
             ...filteredParams,
         });
-        const url = `${process.env.REACT_APP_BASE_URL}?${urlSearchParams}`;
+        const url = `${process.env.REACT_APP_COOPER_HEWITT_BASE_URL}?${urlSearchParams}`;
         try {
-            const response = await fetch(url, {
-                method: "GET",
-            });
-            if (response.status !== 200) {
-                throw response.statusText;
-            }
-            return response.json();
+            const responseJSON = await this.fetchWithCache(url);
+            return responseJSON;
         } catch (error) {
             console.log("Error:", error);
         }
@@ -33,10 +83,13 @@ const CooperHewittSource = {
      * @param {Object} searchParams - Object representing of the search parameters
      * @param {string} [searchParams.query] - Search for objects matching terms across all the text fields
      * @param {string} [searchParams.media_id] - Identifier for the medium (e.g. "screenprint on paper") in the Cooper Hewitt collection
-     * @param {number} maximumNumberOfResults - Maximum number of objects to return (i.e. objects per page since only one page is returned; maximum 500)
+     * @param {string} [searchParams.person_id] - Identifier for the person (e.g. "Andy Warhol") in the Cooper Hewitt collection
+     * @param {string} [searchParams.type_id] - Identifier for the object type (e.g. "Poster") in the Cooper Hewitt collection
+     * @param {string} [searchParams.period_id] - Identifier for the period (e.g. "Baroque") in the Cooper Hewitt collection
+     * @param {number} [maximumNumberOfResults = 100] - Maximum number of objects to return (i.e. objects per page since only one page is returned; maximum 500)
      * @returns {Promise<CooperHewittObject[]>} - Array holding objects with information about one Cooper Hewitt Object each matching the search parameters
      */
-    async searchObjects(searchParams, maximumNumberOfResults = 12) {
+    async searchObjects(searchParams, maximumNumberOfResults = 100) {
         if (maximumNumberOfResults > 500) {
             throw Error("Maximum 500 objects can be returned on one page.");
         }
@@ -92,6 +145,93 @@ const CooperHewittSource = {
         const collections = await getMockData("collections");
         return collections;
     },
+    /**
+     * Get a list of periods from the API (see https://collection.cooperhewitt.org/api/methods/cooperhewitt.periods.getList/explore/)
+     * @param {number} maximumNumberOfPeriods - Maximum number of periods to be fetched
+     * @param {number} offset - Number of periods to skip for the results
+     * @returns {Promise<PeriodWithoutImages[]>} - Promise object holding an array of objects representing the period's content
+     */
+    async getPeriodsList(maximumNumberOfPeriods = 10, offset = 0) {
+        const params = {
+            method: "cooperhewitt.periods.getList",
+            per_page: maximumNumberOfPeriods + offset,
+        };
+        const data = await CooperHewittSource.apiCall(params);
+
+        const periods = data.periods.slice(
+            offset,
+            maximumNumberOfPeriods + offset
+        );
+
+        return periods;
+    },
+    /**
+     * Get a list of periods including their images from the API.
+     * @param {number} maximumNumberOfPeriods - Maximum number of periods to be fetched
+     * @param {number} offset - Number of periods to skip for the results
+     * @returns {Promise<Period[]>} - Promise object holding an array of objects representing the period's content (incl. its images)
+     */
+    async getPeriods(maximumNumberOfPeriods = 10, offset = 0) {
+        const periodsWithoutImages = await CooperHewittSource.getPeriodsList(
+            maximumNumberOfPeriods,
+            offset
+        );
+
+        const periods = await Promise.all(
+            periodsWithoutImages.map(async (periodWithoutImages) => {
+                const periodImages = await CooperHewittSource.getPeriodImages(
+                    periodWithoutImages.id
+                );
+
+                return {
+                    ...periodWithoutImages,
+                    title: periodWithoutImages.name,
+                    images: periodImages,
+                    numberOfImages: periodImages.length,
+                };
+            })
+        );
+
+        return periods;
+    },
+
+    /**
+     * Get the images of the objects from a certain period
+     * @param {string} periodID - Unique identifier of the period
+     * @returns {Promise<Image[]>} - Promise object holding an array of images of objects from the specified period
+     */
+    async getPeriodImages(periodID) {
+        const periodObjects = await CooperHewittSource.searchObjects({
+            period_id: periodID,
+        });
+        const periodImages = periodObjects.map((object) => ({
+            id: object.id,
+            url: object.images[0].b.url,
+        }));
+        return periodImages;
+    },
+
+    /**
+     * Get a period and its images from the API.
+     * @param {string} periodID - ID of the period to be fetched
+     * @returns {Promise<Period>} - Promise object holding an information about the period's content (incl. its images)
+     */
+    async getPeriod(periodID) {
+        const params = {
+            method: "cooperhewitt.periods.getInfo",
+            id: periodID,
+        };
+        const data = await CooperHewittSource.apiCall(params);
+
+        const periodInfo = data.period;
+
+        const periodImages = await CooperHewittSource.getPeriodImages(periodID);
+
+        const period = { ...periodInfo, images: periodImages };
+
+        return period;
+    },
+
     /**
      * Get a random Micah Walter quote from the API.
      * @param {boolean} useMockData - (optional) Flag whether to use the API or local mock data instead (default: false)

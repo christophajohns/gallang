@@ -1,5 +1,7 @@
 import { InputGroup } from "react-bootstrap";
+import PropTypes from "prop-types";
 import { FormControl, InputGroupText } from "./style";
+import { refType } from "../../types";
 
 /**
  * Component to render a text input field for the authentication pages
@@ -8,9 +10,18 @@ import { FormControl, InputGroupText } from "./style";
  * @param {string} props.placeholder - Placeholder for the input field
  * @param {string} props.name - Name for the input field
  * @param {string} [props.type = "text"] - Type of the input field (e.g. text or password)
+ * @param {string} [props.minLength] - Minimum number of characters the user can enter into the entry field
+ * @param {React.MutableRefObject} props.ref - Reference for the input field
  */
 function AuthInputField(props) {
-    const { icon: Icon, placeholder, name, type = "text" } = props;
+    const {
+        icon: Icon,
+        placeholder,
+        name,
+        type = "text",
+        minLength,
+        authRef,
+    } = props;
 
     return (
         <InputGroup>
@@ -24,9 +35,19 @@ function AuthInputField(props) {
                 required
                 placeholder={placeholder}
                 name={name}
+                minLength={minLength}
+                ref={authRef}
             />
         </InputGroup>
     );
 }
+
+AuthInputField.propTypes = {
+    icon: PropTypes.func.isRequired,
+    placeholder: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string,
+    authRef: refType.isRequired,
+};
 
 export default AuthInputField;

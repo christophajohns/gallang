@@ -18,6 +18,7 @@ function useModelProperty(model, propertyName) {
             model.addObserver(obs);
             return function () {
                 model.removeObserver(obs);
+                setValue(null); // cleanup to avoid memory leak
             };
         },
         [model, propertyName]

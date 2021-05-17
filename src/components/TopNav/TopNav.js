@@ -10,36 +10,40 @@ import {
     NavSearch,
     UserName,
 } from "./style";
-import { Link } from "react-router-dom";
 
 /**
  * Navigation bar for the whole application
  * @param {Object} props - Properties passed to component
- * @param {boolean} [props.isLoggedIn=false] - Flag whether the user is currently logged in
- * @param {string} props.username - The username of the currently logged in user
+ * @param {boolean} props.isLoggedIn - Flag whether the user is currently logged in
+ * @param {string} [props.username = "Anonymous Designer"] - The username of the currently logged in user (null if user is not logged in)
  * @param {Function} [props.onAccountWrapperMouseEnter] - Function to be executed when a user's mouse enters the user icon
  * @param {Function} [props.onAccountOptionsMouseLeave] - Function to be executed when a user's mouse leaves the user account options
  * @param {React.MutableRefObject} props.accountOptionsRef - Reference to be used on the account options element (e.g. logout)
  * @param {Function} props.onSearchInput - Function to call when the text inside the search input field changes
  * @param {Function} props.onSearch - Function to call when the user hits enter inside the search input field
+ * @param {Function} props.onLogoutRequest - Function to call when a user requests a logout (clicks the logout button)
+ * @param {Function} props.onClickMyAccountButton - Function to call when a user clicks on the "My account" button to see their profile
  */
 function TopNav(props) {
     const {
-        isLoggedIn = false,
-        username,
+        isLoggedIn,
         onAccountWrapperMouseEnter,
         onAccountOptionsMouseLeave,
         accountOptionsRef,
         onSearchInput,
         onSearch,
+        onLogoutRequest,
+        onClickMyAccountButton,
     } = props;
+
+    const username = props.username ? props.username : "Anonymous Designer";
 
     const userInitial =
         isLoggedIn && username && username.charAt(0).toUpperCase();
 
     return (
         <NavBar sticky={false}>
-            <Logo href="/">Gallang</Logo>
+            <Logo to="/">Gallang</Logo>
             {isLoggedIn && (
                 <ControlsDiv>
                     <NavSearch
@@ -57,10 +61,12 @@ function TopNav(props) {
                             ref={accountOptionsRef}
                         >
                             <UserName>{username}</UserName>
-                            <AccountOption>My account</AccountOption>
-                            <Link to="/login">
-                                <AccountOption>Logout</AccountOption>
-                            </Link>
+                            <AccountOption onClick={onClickMyAccountButton}>
+                                My account
+                            </AccountOption>
+                            <AccountOption onClick={onLogoutRequest}>
+                                Logout
+                            </AccountOption>
                         </AccountOptions>
                     </AccountWrapper>
                 </ControlsDiv>
@@ -70,8 +76,7 @@ function TopNav(props) {
 }
 
 TopNav.propTypes = {
-    username: PropTypes.string.isRequired,
-    isLoggedIn: PropTypes.bool,
+    username: PropTypes.string,
     onAccountWrapperMouseEnter: PropTypes.func,
     onAccountOptionsMouseLeave: PropTypes.func,
     accountOptionsRef: PropTypes.oneOfType([
@@ -82,6 +87,8 @@ TopNav.propTypes = {
     ]).isRequired,
     onSearchInput: PropTypes.func.isRequired,
     onSearch: PropTypes.func.isRequired,
+    onLogoutRequest: PropTypes.func.isRequired,
+    onClickMyAccountButton: PropTypes.func.isRequired,
 };
 
 export default TopNav;
