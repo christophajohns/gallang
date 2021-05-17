@@ -58,15 +58,16 @@ function HorizontalGrid(props) {
             <StyledGridTop>
                 <StyledTitleAndDescription>
                     {type && <StyledLabel>{type.toUpperCase()}</StyledLabel>}
-                    {href ? 
+                    {href ? (
                         <StyledTitle to={href || "#"}>
-                        {toTitleCase(title)}
-                    </StyledTitle>
-                    : 
-                    <StyledTitleNoRef>
-                        {toTitleCase(title)}
-                     </StyledTitleNoRef>}
-                    
+                            {toTitleCase(title)}
+                        </StyledTitle>
+                    ) : (
+                        <StyledTitleNoRef>
+                            {toTitleCase(title)}
+                        </StyledTitleNoRef>
+                    )}
+
                     {description ? (
                         <StyledDescription>{description}</StyledDescription>
                     ) : (
