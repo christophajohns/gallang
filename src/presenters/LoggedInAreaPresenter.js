@@ -4,7 +4,7 @@ import { persistModel, GallangModel } from "../model";
 import { useModelProperty } from "./customHooks";
 
 /**
- * Presenter for the all app content a user has to be logged in to access
+ * Presenter for all app content a user has to be logged in to access
  * @param {Object} props - Properties passed to the presenter
  * @param {GallangModel} props.model - Model keeping the application state
  */

@@ -6,7 +6,7 @@ import { usePromise } from "./customHooks";
 import "../types";
 
 /**
- * Presenter for a the collection carousel
+ * Presenter for the collection carousel
  * @returns Loading spinner or CollectionCarousel
  */
 function CollectionCarouselPresenter() {

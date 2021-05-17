@@ -2,13 +2,19 @@ import React from "react";
 import { promiseNoData } from "../components";
 import { usePromise } from "./customHooks";
 import { HorizontalGridPresenter } from "../presenters";
+// eslint-disable-next-line no-unused-vars
+import { GallangModel } from "../model"; // only imported for JSDoc type
 
+/**
+ * Presenter for a horizontal grid of recommended images
+ * @param {Object} props - Properties passed to the presenter
+ * @param {GallangModel} props.model - Model keeping the application state
+ */
 function RecommendationPresenter(props) {
     const { model } = props;
 
-    const [recommendationsPromise, setRecommendationsPromise] = React.useState(
-        null
-    );
+    const [recommendationsPromise, setRecommendationsPromise] =
+        React.useState(null);
     const [recommendationsData, , recommendationsError] = usePromise(
         recommendationsPromise
     );

@@ -5,7 +5,7 @@ import { galleryType } from "../../types";
 import { ModalTitle, ModalHeader, ModalFooter } from "./style";
 
 /**
- * Modal to add a gallery
+ * Modal to add an image to a gallery
  * @param {Object} props - Properties passed to the component
  * @param {boolean} props.showModal - Flag whether the modal to add the image to a gallery should be displayed
  * @param {Function} props.onRequestCloseModal - Function to be called when a user requests to close the modal
@@ -15,11 +15,11 @@ import { ModalTitle, ModalHeader, ModalFooter } from "./style";
  * @param {Function} props.modalValid - Boolean specifying if the selected option in the modal is a valid option
  */
 function AddImageToGalleryModal(props) {
-    const { 
-        showModal, 
-        onRequestCloseModal, 
-        onRequestAddToGallery, 
-        galleries, 
+    const {
+        showModal,
+        onRequestCloseModal,
+        onRequestAddToGallery,
+        galleries,
         onOptionChange,
         modalValid,
     } = props;
@@ -34,7 +34,10 @@ function AddImageToGalleryModal(props) {
             </ModalHeader>
             <Form onSubmit={onRequestAddToGallery}>
                 <Modal.Body>
-                    <Form.Group controlId="exampleForm.SelectCustom" onChange={onOptionChange}>
+                    <Form.Group
+                        controlId="exampleForm.SelectCustom"
+                        onChange={onOptionChange}
+                    >
                         <Form.Label>Gallery</Form.Label>
                         <Form.Control name="gallery" as="select">
                             <option value="none">Select a gallery…</option>
@@ -58,7 +61,11 @@ function AddImageToGalleryModal(props) {
                     >
                         No, keep it as liked
                     </Button>
-                    <Button variant="dark" type="submit" disabled={modalValid ? false : true}>
+                    <Button
+                        variant="dark"
+                        type="submit"
+                        disabled={modalValid ? false : true}
+                    >
                         Yes, Add image to gallery
                     </Button>
                 </ModalFooter>

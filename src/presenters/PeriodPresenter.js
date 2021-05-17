@@ -6,7 +6,7 @@ import { usePromise } from "./customHooks";
 import "../types";
 
 /**
- * Presenter for a grid of a periods objects
+ * Presenter for a grid of a period's objects
  * @param {GallangModel} props.model - The model holding the application state
  * @param {string} props.title - Title or name of the period
  * @param {string} props.id - Unique identifier of the period
@@ -16,9 +16,8 @@ function PeriodPresenter(props) {
     const { model, title, id } = props;
 
     const [periodImagesPromise, setPeriodImagesPromise] = React.useState(null);
-    const [periodImagesData, , periodImagesError] = usePromise(
-        periodImagesPromise
-    );
+    const [periodImagesData, , periodImagesError] =
+        usePromise(periodImagesPromise);
 
     React.useEffect(() => {
         // only at creation
